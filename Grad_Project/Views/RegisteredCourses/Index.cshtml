@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Grad_Project.Models.RegisteredCourses_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl1.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl2.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl3.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl4.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl5.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_tbl6.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl1.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl2.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl3.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl4.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl5.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course_tbl6.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

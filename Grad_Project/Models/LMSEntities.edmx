@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salt" Type="varbinary" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Attendance_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StudentID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="No_of_Attendances" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Prof" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Assistant" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PDFs" Type="varbinary(max)" />
+          <Property Name="Links" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Event_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ReleaseDate" Type="date" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Ed_Level" Type="int" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Lecturer_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salt" Type="varbinary" MaxLength="50" />
+          <Property Name="Role" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="RegisteredCourses" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RegisteredCourses_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Course01" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course02" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course03" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course04" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course05" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course06" Type="nvarchar" MaxLength="10" />
+          <Property Name="Course07" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Result_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StudentID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Total_Mark" Type="int" />
+          <Property Name="Achieved_Mark" Type="int" />
+        </EntityType>
+        <EntityType Name="Student_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salt" Type="varbinary" MaxLength="50" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ed_Level" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Attend_Courses" Type="nvarchar" MaxLength="10" />
+          <Property Name="Registered_Courses" Type="nvarchar" MaxLength="10" />
+          <Property Name="Results" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Attendance_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attendance_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_tbl_Student_tbl">
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="1" />
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attendance_tbl">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_tbl_Lecturer_tbl">
+          <End Role="Lecturer_tbl" Type="Self.Lecturer_tbl" Multiplicity="1" />
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course_tbl">
+              <PropertyRef Name="Prof" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_tbl_Lecturer_tbl1">
+          <End Role="Lecturer_tbl" Type="Self.Lecturer_tbl" Multiplicity="1" />
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course_tbl">
+              <PropertyRef Name="Assistant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="Event_tbl" Type="Self.Event_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl1">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl2">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course03" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl3">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course04" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl4">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course05" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl5">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course06" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl6">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course07" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_tbl_Student_tbl">
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="1" />
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_Attendance_tbl">
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Attend_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_RegisteredCourses_tbl">
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisteredCourses_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Registered_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_Result_tbl">
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Result_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Results" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LMSDBModelStoreContainer">
+          <EntitySet Name="Admin_tbl" EntityType="Self.Admin_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance_tbl" EntityType="Self.Attendance_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course_tbl" EntityType="Self.Course_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_tbl" EntityType="Self.Event_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer_tbl" EntityType="Self.Lecturer_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegisteredCourses_tbl" EntityType="Self.RegisteredCourses_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Result_tbl" EntityType="Self.Result_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_tbl" EntityType="Self.Student_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attendance_tbl_Course_tbl" Association="Self.FK_Attendance_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_tbl_Student_tbl" Association="Self.FK_Attendance_tbl_Student_tbl">
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_tbl_Lecturer_tbl" Association="Self.FK_Course_tbl_Lecturer_tbl">
+            <End Role="Lecturer_tbl" EntitySet="Lecturer_tbl" />
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_tbl_Lecturer_tbl1" Association="Self.FK_Course_tbl_Lecturer_tbl1">
+            <End Role="Lecturer_tbl" EntitySet="Lecturer_tbl" />
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_tbl_Course_tbl" Association="Self.FK_Event_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Event_tbl" EntitySet="Event_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl" Association="Self.FK_RegisteredCourses_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl1" Association="Self.FK_RegisteredCourses_tbl_Course_tbl1">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl2" Association="Self.FK_RegisteredCourses_tbl_Course_tbl2">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl3" Association="Self.FK_RegisteredCourses_tbl_Course_tbl3">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl4" Association="Self.FK_RegisteredCourses_tbl_Course_tbl4">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl5" Association="Self.FK_RegisteredCourses_tbl_Course_tbl5">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl6" Association="Self.FK_RegisteredCourses_tbl_Course_tbl6">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Course_tbl" Association="Self.FK_Result_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Student_tbl" Association="Self.FK_Result_tbl_Student_tbl">
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_Attendance_tbl" Association="Self.FK_Student_tbl_Attendance_tbl">
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_RegisteredCourses_tbl" Association="Self.FK_Student_tbl_RegisteredCourses_tbl">
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_Result_tbl" Association="Self.FK_Student_tbl_Result_tbl">
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="Binary" Nullable="true" MaxLength="50" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Attendance_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StudentID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="No_of_Attendances" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Attendance_tbl_Course_tbl" FromRole="Attendance_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Student_tbl" Relationship="Self.FK_Attendance_tbl_Student_tbl" FromRole="Attendance_tbl" ToRole="Student_tbl" />
+          <NavigationProperty Name="Student_tbl1" Relationship="Self.FK_Student_tbl_Attendance_tbl" FromRole="Attendance_tbl" ToRole="Student_tbl" />
+        </EntityType>
+        <EntityType Name="Course_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prof" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Assistant" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PDFs" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Links" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attendance_tbl" Relationship="Self.FK_Attendance_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Attendance_tbl" />
+          <NavigationProperty Name="Lecturer_tbl" Relationship="Self.FK_Course_tbl_Lecturer_tbl" FromRole="Course_tbl" ToRole="Lecturer_tbl" />
+          <NavigationProperty Name="Lecturer_tbl1" Relationship="Self.FK_Course_tbl_Lecturer_tbl1" FromRole="Course_tbl" ToRole="Lecturer_tbl" />
+          <NavigationProperty Name="Event_tbl" Relationship="Self.FK_Event_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Event_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl1" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl1" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl2" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl2" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl3" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl3" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl4" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl4" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl5" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl5" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl6" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl6" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Result_tbl" />
+        </EntityType>
+        <EntityType Name="Event_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Type" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ed_Level" Type="Int32" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Event_tbl_Course_tbl" FromRole="Event_tbl" ToRole="Course_tbl" />
+        </EntityType>
+        <EntityType Name="Lecturer_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="Binary" Nullable="true" MaxLength="50" FixedLength="false" />
+          <Property Name="Role" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Course_tbl_Lecturer_tbl" FromRole="Lecturer_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl1" Relationship="Self.FK_Course_tbl_Lecturer_tbl1" FromRole="Lecturer_tbl" ToRole="Course_tbl" />
+          <Property Name="RegisteredCourses" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RegisteredCourses_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Course01" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course02" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course03" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course04" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course05" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course06" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Course07" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course_tbl" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl1" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl1" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl2" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl2" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl3" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl3" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl4" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl4" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl5" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl5" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Course_tbl6" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl6" FromRole="RegisteredCourses_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Student_tbl" Relationship="Self.FK_Student_tbl_RegisteredCourses_tbl" FromRole="RegisteredCourses_tbl" ToRole="Student_tbl" />
+        </EntityType>
+        <EntityType Name="Result_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StudentID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Total_Mark" Type="Int32" />
+          <Property Name="Achieved_Mark" Type="Int32" />
+          <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Result_tbl" ToRole="Course_tbl" />
+          <NavigationProperty Name="Student_tbl" Relationship="Self.FK_Result_tbl_Student_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
+          <NavigationProperty Name="Student_tbl1" Relationship="Self.FK_Student_tbl_Result_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
+        </EntityType>
+        <EntityType Name="Student_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="Binary" Nullable="true" MaxLength="50" FixedLength="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ed_Level" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Attend_Courses" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Registered_Courses" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Results" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attendance_tbl" Relationship="Self.FK_Attendance_tbl_Student_tbl" FromRole="Student_tbl" ToRole="Attendance_tbl" />
+          <NavigationProperty Name="Attendance_tbl1" Relationship="Self.FK_Student_tbl_Attendance_tbl" FromRole="Student_tbl" ToRole="Attendance_tbl" />
+          <NavigationProperty Name="RegisteredCourses_tbl" Relationship="Self.FK_Student_tbl_RegisteredCourses_tbl" FromRole="Student_tbl" ToRole="RegisteredCourses_tbl" />
+          <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Student_tbl" FromRole="Student_tbl" ToRole="Result_tbl" />
+          <NavigationProperty Name="Result_tbl1" Relationship="Self.FK_Student_tbl_Result_tbl" FromRole="Student_tbl" ToRole="Result_tbl" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Attendance_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attendance_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_tbl_Student_tbl">
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="1" />
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attendance_tbl">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_Attendance_tbl">
+          <End Role="Attendance_tbl" Type="Self.Attendance_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Attend_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_tbl_Lecturer_tbl">
+          <End Role="Lecturer_tbl" Type="Self.Lecturer_tbl" Multiplicity="1" />
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course_tbl">
+              <PropertyRef Name="Prof" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_tbl_Lecturer_tbl1">
+          <End Role="Lecturer_tbl" Type="Self.Lecturer_tbl" Multiplicity="1" />
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course_tbl">
+              <PropertyRef Name="Assistant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="Event_tbl" Type="Self.Event_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl1">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl2">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course03" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl3">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course04" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl4">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course05" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl5">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course06" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredCourses_tbl_Course_tbl6">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisteredCourses_tbl">
+              <PropertyRef Name="Course07" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_RegisteredCourses_tbl">
+          <End Role="RegisteredCourses_tbl" Type="Self.RegisteredCourses_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisteredCourses_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Registered_Courses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_tbl_Student_tbl">
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="1" />
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_tbl_Result_tbl">
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="0..1" />
+          <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Result_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student_tbl">
+              <PropertyRef Name="Results" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LMSDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin_tbl" EntityType="Self.Admin_tbl" />
+          <EntitySet Name="Attendance_tbl" EntityType="Self.Attendance_tbl" />
+          <EntitySet Name="Course_tbl" EntityType="Self.Course_tbl" />
+          <EntitySet Name="Event_tbl" EntityType="Self.Event_tbl" />
+          <EntitySet Name="Lecturer_tbl" EntityType="Self.Lecturer_tbl" />
+          <EntitySet Name="RegisteredCourses_tbl" EntityType="Self.RegisteredCourses_tbl" />
+          <EntitySet Name="Result_tbl" EntityType="Self.Result_tbl" />
+          <EntitySet Name="Student_tbl" EntityType="Self.Student_tbl" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Attendance_tbl_Course_tbl" Association="Self.FK_Attendance_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_tbl_Student_tbl" Association="Self.FK_Attendance_tbl_Student_tbl">
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_Attendance_tbl" Association="Self.FK_Student_tbl_Attendance_tbl">
+            <End Role="Attendance_tbl" EntitySet="Attendance_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_tbl_Lecturer_tbl" Association="Self.FK_Course_tbl_Lecturer_tbl">
+            <End Role="Lecturer_tbl" EntitySet="Lecturer_tbl" />
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_tbl_Lecturer_tbl1" Association="Self.FK_Course_tbl_Lecturer_tbl1">
+            <End Role="Lecturer_tbl" EntitySet="Lecturer_tbl" />
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_tbl_Course_tbl" Association="Self.FK_Event_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Event_tbl" EntitySet="Event_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl" Association="Self.FK_RegisteredCourses_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl1" Association="Self.FK_RegisteredCourses_tbl_Course_tbl1">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl2" Association="Self.FK_RegisteredCourses_tbl_Course_tbl2">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl3" Association="Self.FK_RegisteredCourses_tbl_Course_tbl3">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl4" Association="Self.FK_RegisteredCourses_tbl_Course_tbl4">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl5" Association="Self.FK_RegisteredCourses_tbl_Course_tbl5">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl6" Association="Self.FK_RegisteredCourses_tbl_Course_tbl6">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Course_tbl" Association="Self.FK_Result_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_RegisteredCourses_tbl" Association="Self.FK_Student_tbl_RegisteredCourses_tbl">
+            <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Student_tbl" Association="Self.FK_Result_tbl_Student_tbl">
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_tbl_Result_tbl" Association="Self.FK_Student_tbl_Result_tbl">
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+            <End Role="Student_tbl" EntitySet="Student_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LMSDBModelStoreContainer" CdmEntityContainer="LMSDBEntities">
+    <EntitySetMapping Name="Admin_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Admin_tbl)">
+        <MappingFragment StoreEntitySet="Admin_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Attendance_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Attendance_tbl)">
+        <MappingFragment StoreEntitySet="Attendance_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="No_of_Attendances" ColumnName="No_of_Attendances" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Course_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Course_tbl)">
+        <MappingFragment StoreEntitySet="Course_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Prof" ColumnName="Prof" />
+          <ScalarProperty Name="Assistant" ColumnName="Assistant" />
+          <ScalarProperty Name="PDFs" ColumnName="PDFs" />
+          <ScalarProperty Name="Links" ColumnName="Links" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Event_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Event_tbl)">
+        <MappingFragment StoreEntitySet="Event_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Ed_Level" ColumnName="Ed_Level" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lecturer_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Lecturer_tbl)">
+        <MappingFragment StoreEntitySet="Lecturer_tbl">
+          <ScalarProperty Name="RegisteredCourses" ColumnName="RegisteredCourses" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisteredCourses_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.RegisteredCourses_tbl)">
+        <MappingFragment StoreEntitySet="RegisteredCourses_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Course01" ColumnName="Course01" />
+          <ScalarProperty Name="Course02" ColumnName="Course02" />
+          <ScalarProperty Name="Course03" ColumnName="Course03" />
+          <ScalarProperty Name="Course04" ColumnName="Course04" />
+          <ScalarProperty Name="Course05" ColumnName="Course05" />
+          <ScalarProperty Name="Course06" ColumnName="Course06" />
+          <ScalarProperty Name="Course07" ColumnName="Course07" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Result_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Result_tbl)">
+        <MappingFragment StoreEntitySet="Result_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />
+          <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Student_tbl">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Student_tbl)">
+        <MappingFragment StoreEntitySet="Student_tbl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Ed_Level" ColumnName="Ed_Level" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Attend_Courses" ColumnName="Attend_Courses" />
+          <ScalarProperty Name="Registered_Courses" ColumnName="Registered_Courses" />
+          <ScalarProperty Name="Results" ColumnName="Results" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.sysdiagram)">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

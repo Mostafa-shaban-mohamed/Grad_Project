@@ -1,0 +1,58 @@
+﻿@model Grad_Project.Models.Course_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Course_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDFs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDFs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Links)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Links)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lecturer_tbl.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lecturer_tbl.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lecturer_tbl1.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lecturer_tbl1.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
