@@ -1,0 +1,12 @@
+﻿@model Grad_Project.Models.FileDataVM
+
+@using(Html.BeginForm("UploadFiles", "Course", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        @Html.LabelFor(x => x.File)
+        @Html.TextBoxFor(x => x.File, new { type = "file" })
+        @Html.ValidationMessageFor(x => x.File)
+    </div>
+
+    <button type="submit">Upload</button>
+}

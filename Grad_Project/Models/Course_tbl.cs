@@ -33,7 +33,7 @@ namespace Grad_Project.Models
         public string Name { get; set; }
         public string Prof { get; set; }
         public string Assistant { get; set; }
-        public byte[] PDFs { get; set; }
+        public string PDFs { get; set; }
         public string Links { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

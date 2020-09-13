@@ -210,6 +210,10 @@
     <Compile Include="Models\Event_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileDataVM.cs" />
+    <Compile Include="Models\File_tbl.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Lecturer_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
@@ -292,6 +296,8 @@
     <Content Include="Views\Attendance\Details.cshtml" />
     <Content Include="Views\Attendance\Edit.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
+    <Content Include="Views\Course\UploadFiles.cshtml" />
+    <Content Include="Views\Course\DownloadFiles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -301,6 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Educational_Files\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>

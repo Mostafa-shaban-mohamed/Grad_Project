@@ -31,7 +31,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Prof" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Assistant" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="PDFs" Type="varbinary(max)" />
+          <Property Name="PDFs" Type="nvarchar(max)" />
           <Property Name="Links" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Event_tbl">
@@ -45,6 +45,15 @@
           <Property Name="Type" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Ed_Level" Type="int" />
           <Property Name="CourseID" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="File_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UploadOn" Type="datetime" />
+          <Property Name="File" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Lecturer_tbl">
           <Key>
@@ -317,6 +326,7 @@
           <EntitySet Name="Attendance_tbl" EntityType="Self.Attendance_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course_tbl" EntityType="Self.Course_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_tbl" EntityType="Self.Event_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="File_tbl" EntityType="Self.File_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lecturer_tbl" EntityType="Self.Lecturer_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegisteredCourses_tbl" EntityType="Self.RegisteredCourses_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Result_tbl" EntityType="Self.Result_tbl" Schema="dbo" store:Type="Tables" />
@@ -424,7 +434,7 @@
           <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Prof" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Assistant" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PDFs" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PDFs" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Links" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Attendance_tbl" Relationship="Self.FK_Attendance_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Attendance_tbl" />
           <NavigationProperty Name="Lecturer_tbl" Relationship="Self.FK_Course_tbl_Lecturer_tbl" FromRole="Course_tbl" ToRole="Lecturer_tbl" />
@@ -814,7 +824,17 @@
             <End Role="Result_tbl" EntitySet="Result_tbl" />
             <End Role="Student_tbl" EntitySet="Student_tbl" />
           </AssociationSet>
+          <EntitySet Name="File_tbl" EntityType="LMSDBModel.File_tbl" />
         </EntityContainer>
+        <EntityType Name="File_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UploadOn" Type="DateTime" Precision="3" />
+          <Property Name="File" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -933,6 +953,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="File_tbl">
+            <EntityTypeMapping TypeName="LMSDBModel.File_tbl">
+              <MappingFragment StoreEntitySet="File_tbl">
+                <ScalarProperty Name="File" ColumnName="File" />
+                <ScalarProperty Name="UploadOn" ColumnName="UploadOn" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

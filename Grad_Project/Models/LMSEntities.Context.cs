@@ -34,5 +34,6 @@ namespace Grad_Project.Models
         public virtual DbSet<Result_tbl> Result_tbl { get; set; }
         public virtual DbSet<Student_tbl> Student_tbl { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<File_tbl> File_tbl { get; set; }
     }
 }
