@@ -1,4 +1,4 @@
-﻿@model Grad_Project.Models.Course_tbl
+﻿@model Grad_Project.Models.File_tbl
 
 @{
     ViewBag.Title = "Delete";
@@ -8,39 +8,31 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Course_tbl</h4>
+    <h4>File_tbl</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.FileName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.FileName)
         </dd>
 
         <dt>
-            @Html.DisplayName("Level")
+            @Html.DisplayNameFor(model => model.UploadOn)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ed_Level)
+            @Html.DisplayFor(model => model.UploadOn)
         </dd>
 
         <dt>
-            @Html.DisplayName("Prof")
+            @Html.DisplayNameFor(model => model.File)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Lecturer_tbl.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Assistant")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lecturer_tbl1.Name)
+            @Html.DisplayFor(model => model.File)
         </dd>
 
     </dl>

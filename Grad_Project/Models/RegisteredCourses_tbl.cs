@@ -11,7 +11,9 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using Grad_Project.Models;
+    using System.Linq;
+
     public partial class RegisteredCourses_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,7 +30,7 @@ namespace Grad_Project.Models
         public string Course05 { get; set; }
         public string Course06 { get; set; }
         public string Course07 { get; set; }
-    
+
         public virtual Course_tbl Course_tbl { get; set; }
         public virtual Course_tbl Course_tbl1 { get; set; }
         public virtual Course_tbl Course_tbl2 { get; set; }
@@ -38,5 +40,6 @@ namespace Grad_Project.Models
         public virtual Course_tbl Course_tbl6 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student_tbl> Student_tbl { get; set; }
+        
     }
 }

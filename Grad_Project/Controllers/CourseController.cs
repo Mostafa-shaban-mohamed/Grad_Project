@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Grad_Project.Models;
+using PagedList;
+using System.Dynamic;
 using System.IO;
 
 namespace Grad_Project.Controllers
@@ -18,10 +20,17 @@ namespace Grad_Project.Controllers
 
         // GET: Course
         [Authorize(Roles = "Lecturer, Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string Search, int? Page_No)
         {
             var course_tbl = db.Course_tbl.Include(c => c.Lecturer_tbl).Include(c => c.Lecturer_tbl1);
-            return View(course_tbl.ToList());
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            if (!string.IsNullOrEmpty(Search))
+            {
+                return View(course_tbl.Where(m => m.Name.Contains(Search)).ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            
+            return View(course_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
 
@@ -115,6 +124,7 @@ namespace Grad_Project.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Lecturer, Admin")]
         public ActionResult UploadFiles()
         {
             var model = new FileDataVM();
@@ -151,19 +161,13 @@ namespace Grad_Project.Controllers
             
             return RedirectToAction("Edit", new { id = course_ID });
         }
-
-        public ActionResult DownloadFiles()
-        {
-            return View();
-        }
-
+        
         public FileResult ViewFile()
         {
             var fl = db.File_tbl.FirstOrDefault();
             string contentType = MimeMapping.GetMimeMapping(fl.FileName);
             return File(fl.File, contentType);
         }
-
 
         // GET: Course/Delete/5
         [Authorize(Roles = "Admin")]

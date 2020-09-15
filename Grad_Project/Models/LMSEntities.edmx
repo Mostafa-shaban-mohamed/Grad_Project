@@ -33,6 +33,7 @@
           <Property Name="Assistant" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PDFs" Type="nvarchar(max)" />
           <Property Name="Links" Type="nvarchar(max)" />
+          <Property Name="Ed_Level" Type="int" />
         </EntityType>
         <EntityType Name="Event_tbl">
           <Key>
@@ -448,6 +449,7 @@
           <NavigationProperty Name="RegisteredCourses_tbl5" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl5" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
           <NavigationProperty Name="RegisteredCourses_tbl6" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl6" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
           <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Result_tbl" />
+          <Property Name="Ed_Level" Type="Int32" />
         </EntityType>
         <EntityType Name="Event_tbl">
           <Key>
@@ -864,7 +866,8 @@
     <EntitySetMapping Name="Course_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Course_tbl)">
         <MappingFragment StoreEntitySet="Course_tbl">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Ed_Level" ColumnName="Ed_Level" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Prof" ColumnName="Prof" />
           <ScalarProperty Name="Assistant" ColumnName="Assistant" />

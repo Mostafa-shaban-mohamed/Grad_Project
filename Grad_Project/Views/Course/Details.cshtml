@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayName("Course Name")
         </dt>
 
         <dd>
@@ -19,11 +19,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PDFs)
+            @Html.DisplayName("Level")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PDFs)
+            @Html.DisplayFor(model => model.Ed_Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Number of Documents")
+        </dt>
+
+        <dd>
+            @if (Model.PDFs == null)
+            {
+                @Html.DisplayFor(model => model.PDFs)
+            }
+            else
+            {
+                @Html.ActionLink((Model.PDFs.Split('/').Count() - 1).ToString(), "Index", "File")
+            }
+            
         </dd>
 
         <dt>
@@ -35,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Lecturer_tbl.Name)
+            @Html.DisplayName("Prof")
         </dt>
 
         <dd>
@@ -43,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Lecturer_tbl1.Name)
+            @Html.DisplayName("Assistant")
         </dt>
 
         <dd>

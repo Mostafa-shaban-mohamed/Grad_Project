@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Grad_Project.Models.RegisteredCourses_tbl>
+﻿@model IEnumerable<Grad_Project.Models.File_tbl>
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ID)
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File)
         </th>
         <th></th>
     </tr>
@@ -20,7 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ID)
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
