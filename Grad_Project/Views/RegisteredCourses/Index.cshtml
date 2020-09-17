@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Grad_Project.Models.RegisteredCourses_tbl>
+﻿@model PagedList.IPagedList<Grad_Project.Models.RegisteredCourses_tbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Index";
@@ -9,10 +11,19 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "RegisteredCourses", FormMethod.Get, new { @class = "horizontal-form" }))
+{
+    <p>
+        Search Box: @Html.TextBox("Search")
+        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ID)
+            @Html.DisplayName("Student Code")
         </th>
         <th></th>
     </tr>
@@ -31,3 +42,7 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No }))

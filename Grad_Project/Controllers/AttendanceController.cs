@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Grad_Project.Models;
+using PagedList;
 
 namespace Grad_Project.Controllers
 {
@@ -15,90 +16,47 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: Attendance
-        public ActionResult Index()
+        [Authorize(Roles = "Admin, Student, Lecturer")]
+        public ActionResult Index(string Search, string Courses, int? Page_No)
         {
-            var attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl);
-            return View(attendance_tbl.ToList());
-        }
-
-        // GET: Attendance/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
+            var attendance_tbl = db.Attendance_tbl.AsQueryable();
+            if (User.IsInRole("Lecturer"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                ViewBag.Courses = new SelectList(db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID), "ID", "Name");
+                attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl);
             }
-            Attendance_tbl attendance_tbl = db.Attendance_tbl.Find(id);
-            if (attendance_tbl == null)
+            else if (User.IsInRole("Student"))
             {
-                return HttpNotFound();
+                var std = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                var reg = db.RegisteredCourses_tbl.Find(std.ID);
+                ViewBag.Courses = new SelectList(db.Course_tbl.Where(m => m.ID.Contains(reg.Course01) || m.ID.Contains(reg.Course02)
+                || m.ID.Contains(reg.Course03) || m.ID.Contains(reg.Course04) || m.ID.Contains(reg.Course05)
+                || m.ID.Contains(reg.Course05) || m.ID.Contains(reg.Course06)), "ID", "Name");
+                attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl).Where(m => m.StudentID == std.ID);
             }
-            return View(attendance_tbl);
-        }
-
-        // GET: Attendance/Create
-        public ActionResult Create()
-        {
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name");
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name");
-            return View();
-        }
-
-        // POST: Attendance/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,StudentID,CourseID,No_of_Attendances")] Attendance_tbl attendance_tbl)
-        {
-            if (ModelState.IsValid)
+            else //Admin
             {
-                db.Attendance_tbl.Add(attendance_tbl);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");
+                attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl);
+            }
+            
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            if (!string.IsNullOrEmpty(Courses))
+            {
+                attendance_tbl = attendance_tbl.Where(m => m.CourseID.Contains(Courses));
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                return View(attendance_tbl.Where(m => m.StudentID.Contains(Search)).ToList().ToPagedList(No_Of_Page, Size_Of_Page));
             }
 
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", attendance_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", attendance_tbl.StudentID);
-            return View(attendance_tbl);
-        }
-
-        // GET: Attendance/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Attendance_tbl attendance_tbl = db.Attendance_tbl.Find(id);
-            if (attendance_tbl == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", attendance_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", attendance_tbl.StudentID);
-            return View(attendance_tbl);
-        }
-
-        // POST: Attendance/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,StudentID,CourseID,No_of_Attendances")] Attendance_tbl attendance_tbl)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(attendance_tbl).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", attendance_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", attendance_tbl.StudentID);
-            return View(attendance_tbl);
+            return View(attendance_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
         // GET: Attendance/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)

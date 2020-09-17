@@ -2,10 +2,6 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-@{
-    ViewBag.Title = "Index";
-}
-
 <h2>Index</h2>
 
 @if (User.IsInRole("Admin"))
@@ -21,7 +17,7 @@
         Search Box: @Html.TextBox("Search")
         <button type="submit" value="Search" class="btn btn-primary">Search</button>
     </p>
-    }
+}
 
 <table class="table">
     <tr>

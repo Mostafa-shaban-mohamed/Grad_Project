@@ -1,26 +1,45 @@
-﻿@model IEnumerable<Grad_Project.Models.Attendance_tbl>
+﻿@model PagedList.IPagedList<Grad_Project.Models.Attendance_tbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
-@{
-    ViewBag.Title = "Index";
-}
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+@using (Html.BeginForm("Index", "Attendance", FormMethod.Get, new { @class = "horizontal-form" }))
+{
+    <div>
+        <div class="form-group">
+            @Html.Label("Choose The Course", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Courses", null, "Select Course", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <p>
+        Search Box (Use ID Code): @Html.TextBox("Search")
+        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    </p>
+}
+
+<br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.No_of_Attendances)
+            @Html.DisplayName("No of Attendances")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Course_tbl.Name)
+            @Html.DisplayName("Course")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student_tbl.Name)
+            @Html.DisplayName("Student")
         </th>
-        <th></th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th></th>
+        }
     </tr>
 
 @foreach (var item in Model) {
@@ -34,12 +53,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.Student_tbl.Name)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        }
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No }))
