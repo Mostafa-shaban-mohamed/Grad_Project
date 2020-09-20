@@ -15,13 +15,46 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: Event
+        [Authorize(Roles = "Admin, Student, Lecturer")]
         public ActionResult Index()
         {
             var event_tbl = db.Event_tbl.Include(e => e.Course_tbl);
+            if (User.IsInRole("Student"))
+            {
+                var std = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                var att = db.Attendance_tbl.Where(m => m.StudentID == std.ID).ToList();
+                List<Event_tbl> ev = new List<Event_tbl>();
+                //Add Courses
+                foreach(var e in att)
+                {
+                    if(db.Event_tbl.FirstOrDefault(m => m.CourseID == e.CourseID) != null)
+                        ev.Add(db.Event_tbl.FirstOrDefault(m => m.CourseID == e.CourseID));
+                }
+                var evl = event_tbl.Where(m => m.Ed_Level == std.Ed_Level).ToList();
+                //Add Levels
+                foreach (var u in evl)
+                {
+                    ev.Add(u);
+                }
+                return View(ev);
+            }
+            if (User.IsInRole("Lecturer"))
+            {
+                var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                var courses = db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID).ToList();
+                List<Event_tbl> ev = new List<Event_tbl>();
+                foreach (var c in courses)
+                {
+                    if(db.Event_tbl.FirstOrDefault(m => m.CourseID == c.ID) != null)
+                        ev.Add(db.Event_tbl.FirstOrDefault(m => m.CourseID == c.ID));
+                }
+                return View(ev);
+            }
             return View(event_tbl.ToList());
         }
 
         // GET: Event/Details/5
+        [Authorize(Roles = "Admin, Student, Lecturer")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -37,6 +70,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Event/Create
+        [Authorize(Roles = "Admin, Lecturer")]
         public ActionResult Create()
         {
             ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name");
@@ -44,14 +78,13 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Event/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,ReleaseDate,Type,Ed_Level,CourseID")] Event_tbl event_tbl)
+        public ActionResult Create(Event_tbl event_tbl)
         {
             if (ModelState.IsValid)
             {
+                event_tbl.ReleaseDate = DateTime.Now;
                 db.Event_tbl.Add(event_tbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -62,6 +95,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Event/Edit/5
+        [Authorize(Roles = "Admin, Lecturer")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -78,8 +112,6 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Event/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,ReleaseDate,Type,Ed_Level,CourseID")] Event_tbl event_tbl)
@@ -95,6 +127,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Event/Delete/5
+        [Authorize(Roles = "Admin, Lecturer")]
         public ActionResult Delete(string id)
         {
             if (id == null)

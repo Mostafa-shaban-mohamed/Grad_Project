@@ -60,7 +60,15 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+@if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
     @Html.ActionLink("Back to List", "Index")
-</p>
+}
+

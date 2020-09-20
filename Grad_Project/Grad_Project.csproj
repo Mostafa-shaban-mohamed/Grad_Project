@@ -196,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
+    <Compile Include="Controllers\AttendanceWebAPIController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -213,11 +214,13 @@
     <Compile Include="Models\Attendance_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AttVM.cs" />
     <Compile Include="Models\CoursesArray.cs" />
     <Compile Include="Models\Course_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Departments.cs" />
+    <Compile Include="Models\EventTypes.cs" />
     <Compile Include="Models\Event_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
@@ -323,6 +326,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Att_Json\" />
     <Folder Include="Educational_Files\" />
     <Folder Include="Images\" />
   </ItemGroup>

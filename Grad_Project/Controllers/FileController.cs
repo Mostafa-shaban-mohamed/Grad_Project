@@ -19,76 +19,7 @@ namespace Grad_Project.Controllers
         {
             return View(db.File_tbl.ToList());
         }
-
-        // GET: File/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            File_tbl file_tbl = db.File_tbl.Find(id);
-            if (file_tbl == null)
-            {
-                return HttpNotFound();
-            }
-            return View(file_tbl);
-        }
-
-        // GET: File/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: File/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FileName,UploadOn,File")] File_tbl file_tbl)
-        {
-            if (ModelState.IsValid)
-            {
-                db.File_tbl.Add(file_tbl);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(file_tbl);
-        }
-
-        // GET: File/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            File_tbl file_tbl = db.File_tbl.Find(id);
-            if (file_tbl == null)
-            {
-                return HttpNotFound();
-            }
-            return View(file_tbl);
-        }
-
-        // POST: File/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FileName,UploadOn,File")] File_tbl file_tbl)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(file_tbl).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(file_tbl);
-        }
-
+        
         // GET: File/Delete/5
         public ActionResult Delete(int? id)
         {

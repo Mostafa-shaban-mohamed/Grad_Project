@@ -430,6 +430,8 @@ namespace Grad_Project.Controllers
         {
             RegisteredCourses_tbl registeredCourses_tbl = db.RegisteredCourses_tbl.Find(id);
             db.RegisteredCourses_tbl.Remove(registeredCourses_tbl);
+            var std = db.Student_tbl.Find(id);
+            std.Registered_Courses = null;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
