@@ -91,6 +91,7 @@
           <Property Name="StudentID" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Total_Mark" Type="int" />
           <Property Name="Achieved_Mark" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Student_tbl">
           <Key>
@@ -512,6 +513,7 @@
           <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Result_tbl" ToRole="Course_tbl" />
           <NavigationProperty Name="Student_tbl" Relationship="Self.FK_Result_tbl_Student_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
           <NavigationProperty Name="Student_tbl1" Relationship="Self.FK_Student_tbl_Result_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Student_tbl">
           <Key>
@@ -920,7 +922,8 @@
     <EntitySetMapping Name="Result_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Result_tbl)">
         <MappingFragment StoreEntitySet="Result_tbl">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
           <ScalarProperty Name="StudentID" ColumnName="StudentID" />
           <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />

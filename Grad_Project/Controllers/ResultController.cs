@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Grad_Project.Models;
+using PagedList;
 
 namespace Grad_Project.Controllers
 {
@@ -15,13 +16,21 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: Result
-        public ActionResult Index()
+        [Authorize(Roles = "Lecturer, Student")]
+        public ActionResult Index(string Search, int? Page_No)
         {
             var result_tbl = db.Result_tbl.Include(r => r.Course_tbl).Include(r => r.Student_tbl);
-            return View(result_tbl.ToList());
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            if (!string.IsNullOrEmpty(Search))
+            {
+                return View(result_tbl.Where(m => m.Title.Contains(Search)).ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            return View(result_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
         // GET: Result/Details/5
+        [Authorize(Roles = "Lecturer, Student")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -37,19 +46,16 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Result/Create
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Create()
         {
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name");
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name");
             return View();
         }
 
         // POST: Result/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CourseID,StudentID,Total_Mark,Achieved_Mark")] Result_tbl result_tbl)
+        public ActionResult Create(Result_tbl result_tbl)
         {
             if (ModelState.IsValid)
             {
@@ -57,13 +63,11 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", result_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", result_tbl.StudentID);
             return View(result_tbl);
         }
 
         // GET: Result/Edit/5
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -75,17 +79,27 @@ namespace Grad_Project.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", result_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", result_tbl.StudentID);
             return View(result_tbl);
         }
 
+        //AutoComplete mechanism for student code
+        public JsonResult SearchStd(string term)
+        {
+            List<string> Loc = db.Student_tbl.Where(x => x.ID.Contains(term)).Select(x => x.ID).ToList();
+            return Json(Loc, JsonRequestBehavior.AllowGet);
+        }
+
+        //AutoComplete mechanism for course code
+        public JsonResult SearchCourse(string term)
+        {
+            List<string> Loc = db.Course_tbl.Where(x => x.ID.Contains(term)).Select(x => x.ID).ToList();
+            return Json(Loc, JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Result/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CourseID,StudentID,Total_Mark,Achieved_Mark")] Result_tbl result_tbl)
+        public ActionResult Edit(Result_tbl result_tbl)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +107,11 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", result_tbl.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student_tbl, "ID", "Name", result_tbl.StudentID);
             return View(result_tbl);
         }
 
         // GET: Result/Delete/5
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Delete(string id)
         {
             if (id == null)

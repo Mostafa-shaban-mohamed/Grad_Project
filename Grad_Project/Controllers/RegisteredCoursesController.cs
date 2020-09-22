@@ -47,7 +47,7 @@ namespace Grad_Project.Controllers
             return View(registeredCourses_tbl);
         }
 
-        //AutoComplete mechanism
+        //AutoComplete mechanism for students code
         public JsonResult Search(string term)
         {
             List<string> Loc = db.Course_tbl.Where(x => x.Name.Contains(term)).Select(x => x.Name).ToList();

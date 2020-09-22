@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Grad_Project.Models;
+using PagedList;
 
 namespace Grad_Project.Controllers
 {
@@ -15,9 +16,35 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: File
-        public ActionResult Index()
+        public ActionResult Index(string Search, string Courses, int? Page_No)
         {
-            return View(db.File_tbl.ToList());
+            ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            //Search box
+            if (!string.IsNullOrEmpty(Search))
+            {
+                return View(db.File_tbl.Where(m => m.FileName.Contains(Search)).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            //Drop down List
+            if (!string.IsNullOrEmpty(Courses))
+            {
+                var course = db.Course_tbl.Find(Courses);
+                if(string.IsNullOrEmpty(course.PDFs))
+                {
+                    return View(db.File_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+                }
+                var st = course.PDFs.Split('/');
+                List<File_tbl> fls = new List<File_tbl>();
+                foreach(var s in st)
+                {
+                    if(!string.IsNullOrEmpty(s))
+                        fls.Add(db.File_tbl.Find(int.Parse(s)));
+                }
+                return View(fls.ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            
+            return View(db.File_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
         
         // GET: File/Delete/5

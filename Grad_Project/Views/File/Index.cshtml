@@ -1,24 +1,35 @@
-﻿@model IEnumerable<Grad_Project.Models.File_tbl>
-
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model PagedList.IPagedList<Grad_Project.Models.File_tbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+@using (Html.BeginForm("Index", "File", FormMethod.Get, new { @class = "horizontal-form" }))
+{
+    <div>
+        <div class="form-group">
+            @Html.Label("Choose The Course", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Courses", null, "Select Course", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <p>
+        Search Box (Use ID Code): @Html.TextBox("Search")
+        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    </p>
+}
+<br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FileName)
+            @Html.DisplayName("File Name")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UploadOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.File)
+            @Html.DisplayName("Upload On")
         </th>
         <th></th>
     </tr>
@@ -26,20 +37,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FileName)
+            @Html.ActionLink(item.FileName, "ViewFile", "Course", new { Name = item.FileName }, new { @class = "form-label" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UploadOn)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.File)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No }))

@@ -162,9 +162,9 @@ namespace Grad_Project.Controllers
             return RedirectToAction("Edit", new { id = course_ID });
         }
         
-        public FileResult ViewFile()
+        public FileResult ViewFile(string Name)
         {
-            var fl = db.File_tbl.FirstOrDefault();
+            var fl = db.File_tbl.FirstOrDefault(m => m.FileName == Name);
             string contentType = MimeMapping.GetMimeMapping(fl.FileName);
             return File(fl.File, contentType);
         }

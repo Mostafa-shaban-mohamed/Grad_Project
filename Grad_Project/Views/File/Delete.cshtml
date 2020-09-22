@@ -12,7 +12,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FileName)
+            @Html.DisplayName("File Name")
         </dt>
 
         <dd>
@@ -20,21 +20,12 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UploadOn)
+            @Html.DisplayName("Upload On")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.UploadOn)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.File)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.File)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {

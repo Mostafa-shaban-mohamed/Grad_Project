@@ -11,7 +11,8 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Result_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,10 +22,15 @@ namespace Grad_Project.Models
         }
     
         public string ID { get; set; }
+        [Display(Name = "Course")]
         public string CourseID { get; set; }
+        [Display(Name = "Student")]
         public string StudentID { get; set; }
+        [Display(Name = "Total Mark")]
         public Nullable<int> Total_Mark { get; set; }
+        [Display(Name = "Achieved Mark")]
         public Nullable<int> Achieved_Mark { get; set; }
+        public string Title { get; set; }
     
         public virtual Course_tbl Course_tbl { get; set; }
         public virtual Student_tbl Student_tbl { get; set; }
