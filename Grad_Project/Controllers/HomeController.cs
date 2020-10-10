@@ -66,10 +66,11 @@ namespace Grad_Project.Controllers
                     var pass_ad = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(model.Password), ad.Salt));
                     IsValidAdmin = db.Admin_tbl.Any(user => user.Email.ToLower() == model.Email.ToLower() && user.Password == pass_ad);
                 }
-
+                //-----------------------------------------------------
                 if (IsValidStudent)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
+                    Session["UserID"] = std.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }
@@ -77,6 +78,7 @@ namespace Grad_Project.Controllers
                 if (IsValidLecturer)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
+                    Session["UserID"] = lec.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }
@@ -84,6 +86,7 @@ namespace Grad_Project.Controllers
                 if (IsValidAdmin)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
+                    Session["UserID"] = ad.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }

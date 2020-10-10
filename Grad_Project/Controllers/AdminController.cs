@@ -16,13 +16,8 @@ namespace Grad_Project.Controllers
     {
         private LMSDBEntities db = new LMSDBEntities();
 
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View(db.Admin_tbl.ToList());
-        }
-
         // GET: Admin/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -60,15 +55,15 @@ namespace Grad_Project.Controllers
         }
         
         // GET: Admin/Create
+        [Route("Admin/Register")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Admin/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Admin/Register")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Admin_tbl admin_tbl)
         {
@@ -84,6 +79,50 @@ namespace Grad_Project.Controllers
 
             return View(admin_tbl);
         }
+
+        //Change Password ------------------------------
+        [HttpGet]
+        public ActionResult ChangePassword(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Admin_tbl admin_tbl = db.Admin_tbl.Find(id);
+            if (admin_tbl == null)
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordVM CPVM)
+        {
+            if(string.IsNullOrWhiteSpace(CPVM.OldPassword) || string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                return HttpNotFound();
+            }
+            var admin = db.Admin_tbl.Where( m => m.Email == User.Identity.Name).FirstOrDefault();
+            //check if admin is null
+            if(admin == null)
+            {
+                return HttpNotFound();
+            }
+            //hashing old taken password
+            var oldHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.OldPassword), admin.Salt));
+            //Check if oldpassowrd is the user password
+            if (oldHashedPassword == admin.Password && !string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.NewPassword), admin.Salt));
+                admin.Password = NewHashedPassword;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = admin.ID });
+            }
+
+            return View();
+        }
+
 
         // GET: Admin/Edit/5
         public ActionResult Edit(string id)
@@ -101,11 +140,9 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Admin/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Email,Password,Salt")] Admin_tbl admin_tbl)
+        public ActionResult Edit(Admin_tbl admin_tbl)
         {
             if (ModelState.IsValid)
             {

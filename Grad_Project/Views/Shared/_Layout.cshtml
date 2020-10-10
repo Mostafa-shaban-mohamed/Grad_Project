@@ -3,22 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>S.E.E.S</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     @RenderSection("Scripts", required: false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapse" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -32,15 +34,29 @@
                     {
                         if (User.IsInRole("Student"))
                         {
-                            <li><a href="/Student/Details">Hello - @User.Identity.Name</a></li>
+                            <li><a href="/Student/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
                         }
                         else if (User.IsInRole("Lecturer"))
                         {
-                            <li><a href="/Lecturer/Details">Hello - @User.Identity.Name</a></li>
+                            <li><a href="/Lecturer/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
                         }
                         else if (User.IsInRole("Admin"))
                         {
-                            <li><a href="/Admin/Details">Hello - @User.Identity.Name</a></li>
+                            <li><a href="/Admin/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Students</a></li>
+                                    <li><a href="#">Lecturers</a></li>
+                                    <li><a href="#">Courses</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Results</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Register the Courses</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Events</a></li>
+                                </ul>
+                            </li>
                         }
 
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
@@ -53,16 +69,60 @@
             </div>
         </div>
     </div>
-
-    <div class="container body-content">
+    <div>
         @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="margin_120_95 container">
+                <div class="row">
+                    <!-- Upper Part of Footer -->
+                    <div class="col-lg-5 col-md-12">
+                        <h2>S.E.E.S</h2>
+                        <p style="margin: 30px 10px;">S.E.E.S stands for "Smart Educational Environment System".
+                         It is a system which helps the students to achieve the higher score through the best learning experience
+                         both theoretically and practically. It will help the instructors also in bringing value to students through easier means.
+                        </p>
+                        <div class="follow_us">
+                            <ul style="list-style:none;">
+                                <li>Follow us</li>
+                                <li><a href="#" class="fa fa-facebook"></a></li>
+                                <li><a href="#" class="fa fa-google"></a></li>
+                                <li><a href="#" class="fa fa-instagram"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Left Part of Footer -->
+                    <div class="col-lg-3 col-md-6" style="margin-left: 30px;">
+                        <h3>Useful Links</h3>
+                        <ul style="list-style:none;">
+                            <li><a href="#">Log in</a></li>
+                            <li><a href="#">Register</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!-- Right Part of Footer-->
+                    <div class="col-lg-3 col-md-6">
+                        <h3>Contact Us</h3>
+                        <ul style="list-style:none;">
+                            <li><a href="#"><i class="glyphicon glyphicon-phone"></i> +201-199-208</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Info@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <br />
+                    <br />
+                    <div class="col-md-8">
+                        <p>Developed and Designed By Ahmed Rizk &amp; Mostafa Shaaban</p>
+                    </div>
+                    <div class="col-md-4" style="left:0%;">
+                        <div id="copy"><p style="text-align:right;">&copy; S.E.E.S</p></div>
+                    </div>
+                </div>
+            </div>
+            
         </footer>
     </div>
-
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>*@
 </body>
 </html>

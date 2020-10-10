@@ -150,6 +150,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\arch-eng.jpg" />
+    <Content Include="Content\Images\bg_register.jpg" />
+    <Content Include="Content\Images\civil-eng.jpg" />
+    <Content Include="Content\Images\comm-eng.jpg" />
+    <Content Include="Content\Images\home_section_1.jpg" />
+    <Content Include="Content\Images\mech-eng.jpg" />
+    <Content Include="Content\Images\pow-eng.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -168,6 +175,7 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="fonts\Raleway-Regular.ttf" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -215,6 +223,7 @@
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AttVM.cs" />
+    <Compile Include="Models\ChangePasswordVM.cs" />
     <Compile Include="Models\CoursesArray.cs" />
     <Compile Include="Models\Course_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
@@ -317,6 +326,7 @@
     <Content Include="Views\File\Details.cshtml" />
     <Content Include="Views\File\Edit.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
