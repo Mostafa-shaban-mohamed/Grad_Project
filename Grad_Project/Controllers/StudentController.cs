@@ -144,43 +144,24 @@ namespace Grad_Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadImage(int? a)
+        public ActionResult UploadImage(string id, FileDataVM model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                //  Get all files from Request object  
-                HttpFileCollectionBase files = Request.Files;
-                for (int i = 0; i < files.Count; i++)
-                {
-                    HttpPostedFileBase file = files[i];
-                    string fname;
-
-                    // Checking for Internet Explorer  
-                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                    {
-                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                        fname = testfiles[testfiles.Length - 1];
-                    }
-                    else
-                    {
-                        fname = file.FileName;
-                    }
-
-                    // Get the complete folder path and store the file inside it.  
-                    fname = Path.Combine(Server.MapPath("~/Images/"), fname);
-                    file.SaveAs(fname);
-                    var bytes = System.IO.File.ReadAllBytes(fname);
-                    var std = db.Student_tbl.Find(str);
-                    std.Image = bytes;
-                    db.SaveChanges();
-                }
-                // message is successfully uploaded  
-                return RedirectToAction("Index");
+                return View(model);
             }
-            catch (Exception ex)
-            {
-                return Json("Error occurred. Error details: " + ex.Message);
-            }
+
+            byte[] uploadedFile = new byte[model.File.InputStream.Length];
+            model.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+            // now you could pass the byte array to your model and store wherever 
+            // you intended to store it
+            var art = db.Student_tbl.Find(id);
+            art.Image = uploadedFile;
+            db.Entry(art).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details", new { id = id });
         }
 
         // GET: Student/Edit/5
@@ -202,21 +183,16 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Student/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email,Password,Salt,Department,Ed_Level,Image,Attend_Courses,Registered_Courses,Results")] Student_tbl student_tbl)
+        public ActionResult Edit(Student_tbl student_tbl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(student_tbl).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = student_tbl.ID });
             }
-            ViewBag.Attend_Courses = new SelectList(db.Attendance_tbl, "ID", "StudentID", student_tbl.Attend_Courses);
-            ViewBag.Registered_Courses = new SelectList(db.RegisteredCourses_tbl, "ID", "Course01", student_tbl.Registered_Courses);
-            ViewBag.Results = new SelectList(db.Result_tbl, "ID", "CourseID", student_tbl.Results);
             return View(student_tbl);
         }
 

@@ -49,13 +49,22 @@
     </div>
 
     <div class="col-lg-6 col-md-6 col-sm-6">
-        @{
+        @if (Model.Image != null)
+        {
             string imreBase64Data = Convert.ToBase64String(Model.Image);
             string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+
+            <img src="@imgDataURL" alt="Avatar" style="width:50%">
+            <br />
+            <br />
         }
-        <img src="@imgDataURL" alt="Avatar" style="width:50%">
-        <br />
-        <br />
+        else
+        {
+            <img src="~/Content/Images/pngtree-profile-line-black-icon-png-image_691051.jpg" alt="Avatar" style="width:50%">
+            <br />
+            <br />
+        }
+
     </div>
 
     <div>
