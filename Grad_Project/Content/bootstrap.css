@@ -2162,6 +2162,20 @@ fieldset[disabled] .btn-primary.active {
   border-color: #357ebd;
 }
 
+.btn-sees {
+    color: #ffffff;
+    background-color: #2834f5;
+    border-color: #2834f5;
+}
+
+.btn-sees:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active {
+    color: #2834f5;
+    background-color: white;
+}
+
 .btn-warning {
   color: #ffffff;
   background-color: #f0ad4e;

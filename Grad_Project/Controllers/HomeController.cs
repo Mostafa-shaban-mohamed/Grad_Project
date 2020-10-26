@@ -61,7 +61,7 @@ namespace Grad_Project.Controllers
                     var pass_lec = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(model.Password), lec.Salt));
                     IsValidLecturer = db.Lecturer_tbl.Any(user => user.Email.ToLower() == model.Email.ToLower() && user.Password == pass_lec);
                 }
-                else
+                else if(ad != null)
                 {
                     var pass_ad = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(model.Password), ad.Salt));
                     IsValidAdmin = db.Admin_tbl.Any(user => user.Email.ToLower() == model.Email.ToLower() && user.Password == pass_ad);

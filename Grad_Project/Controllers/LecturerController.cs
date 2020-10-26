@@ -87,6 +87,48 @@ namespace Grad_Project.Controllers
             return View(lecturer_tbl);
         }
 
+        //Change Password ------------------------------
+        [HttpGet]
+        public ActionResult ChangePassword(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Lecturer_tbl lec = db.Lecturer_tbl.Find(id);
+            if (lec == null)
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordVM CPVM)
+        {
+            if (string.IsNullOrWhiteSpace(CPVM.OldPassword) || string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                return HttpNotFound();
+            }
+            var lec = db.Lecturer_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
+            //check if admin is null
+            if (lec == null)
+            {
+                return HttpNotFound();
+            }
+            //hashing old taken password
+            var oldHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.OldPassword), lec.Salt));
+            //Check if oldpassowrd is the user password
+            if (oldHashedPassword == lec.Password && !string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.NewPassword), lec.Salt));
+                lec.Password = NewHashedPassword;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = lec.ID });
+            }
+
+            return View();
+        }
 
         [HttpGet]
         public ActionResult UploadImage()

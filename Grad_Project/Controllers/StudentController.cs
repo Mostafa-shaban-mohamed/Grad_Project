@@ -27,6 +27,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Student/Details/5
+        [Authorize(Roles = "Student")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -91,6 +92,49 @@ namespace Grad_Project.Controllers
             ViewBag.Registered_Courses = new SelectList(db.RegisteredCourses_tbl, "ID", "Course01", student_tbl.Registered_Courses);
             ViewBag.Results = new SelectList(db.Result_tbl, "ID", "CourseID", student_tbl.Results);
             return View(student_tbl);
+        }
+
+        //Change Password ------------------------------
+        [HttpGet]
+        public ActionResult ChangePassword(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student_tbl std = db.Student_tbl.Find(id);
+            if (std == null)
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordVM CPVM)
+        {
+            if (string.IsNullOrWhiteSpace(CPVM.OldPassword) || string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                return HttpNotFound();
+            }
+            var std = db.Student_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
+            //check if admin is null
+            if (std == null)
+            {
+                return HttpNotFound();
+            }
+            //hashing old taken password
+            var oldHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.OldPassword), std.Salt));
+            //Check if oldpassowrd is the user password
+            if (oldHashedPassword == std.Password && !string.IsNullOrWhiteSpace(CPVM.NewPassword))
+            {
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(CPVM.NewPassword), std.Salt));
+                std.Password = NewHashedPassword;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = std.ID });
+            }
+
+            return View();
         }
 
         [HttpGet]

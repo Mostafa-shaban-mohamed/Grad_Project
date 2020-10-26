@@ -1,13 +1,8 @@
 ﻿@model Grad_Project.Models.Lecturer_tbl
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
+<h2>@Model.Name</h2>
 
 <div>
-    <h4>Lecturer_tbl</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -27,40 +22,30 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Role)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Role)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
     </dl>
 </div>
+
+<div>
+    <button id="btnCP" class="btn btn-success">Change Password</button>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID })
 </p>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btnCP').click(function () {
+                location.href = '@Url.Action("ChangePassword", new { id = Model.ID })';
+            });
+        });
+    </script>
+}

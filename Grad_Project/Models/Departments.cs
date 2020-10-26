@@ -13,11 +13,11 @@ namespace Grad_Project.Models
         {
             List<string> Depart = new List<string>()
             {
-                "Civil",
-                "Electrical",
-                "Communication",
-                "Architectical",
-                "Mechatronics"
+                "Civil Engineering",
+                "Electrical Engineering",
+                "Electronics & Communication Engineering",
+                "Architectical Engineering",
+                "Mechatronics Engineering"
             };
 
             return Depart;
