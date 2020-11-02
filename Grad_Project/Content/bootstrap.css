@@ -353,14 +353,13 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: #2834f5;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
   color: #2a6496;
-  text-decoration: underline;
 }
 
 
@@ -1746,6 +1745,28 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .form-control::-webkit-input-placeholder {
   color: #999999;
+}
+
+#tableTR:hover{
+    background-color: #2834f5;
+    color: white;
+}
+
+.form-control-sees {
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .form-control {

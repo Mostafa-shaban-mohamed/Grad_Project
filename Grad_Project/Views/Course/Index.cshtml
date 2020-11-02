@@ -1,77 +1,132 @@
 ﻿@model PagedList.IPagedList<Grad_Project.Models.Course_tbl>
+
+@using PagedList;
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-<h2>Index</h2>
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Courses List</h2>
+    <br />
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees" })
+        </p>
+    }
 
-@if (User.IsInRole("Admin"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
+    @using (Html.BeginForm("Index", "Course", FormMethod.Get))
+    {
+        <p>
+            Search Box: &ensp;
+            @Html.TextBox("Search", null, new { @class = "form-control-sees"}) &ensp;
+            <input type="submit" value="Search" class="btn btn-sees">
+        </p>
+    }
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Course Name")
+            </th>
+            <th>
+                @Html.DisplayName("Level")
+            </th>
+            <th>
+                @Html.DisplayName("Prof")
+            </th>
+            <th>
+                @Html.DisplayName("Assistant")
+            </th>
+            <th></th>
+        </tr>
 
-@using (Html.BeginForm("Index", "Course", FormMethod.Get, new { @class = "horizontal-form" }))
-{
-    <p>
-        Search Box: @Html.TextBox("Search")
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
-    </p>
-}
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Course Name")
-        </th>
-        <th>
-            @Html.DisplayName("Level")
-        </th>
-        <th>
-            @Html.DisplayName("Prof")
-        </th>
-        <th>
-            @Html.DisplayName("Assistant")
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ed_Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lecturer_tbl.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lecturer_tbl1.Name)
-        </td>
-        @if (User.IsInRole("Admin"))
+        @foreach (var item in Model)
         {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
+            <tr id="tableTR">
+                <td class="Target" data-target="@item.ID">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ed_Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecturer_tbl.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecturer_tbl1.Name)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) &ensp;
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                    </td>
+                }
+                else if(User.IsInRole("Lecturer"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                    </td>
+                }
+            </tr>
         }
-        else
-        {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
-            </td>
-        }
+    </table>
+    <br />
 
-    </tr>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index", new { Page_No, Search = Request.QueryString["Search"] }))
+</div>
+
+<!-- modal pop up -->
+<div id='myModalS' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Details</h2>
+            </div>
+            <div id='myModalContentS' class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //click on target element
+            $('.Target').click(function () {
+                var targetID = $(this).data("target");
+                //ajax of modal pop up
+                var url = '/Course/Details';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": targetID },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContentS').html(data);
+                        $('#myModalS').modal(options);
+                        $('#myModalS').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#myModalS').modal('hide');
+            });
+        });
+    </script>
 }
-
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-    new {Page_No}))

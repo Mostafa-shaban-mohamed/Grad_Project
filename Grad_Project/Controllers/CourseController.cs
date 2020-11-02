@@ -19,18 +19,75 @@ namespace Grad_Project.Controllers
         private static string course_ID;
 
         // GET: Course
-        [Authorize(Roles = "Lecturer, Admin")]
+        [HttpGet]
+        [Authorize(Roles = "Lecturer, Admin, Student")]
         public ActionResult Index(string Search, int? Page_No)
         {
             var course_tbl = db.Course_tbl.Include(c => c.Lecturer_tbl).Include(c => c.Lecturer_tbl1);
+            var coursesList = new List<Course_tbl>();
             int Size_Of_Page = 2;
             int No_Of_Page = (Page_No ?? 1);
-            if (!string.IsNullOrEmpty(Search))
+
+            if (User.IsInRole("Student"))
             {
-                return View(course_tbl.Where(m => m.Name.Contains(Search)).ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+                var std = db.Student_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
+                if (std != null)
+                {
+                    var IDCode = std.ID;
+                    var reg = db.RegisteredCourses_tbl.Find(IDCode);
+                    if (reg.Course01 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course01));
+                    }
+                    if (reg.Course02 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course02));
+                    }
+                    if (reg.Course03 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course03));
+                    }
+                    if (reg.Course04 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course04));
+                    }
+                    if (reg.Course05 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course05));
+                    }
+                    if (reg.Course06 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course06));
+                    }
+                    if (reg.Course07 != null)
+                    {
+                        coursesList.Add(db.Course_tbl.Find(reg.Course07));
+                    }
+                }
             }
             
-            return View(course_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+            if (!string.IsNullOrEmpty(Search))
+            {
+                if (coursesList.Count != 0)
+                {
+                    course_tbl = coursesList.Where(m => m.Name.Contains(Search)).AsQueryable();
+                }
+                else
+                {
+                    course_tbl = course_tbl.Where(m => m.Name.Contains(Search)).AsQueryable();
+                }
+                return View(course_tbl.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+
+            if(coursesList.Count == 0)
+            {
+                return View(course_tbl.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            else
+            {
+                return View(coursesList.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            
         }
 
 
@@ -47,7 +104,7 @@ namespace Grad_Project.Controllers
             {
                 return HttpNotFound();
             }
-            return View(course_tbl);
+            return PartialView(course_tbl);
         }
 
         // GET: Course/Create
@@ -60,8 +117,6 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Course/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Course_tbl course_tbl)
