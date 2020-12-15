@@ -70,12 +70,10 @@
     <div>
         <button id="btnCP" class="btn btn-sees">Change Password</button> &ensp;
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees" }) &ensp;
-        @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID }, new { @class = "btn btn-sees" })
+        @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID }, new { @class = "btn btn-sees" }) &ensp;
+        @Html.ActionLink("Courses", "Details", "RegisteredCourses", new { id = Model.ID }, new { @class = "btn btn-danger" })
     </div>
 
-    <p>
-        
-    </p>
 </div>
 
 

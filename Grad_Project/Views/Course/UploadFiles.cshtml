@@ -1,12 +1,21 @@
 ﻿@model Grad_Project.Models.FileDataVM
 
-@using(Html.BeginForm("UploadFiles", "Course", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div>
-        @Html.LabelFor(x => x.File)
-        @Html.TextBoxFor(x => x.File, new { type = "file" })
-        @Html.ValidationMessageFor(x => x.File)
-    </div>
+<div class="margin_120_95">
+    @using (Html.BeginForm("UploadFiles", "Course", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="centered-form">
+            <div>
+                @Html.LabelFor(x => x.File)
+                <br />
+                <br />
+                @Html.TextBoxFor(x => x.File, new { type = "file" })
+                <br />
+                @Html.ValidationMessageFor(x => x.File)
+            </div>
 
-    <button type="submit">Upload</button>
-}
+            <button type="submit" class="btn btn-sees">Upload</button>
+        </div>
+        
+    }
+</div>
+

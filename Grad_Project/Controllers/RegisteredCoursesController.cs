@@ -63,7 +63,6 @@ namespace Grad_Project.Controllers
         }
 
         // POST: RegisteredCourses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RegisteredCourses_tbl registeredCourses_tbl)
@@ -197,7 +196,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: RegisteredCourses/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -245,7 +244,6 @@ namespace Grad_Project.Controllers
         }
 
         // POST: RegisteredCourses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(RegisteredCourses_tbl registeredCourses_tbl)
@@ -407,7 +405,7 @@ namespace Grad_Project.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         // GET: RegisteredCourses/Delete/5
         public ActionResult Delete(string id)
         {

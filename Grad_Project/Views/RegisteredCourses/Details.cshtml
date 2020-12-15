@@ -1,126 +1,121 @@
 ﻿@model Grad_Project.Models.RegisteredCourses_tbl
 
-@{
-    ViewBag.Title = "Details";
-}
+<div class="margin_30_95" style="margin-left:30px;">
+    <div>
+        <h2>Details</h2>
 
-<h2>Details</h2>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("Course 1:")
+            </dt>
 
-<div>
-    <h4>RegisteredCourses_tbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayName("Course 1:")
-        </dt>
+            <dd>
+                @if (Model.Course01 == null)
+                {
+                    @Html.DisplayFor(model => model.Course_tbl.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl.Name, "Details", "Course", new { id = Model.Course01 }, new { @class = "" })
+                }
+            </dd>
 
-        <dd>
-            @if(Model.Course01 == null)
+            <dt>
+                @Html.DisplayName("Course 2:")
+            </dt>
+
+            <dd>
+                @if (Model.Course02 == null)
             {
-                @Html.DisplayFor(model => model.Course_tbl.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl.Name, "Details", "Course", new { id = Model.Course01 }, new { @class = "" })
-            }
-        </dd>
+                    @Html.DisplayFor(model => model.Course_tbl1.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl1.Name, "Details", "Course", new { id = Model.Course02 }, new { @class = "" })
+                }
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Course 2:")
-        </dt>
+            <dt>
+                @Html.DisplayName("Course 3:")
+            </dt>
 
-        <dd>
-            @if (Model.Course02 == null)
+            <dd>
+                @if (Model.Course03 == null)
             {
-                @Html.DisplayFor(model => model.Course_tbl1.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl1.Name, "Details", "Course", new { id = Model.Course02 }, new { @class = "" })
-            }
-        </dd>
+                    @Html.DisplayFor(model => model.Course_tbl2.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl2.Name, "Details", "Course", new { id = Model.Course03 }, new { @class = "" })
+                }
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Course 3:")
-        </dt>
+            <dt>
+                @Html.DisplayName("Course 4:")
+            </dt>
 
-        <dd>
-            @if (Model.Course03 == null)
+            <dd>
+                @if (Model.Course04 == null)
             {
-                @Html.DisplayFor(model => model.Course_tbl2.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl2.Name, "Details", "Course", new { id = Model.Course03 }, new { @class = "" })
-            }
-        </dd>
+                    @Html.DisplayFor(model => model.Course_tbl3.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl3.Name, "Details", "Course", new { id = Model.Course04 }, new { @class = "" })
+                }
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Course 4:")
-        </dt>
+            <dt>
+                @Html.DisplayName("Course 5:")
+            </dt>
 
-        <dd>
-            @if (Model.Course04 == null)
+            <dd>
+                @if (Model.Course05 == null)
             {
-                @Html.DisplayFor(model => model.Course_tbl3.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl3.Name, "Details", "Course", new { id = Model.Course04 }, new { @class = "" })
-            }
-        </dd>
+                    @Html.DisplayFor(model => model.Course_tbl4.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl4.Name, "Details", "Course", new { id = Model.Course05 }, new { @class = "" })
+                }
 
-        <dt>
-            @Html.DisplayName("Course 5:")
-        </dt>
+            </dd>
 
-        <dd>
-            @if (Model.Course05 == null)
-            {
-                @Html.DisplayFor(model => model.Course_tbl4.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl4.Name, "Details", "Course", new { id = Model.Course05}, new { @class = "" })
-            }
-            
-        </dd>
+            <dt>
+                @Html.DisplayName("Course 6:")
+            </dt>
 
-        <dt>
-            @Html.DisplayName("Course 6:")
-        </dt>
-
-        <dd>
-            @if (Model.Course06 == null)
+            <dd>
+                @if (Model.Course06 == null)
             {
-                @Html.DisplayFor(model => model.Course_tbl5.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl5.Name, "Details", "Course", new { id = Model.Course06 }, new { @class = "" })
-            }
-            
-        </dd>
+                    @Html.DisplayFor(model => model.Course_tbl5.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl5.Name, "Details", "Course", new { id = Model.Course06 }, new { @class = "" })
+                }
 
-        <dt>
-            @Html.DisplayName("Course 7:")
-        </dt>
+            </dd>
 
-        <dd>
-            @if (Model.Course07 == null)
-            {
-                @Html.DisplayFor(model => model.Course_tbl6.Name)
-            }
-            else
-            {
-                @Html.ActionLink(Model.Course_tbl6.Name, "Details", "Course", new { id = Model.Course07 }, new { @class = "" })
-            }
-            
-        </dd>
+            <dt>
+                @Html.DisplayName("Course 7:")
+            </dt>
 
-    </dl>
+            <dd>
+                @if (Model.Course07 == null)
+            {
+                    @Html.DisplayFor(model => model.Course_tbl6.Name)
+                }
+                else
+                {
+                    @Html.ActionLink(Model.Course_tbl6.Name, "Details", "Course", new { id = Model.Course07 }, new { @class = "" })
+                }
+
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees" })
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

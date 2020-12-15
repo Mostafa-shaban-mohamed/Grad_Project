@@ -2,47 +2,46 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@using (Html.BeginForm("Index", "RegisteredCourses", FormMethod.Get, new { @class = "horizontal-form" }))
-{
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>List of Registered Students</h2>
+    <br />
     <p>
-        Search Box: @Html.TextBox("Search")
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees" })
     </p>
-}
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Student Code")
-        </th>
-        <th></th>
-    </tr>
+    @using (Html.BeginForm("Index", "RegisteredCourses", FormMethod.Get))
+    {
+        <p>
+            Search Box: &ensp;
+            @Html.TextBox("Search", null, new { @class = "form-control-sees" }) &ensp;
+            <input type="submit" value="Search" class="btn btn-sees">
+        </p>
+    }
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Student Code")
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr id="tableTR">
+                <td class="Target" data-target="@item.ID" onclick="location.href = '@Url.Action("Details", new { id = item.ID })'">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) &ensp;
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
 
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-    new { Page_No }))
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index", new { Page_No, Search = Request.QueryString["Search"] }))
+</div>

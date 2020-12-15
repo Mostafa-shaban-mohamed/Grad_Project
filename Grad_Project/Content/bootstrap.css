@@ -1752,6 +1752,10 @@ input[type="number"]::-webkit-inner-spin-button {
     color: white;
 }
 
+#tableTR:hover > td > a {
+    color: white;
+}
+
 .form-control-sees {
   width: 100%;
   height: 34px;
@@ -2158,6 +2162,12 @@ fieldset[disabled] .btn-default.active {
   border-color: #285e8e;
 }
 
+#tableTR > td > .btn-primary:hover{
+    color: #2834f5;
+  background-color: white;
+  border-color: #285e8e;
+}
+
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
@@ -2189,10 +2199,7 @@ fieldset[disabled] .btn-primary.active {
     border-color: #2834f5;
 }
 
-.btn-sees:hover,
-.btn-warning:focus,
-.btn-warning:active,
-.btn-warning.active {
+.btn-sees:hover {
     color: #2834f5;
     background-color: white;
 }
@@ -2243,7 +2250,7 @@ fieldset[disabled] .btn-warning.active {
   background-color: #d9534f;
   border-color: #d9534f;
 }
-
+#tableTR > td > .btn-danger:hover,
 .btn-danger:hover,
 .btn-danger:focus,
 .btn-danger:active,

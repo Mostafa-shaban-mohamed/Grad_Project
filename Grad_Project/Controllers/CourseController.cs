@@ -100,6 +100,7 @@ namespace Grad_Project.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Course_tbl course_tbl = db.Course_tbl.Find(id);
+            course_tbl.PDFs = db.File_tbl.Where(m => m.CourseID == course_tbl.ID).Count().ToString();
             if (course_tbl == null)
             {
                 return HttpNotFound();
@@ -159,8 +160,6 @@ namespace Grad_Project.Controllers
 
 
         // POST: Course/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Course_tbl course_tbl)
@@ -201,19 +200,16 @@ namespace Grad_Project.Controllers
             // you intended to store it
             File_tbl fl = new File_tbl()
             {
-                ID = db.File_tbl.Count() + 1,
                 FileName = model.File.FileName,
                 UploadOn = DateTime.Now,
-                File = uploadedFile
+                File = uploadedFile,
+                CourseID = course_ID
             };
             db.File_tbl.Add(fl);
             db.SaveChanges();
-            var course_tbl = db.Course_tbl.Find(course_ID) as Course_tbl;
-            course_tbl.PDFs += fl.ID.ToString() + "/";
-            db.Entry(course_tbl).State = EntityState.Modified;
+            db.Course_tbl.Find(course_ID).PDFs = db.File_tbl.Where(m => m.CourseID == course_ID).Count().ToString();
             db.SaveChanges();
-            
-            
+
             return RedirectToAction("Edit", new { id = course_ID });
         }
         

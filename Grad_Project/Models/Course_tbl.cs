@@ -11,8 +11,7 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Course_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,10 +27,10 @@ namespace Grad_Project.Models
             this.RegisteredCourses_tbl5 = new HashSet<RegisteredCourses_tbl>();
             this.RegisteredCourses_tbl6 = new HashSet<RegisteredCourses_tbl>();
             this.Result_tbl = new HashSet<Result_tbl>();
+            this.File_tbl = new HashSet<File_tbl>();
         }
     
         public string ID { get; set; }
-        [Display(Name = "Course Name")]
         public string Name { get; set; }
         public string Prof { get; set; }
         public string Assistant { get; set; }
@@ -61,5 +60,7 @@ namespace Grad_Project.Models
         public virtual ICollection<RegisteredCourses_tbl> RegisteredCourses_tbl6 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Result_tbl> Result_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<File_tbl> File_tbl { get; set; }
     }
 }

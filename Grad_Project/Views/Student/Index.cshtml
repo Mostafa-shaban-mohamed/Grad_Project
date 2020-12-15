@@ -1,87 +1,71 @@
-﻿@model IEnumerable<Grad_Project.Models.Student_tbl>
+﻿@model PagedList.IPagedList<Grad_Project.Models.Student_tbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
-@{
-    ViewBag.Title = "Index";
-}
+<div class="margin_30_95" style="margin-left:30px;">
 
-<h2>Index</h2>
+    <h2>Student List</h2>
+    
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees" })
+    </p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Salt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ed_Level)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Attendance_tbl1.StudentID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegisteredCourses_tbl.Course01)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Result_tbl1.CourseID)
-        </th>
-        <th></th>
-    </tr>
+    @using (Html.BeginForm("Index", "Course", FormMethod.Get))
+    {
+        <p>
+            Search Box: &ensp;
+            @Html.TextBox("Search", null, new { @class = "form-control-sees" }) &ensp;
+            <input type="submit" value="Search" class="btn btn-sees">
+        </p>
+    }
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Student Name")
+            </th>
+            <th>
+                @Html.DisplayName("Email")
+            </th>
+            <th>
+                @Html.DisplayName("ID")
+            </th>
+            <th>
+                @Html.DisplayName("Department")
+            </th>
+            <th>
+                @Html.DisplayName("Level")
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Salt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ed_Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Attendance_tbl1.StudentID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisteredCourses_tbl.Course01)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Result_tbl1.CourseID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr id="tableTR">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ed_Level)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) &ensp;
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index", new { Page_No, Search = Request.QueryString["Search"] }))
+</div>
 
-</table>

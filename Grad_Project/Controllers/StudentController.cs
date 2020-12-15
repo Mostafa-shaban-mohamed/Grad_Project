@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using PagedList;
 
 namespace Grad_Project.Controllers
 {
@@ -20,10 +21,33 @@ namespace Grad_Project.Controllers
         private static string str;
 
         // GET: Student
-        public ActionResult Index()
+        public ActionResult Index(string Search, int? Page_No)
         {
             var student_tbl = db.Student_tbl.Include(s => s.Attendance_tbl1).Include(s => s.RegisteredCourses_tbl).Include(s => s.Result_tbl1);
-            return View(student_tbl.ToList());
+            var studentList = new List<Student_tbl>();
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            if (!string.IsNullOrEmpty(Search))
+            {
+                if (studentList.Count != 0)
+                {
+                    student_tbl = studentList.Where(m => m.Name.Contains(Search)).AsQueryable();
+                }
+                else
+                {
+                    student_tbl = student_tbl.Where(m => m.Name.Contains(Search)).AsQueryable();
+                }
+                return View(student_tbl.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+
+            if (studentList.Count == 0)
+            {
+                return View(student_tbl.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+            else
+            {
+                return View(studentList.OrderBy(m => m.ID).ToPagedList(No_Of_Page, Size_Of_Page));
+            }
         }
 
         // GET: Student/Details/5
@@ -96,6 +120,7 @@ namespace Grad_Project.Controllers
 
         //Change Password ------------------------------
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public ActionResult ChangePassword(string id)
         {
             if (id == null)
@@ -138,6 +163,7 @@ namespace Grad_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public ActionResult UploadImage()
         {
             return View();
@@ -165,6 +191,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Student/Edit/5
+        [Authorize(Roles = "Student, Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -197,6 +224,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Student/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)

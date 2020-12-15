@@ -11,8 +11,7 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Lecturer_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +22,6 @@ namespace Grad_Project.Models
         }
     
         public string ID { get; set; }
-        [Display(Name = "Lecturer Name")]
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

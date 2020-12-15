@@ -32,6 +32,7 @@
         <AssociationConnector Association="LMSDBModel.FK_Result_tbl_Student_tbl" ManuallyRouted="false" />
         <AssociationConnector Association="LMSDBModel.FK_Student_tbl_Result_tbl" ManuallyRouted="false" />
         <EntityTypeShape EntityType="LMSDBModel.File_tbl" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="LMSDBModel.FK_File_tbl_Course_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

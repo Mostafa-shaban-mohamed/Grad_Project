@@ -2,54 +2,64 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-<h2>Index</h2>
 
-
-@using (Html.BeginForm("Index", "File", FormMethod.Get, new { @class = "horizontal-form" }))
-{
-    <div>
-        <div class="form-group">
-            @Html.Label("Choose The Course", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Courses", null, "Select Course", new { @class = "form-control" })
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Documents List</h2>
+    @using (Html.BeginForm("Index", "File", FormMethod.Get, new { @class = "horizontal-form" }))
+    {
+        <div>
+            <div class="form-group">
+                @Html.Label("Choose The Course", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Courses", null, "Select Course", new { @class = "form-control-sees" })
+                </div>
             </div>
+            <br />
+            <br />
+            <div class="form-group" id="SearchBox">
+                @Html.Label("File Name:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("Search", null, new { @class = "form-control-sees" }) &ensp;
+                </div>
+            </div>
+            <input type="submit" value="Search" class="btn btn-sees">
         </div>
-    </div>
-    <br />
-    <br />
-    <p>
-        Search Box (Use ID Code): @Html.TextBox("Search")
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
-    </p>
-}
-<br />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("File Name")
-        </th>
-        <th>
-            @Html.DisplayName("Upload On")
-        </th>
-        <th></th>
-    </tr>
+        <br />
+        <br />
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("File Name")
+            </th>
+            <th>
+                @Html.DisplayName("Upload On")
+            </th>
+            @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+            {
+                <th></th>
+            }
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.FileName, "ViewFile", "Course", new { Name = item.FileName }, new { @class = "form-label" })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadOn)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-    new { Page_No }))
+        @foreach (var item in Model)
+        {
+            <tr id="tableTR">
+                <td>
+                    @Html.ActionLink(item.FileName, "ViewFile", "Course", new { Name = item.FileName }, new { @class = "form-label", @id = "File_Hyper", @target = "_blank" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UploadOn)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+                {
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger"})
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index", new { Page_No, Search = Request.QueryString["Search"], Courses = Request.QueryString["Courses"] }))
+</div>

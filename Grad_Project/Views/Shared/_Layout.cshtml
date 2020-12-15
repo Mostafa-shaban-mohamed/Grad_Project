@@ -35,6 +35,17 @@
                         if (User.IsInRole("Student"))
                         {
                             <li><a href="/Student/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student Options <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Results</a></li>
+                                    <li class="divider"></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Events</a></li>
+                                </ul>
+                            </li>
                         }
                         else if (User.IsInRole("Lecturer"))
                         {
@@ -46,13 +57,13 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Students</a></li>
-                                    <li><a href="#">Lecturers</a></li>
-                                    <li><a href="#">Courses</a></li>
+                                    <li><a href="@Url.Action("Index", "Student")">Students</a></li>
+                                    <li><a href="@Url.Action("Index", "Lecturer")">Lecturers</a></li>
+                                    <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Results</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Register the Courses</a></li>
+                                    <li><a href="@Url.Action("Index", "RegisteredCourses")">Register the Courses</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Events</a></li>
                                 </ul>

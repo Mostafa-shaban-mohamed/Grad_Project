@@ -55,6 +55,7 @@
           <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UploadOn" Type="datetime" />
           <Property Name="File" Type="varbinary(max)" Nullable="false" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Lecturer_tbl">
           <Key>
@@ -175,6 +176,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Event_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_File_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="File_tbl" Type="Self.File_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="File_tbl">
               <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -354,6 +367,10 @@
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="Event_tbl" EntitySet="Event_tbl" />
           </AssociationSet>
+          <AssociationSet Name="FK_File_tbl_Course_tbl" Association="Self.FK_File_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="File_tbl" EntitySet="File_tbl" />
+          </AssociationSet>
           <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl" Association="Self.FK_RegisteredCourses_tbl_Course_tbl">
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
@@ -451,6 +468,7 @@
           <NavigationProperty Name="RegisteredCourses_tbl6" Relationship="Self.FK_RegisteredCourses_tbl_Course_tbl6" FromRole="Course_tbl" ToRole="RegisteredCourses_tbl" />
           <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Result_tbl" />
           <Property Name="Ed_Level" Type="Int32" />
+          <NavigationProperty Name="File_tbl" Relationship="LMSDBModel.FK_File_tbl_Course_tbl" FromRole="Course_tbl" ToRole="File_tbl" />
         </EntityType>
         <EntityType Name="Event_tbl">
           <Key>
@@ -829,6 +847,10 @@
             <End Role="Student_tbl" EntitySet="Student_tbl" />
           </AssociationSet>
           <EntitySet Name="File_tbl" EntityType="LMSDBModel.File_tbl" />
+          <AssociationSet Name="FK_File_tbl_Course_tbl" Association="LMSDBModel.FK_File_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="File_tbl" EntitySet="File_tbl" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="File_tbl">
           <Key>
@@ -838,7 +860,21 @@
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UploadOn" Type="DateTime" Precision="3" />
           <Property Name="File" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="CourseID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_File_tbl_Course_tbl" FromRole="File_tbl" ToRole="Course_tbl" />
         </EntityType>
+        <Association Name="FK_File_tbl_Course_tbl">
+          <End Type="LMSDBModel.Course_tbl" Role="Course_tbl" Multiplicity="1" />
+          <End Type="LMSDBModel.File_tbl" Role="File_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="File_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -962,6 +998,7 @@
           <EntitySetMapping Name="File_tbl">
             <EntityTypeMapping TypeName="LMSDBModel.File_tbl">
               <MappingFragment StoreEntitySet="File_tbl">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="File" ColumnName="File" />
                 <ScalarProperty Name="UploadOn" ColumnName="UploadOn" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />

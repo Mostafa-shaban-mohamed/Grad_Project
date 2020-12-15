@@ -24,14 +24,16 @@
         </dt>
 
         <dd>
-            @if (Model.PDFs == null)
+            @Html.ActionLink(Model.PDFs, "Index", "File")
+
+            @*@if (Model.PDFs == null)
             {
                 @Html.DisplayFor(model => model.PDFs)
             }
             else
             {
                 @Html.ActionLink((Model.PDFs.Split('/').Count() - 1).ToString(), "Index", "File")
-            }
+            }*@
             
         </dd>
 
