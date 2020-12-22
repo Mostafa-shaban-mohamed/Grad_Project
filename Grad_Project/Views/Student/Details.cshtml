@@ -48,31 +48,7 @@
         </dl>
     </div>
 
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        @if (Model.Image != null)
-        {
-            string imreBase64Data = Convert.ToBase64String(Model.Image);
-            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
-
-            <img src="@imgDataURL" alt="Avatar" style="width:50%">
-            <br />
-            <br />
-        }
-        else
-        {
-            <img src="~/Content/Images/pngtree-profile-line-black-icon-png-image_691051.jpg" alt="Avatar" style="width:50%">
-            <br />
-            <br />
-        }
-
-    </div>
-
-    <div>
-        <button id="btnCP" class="btn btn-sees">Change Password</button> &ensp;
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees" }) &ensp;
-        @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID }, new { @class = "btn btn-sees" }) &ensp;
-        @Html.ActionLink("Courses", "Details", "RegisteredCourses", new { id = Model.ID }, new { @class = "btn btn-danger" })
-    </div>
+    
 
 </div>
 

@@ -26,6 +26,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Lecturer/Details/5
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -131,53 +132,36 @@ namespace Grad_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Lecturer")]
         public ActionResult UploadImage()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult UploadImage(int? a)
+        public ActionResult UploadImage(string id, FileDataVM model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                //  Get all files from Request object  
-                HttpFileCollectionBase files = Request.Files;
-                for (int i = 0; i < files.Count; i++)
-                {
-                    HttpPostedFileBase file = files[i];
-                    string fname;
-
-                    // Checking for Internet Explorer  
-                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                    {
-                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                        fname = testfiles[testfiles.Length - 1];
-                    }
-                    else
-                    {
-                        fname = file.FileName;
-                    }
-
-                    // Get the complete folder path and store the file inside it.  
-                    fname = Path.Combine(Server.MapPath("~/Images/"), fname);
-                    file.SaveAs(fname);
-                    var bytes = System.IO.File.ReadAllBytes(fname);
-                    var lec = db.Lecturer_tbl.Find(str);
-                    lec.Image = bytes;
-                    db.SaveChanges();
-                }
-                // message is successfully uploaded  
-                return RedirectToAction("Index");
+                return View(model);
             }
-            catch (Exception ex)
-            {
-                return Json("Error occurred. Error details: " + ex.Message);
-            }
+
+            byte[] uploadedFile = new byte[model.File.InputStream.Length];
+            model.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+            // now you could pass the byte array to your model and store wherever 
+            // you intended to store it
+            var art = db.Lecturer_tbl.Find(id);
+            art.Image = uploadedFile;
+            db.Entry(art).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details", new { id = id });
         }
 
 
         // GET: Lecturer/Edit/5
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -193,8 +177,6 @@ namespace Grad_Project.Controllers
         }
 
         // POST: Lecturer/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,Email,Password,Salt,Role,Image")] Lecturer_tbl lecturer_tbl)

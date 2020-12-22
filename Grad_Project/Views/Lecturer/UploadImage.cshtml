@@ -1,39 +1,12 @@
-﻿<input type="file" id="FileUpload1" />
-<input type="button" id="btnUpload" value="Upload Files" />
+﻿@model Grad_Project.Models.FileDataVM
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
+@using (Html.BeginForm("UploadImage", "Lecturer", FormMethod.Post, new { enctype = "multipart/form-data", @class = "margin_30_95 centered-form" }))
+{
+    <div>
+        @Html.LabelFor(x => x.File)
+        @Html.TextBoxFor(x => x.File, new { type = "file", accept = "image/*" })
+        @Html.ValidationMessageFor(x => x.File)
+    </div>
 
-$(document).ready(function(){
-    $('#btnUpload').click(function () {
-
-        // Checking whether FormData is available in browser
-        if (window.FormData !== undefined) {
-
-            var fileUpload = $("#FileUpload1").get(0);
-            var files = fileUpload.files;
-
-            // Create FormData object
-            var fileData = new FormData();
-
-            // Looping over all files and add it to FormData object
-            for (var i = 0; i < files.length; i++) {
-                fileData.append(files[i].name, files[i]);
-            }
-
-            $.ajax({
-                url: '/Lecturer/UploadImage',
-                type: "POST",
-                contentType: false, // Not to set any content header
-                processData: false, // Not to process data
-                data: fileData,
-                error: function (err) {
-                    alert(err.statusText);
-                }
-            });
-        } else {
-            alert("FormData is not supported.");
-        }
-    });
-});
-</script>
+    <button type="submit">Upload</button>
+}
