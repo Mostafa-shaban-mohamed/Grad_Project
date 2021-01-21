@@ -1,0 +1,199 @@
+﻿@model Grad_Project.Models.Exam_tbl
+@using Grad_Project.Models;
+
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Exam_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Exam_ID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Exam_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Course_ID, "Course_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Course_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Course_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Type, new SelectList(new ExamType().GetExamType()), "Select Exam Type", new { @class = "form-control", @id = "DropDown" })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Q01, "Q01", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q01", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q02, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Q02, "Q02", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q02", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q02, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Q03, "Q03", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q03", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q03, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Q04, "Q04", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q04", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q04, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Q05, "Q05", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q05", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q05, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group ex">
+                @Html.LabelFor(model => model.Q06, "Q06", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q06", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q06, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group ex">
+                @Html.LabelFor(model => model.Q07, "Q07", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q07", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q07, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group ex">
+                @Html.LabelFor(model => model.Q08, "Q08", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q08", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q08, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group ex">
+                @Html.LabelFor(model => model.Q09, "Q09", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q09", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q09, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group ex">
+                @Html.LabelFor(model => model.Q10, "Q10", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Q10", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Q10, "", new { @class = "text-danger" })
+                    <button type="button" class="btn btn-sees card">Create Question</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-sees" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
+    </div>
+
+    <!-- modal pop up -->
+    <div id='myModalAL' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Details</h2>
+                </div>
+                <div id='myModalContentAL' class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.card').on('click', function () {
+                var id_art = $(this).attr("id");
+                var url = '/Question/Create';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id_art },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContentAL').html(data);
+                        $('#myModalAL').modal(options);
+                        $('#myModalAL').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#myModalAL').modal('hide');
+            });
+            $('#DropDown').change(function () {
+                var selectedType = $(this).children("option:selected").val();
+                if (selectedType == "Quiz") {
+                    $('.ex').hide();
+                } else {
+                    $('.ex').show();
+                }
+            });
+            
+        });
+    </script>
+}

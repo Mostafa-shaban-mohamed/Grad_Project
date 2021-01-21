@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Grad_Project.Models.Question_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ch01)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ch02)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ch03)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ch04)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Correct_Ch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Mark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Achieved_Mark)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ch01)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ch02)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ch03)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ch04)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Correct_Ch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCorrect)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_Mark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Achieved_Mark)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Q_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Q_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Q_ID })
+        </td>
+    </tr>
+}
+
+</table>

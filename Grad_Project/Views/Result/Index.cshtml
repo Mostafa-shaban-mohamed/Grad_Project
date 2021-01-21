@@ -2,79 +2,86 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-<h2>Index</h2>
+<div class="margin_30_95" style="margin-left:30px;">
 
-@if (User.IsInRole("Lecturer"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
+    <h2>Results List</h2>
+    <br />
+    @if (User.IsInRole("Lecturer"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
 
-@using (Html.BeginForm("Index", "Result", FormMethod.Get, new { @class = "horizontal-form" }))
-{
-    <p>
-        Search Box (Using Title): @Html.TextBox("Search")
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
-    </p>
-}
+    @using (Html.BeginForm("Index", "Result", FormMethod.Get, new { @class = "horizontal-form" }))
+    {
+        <div>
+            @Html.Label("Search Box (Using Title): ", new { @class = "control-label", @style = "display:inline-block;" }) &ensp;
+            @Html.TextBox("Search", null, new { @class = "form-control", @style = "display:inline-block;" }) &ensp;
+            <button type="submit" value="Search" style="display:inline-block;" class="btn btn-primary">Search</button> <br />
+        </div>
+        
+    }
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Title")
+            </th>
+            <th>
+                @Html.DisplayName("Course Name")
+            </th>
+            <th>
+                @Html.DisplayName("Student Name")
+            </th>
+            <th>
+                @Html.DisplayName("Total Mark")
+            </th>
+            <th>
+                @Html.DisplayName("Achieved Mark")
+            </th>
+            <th></th>
+        </tr>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Title")
-        </th>
-        <th>
-            @Html.DisplayName("Course Name")
-        </th>
-        <th>
-            @Html.DisplayName("Student Name")
-        </th>
-        <th>
-            @Html.DisplayName("Total Mark")
-        </th>
-        <th>
-            @Html.DisplayName("Achieved Mark")
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course_tbl.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Student_tbl.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total_Mark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Achieved_Mark)
-        </td>
-        @if (User.IsInRole("Lecturer"))
+        @foreach (var item in Model)
         {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        }
-        else
-        {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            </td>
-        }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course_tbl.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student_tbl.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_Mark)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Achieved_Mark)
+                </td>
+                @if (User.IsInRole("Lecturer"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    </td>
+                }
 
-    </tr>
-}
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index",
     new { Page_No }))
+</div>
+

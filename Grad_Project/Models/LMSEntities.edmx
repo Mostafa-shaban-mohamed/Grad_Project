@@ -47,6 +47,27 @@
           <Property Name="Ed_Level" Type="int" />
           <Property Name="CourseID" Type="nvarchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Exam_tbl">
+          <Key>
+            <PropertyRef Name="Exam_ID" />
+          </Key>
+          <Property Name="Exam_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Course_ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Q01" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q02" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q03" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q04" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q05" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q06" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q07" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q08" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q09" Type="nvarchar" MaxLength="50" />
+          <Property Name="Q10" Type="nvarchar" MaxLength="50" />
+          <Property Name="Correct_Answers" Type="int" />
+          <Property Name="Total_Mark" Type="int" />
+          <Property Name="Achieved_Mark" Type="int" />
+        </EntityType>
         <EntityType Name="File_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -69,6 +90,21 @@
           <Property Name="Role" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Image" Type="image" />
           <Property Name="RegisteredCourses" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Question_tbl">
+          <Key>
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="Q_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ch01" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ch02" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ch03" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ch04" Type="nvarchar" MaxLength="50" />
+          <Property Name="Correct_Ch" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsCorrect" Type="bit" />
+          <Property Name="Total_Mark" Type="int" />
+          <Property Name="Achieved_Mark" Type="int" />
+          <Property Name="Ques_Title" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="RegisteredCourses_tbl">
           <Key>
@@ -93,6 +129,7 @@
           <Property Name="Total_Mark" Type="int" />
           <Property Name="Achieved_Mark" Type="int" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Exam_ID" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Student_tbl">
           <Key>
@@ -177,6 +214,138 @@
             </Principal>
             <Dependent Role="Event_tbl">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Course_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl1">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl2">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q03" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl3">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q04" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl4">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q05" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl5">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q06" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl6">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q07" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl7">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q08" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl8">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q09" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl9">
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="0..1" />
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q10" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -288,6 +457,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Result_tbl_Exam_tbl">
+          <End Role="Exam_tbl" Type="Self.Exam_tbl" Multiplicity="0..1" />
+          <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam_tbl">
+              <PropertyRef Name="Exam_ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="Exam_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Result_tbl_Student_tbl">
           <End Role="Student_tbl" Type="Self.Student_tbl" Multiplicity="1" />
           <End Role="Result_tbl" Type="Self.Result_tbl" Multiplicity="*" />
@@ -336,13 +517,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="LMSDBModelStoreContainer">
           <EntitySet Name="Admin_tbl" EntityType="Self.Admin_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance_tbl" EntityType="Self.Attendance_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course_tbl" EntityType="Self.Course_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_tbl" EntityType="Self.Event_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exam_tbl" EntityType="Self.Exam_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="File_tbl" EntityType="Self.File_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lecturer_tbl" EntityType="Self.Lecturer_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question_tbl" EntityType="Self.Question_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegisteredCourses_tbl" EntityType="Self.RegisteredCourses_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Result_tbl" EntityType="Self.Result_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student_tbl" EntityType="Self.Student_tbl" Schema="dbo" store:Type="Tables" />
@@ -366,6 +580,50 @@
           <AssociationSet Name="FK_Event_tbl_Course_tbl" Association="Self.FK_Event_tbl_Course_tbl">
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="Event_tbl" EntitySet="Event_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Course_tbl" Association="Self.FK_Exam_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl" Association="Self.FK_Exam_tbl_Question_tbl">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl1" Association="Self.FK_Exam_tbl_Question_tbl1">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl2" Association="Self.FK_Exam_tbl_Question_tbl2">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl3" Association="Self.FK_Exam_tbl_Question_tbl3">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl4" Association="Self.FK_Exam_tbl_Question_tbl4">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl5" Association="Self.FK_Exam_tbl_Question_tbl5">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl6" Association="Self.FK_Exam_tbl_Question_tbl6">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl7" Association="Self.FK_Exam_tbl_Question_tbl7">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl8" Association="Self.FK_Exam_tbl_Question_tbl8">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl9" Association="Self.FK_Exam_tbl_Question_tbl9">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
           </AssociationSet>
           <AssociationSet Name="FK_File_tbl_Course_tbl" Association="Self.FK_File_tbl_Course_tbl">
             <End Role="Course_tbl" EntitySet="Course_tbl" />
@@ -401,6 +659,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Result_tbl_Course_tbl" Association="Self.FK_Result_tbl_Course_tbl">
             <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Exam_tbl" Association="Self.FK_Result_tbl_Exam_tbl">
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
             <End Role="Result_tbl" EntitySet="Result_tbl" />
           </AssociationSet>
           <AssociationSet Name="FK_Result_tbl_Student_tbl" Association="Self.FK_Result_tbl_Student_tbl">
@@ -469,6 +731,7 @@
           <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Result_tbl" />
           <Property Name="Ed_Level" Type="Int32" />
           <NavigationProperty Name="File_tbl" Relationship="LMSDBModel.FK_File_tbl_Course_tbl" FromRole="Course_tbl" ToRole="File_tbl" />
+          <NavigationProperty Name="Exam_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Exam_tbl" />
         </EntityType>
         <EntityType Name="Event_tbl">
           <Key>
@@ -532,6 +795,8 @@
           <NavigationProperty Name="Student_tbl" Relationship="Self.FK_Result_tbl_Student_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
           <NavigationProperty Name="Student_tbl1" Relationship="Self.FK_Student_tbl_Result_tbl" FromRole="Result_tbl" ToRole="Student_tbl" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exam_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Exam_tbl" Relationship="LMSDBModel.FK_Result_tbl_Exam_tbl" FromRole="Result_tbl" ToRole="Exam_tbl" />
         </EntityType>
         <EntityType Name="Student_tbl">
           <Key>
@@ -851,6 +1116,86 @@
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="File_tbl" EntitySet="File_tbl" />
           </AssociationSet>
+          <EntitySet Name="Exam_tbl" EntityType="LMSDBModel.Exam_tbl" />
+          <EntitySet Name="Question_tbl" EntityType="LMSDBModel.Question_tbl" />
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl" Association="LMSDBModel.FK_Exam_tbl_Question_tbl">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl1" Association="LMSDBModel.FK_Exam_tbl_Question_tbl1">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl2" Association="LMSDBModel.FK_Exam_tbl_Question_tbl2">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl3" Association="LMSDBModel.FK_Exam_tbl_Question_tbl3">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl4" Association="LMSDBModel.FK_Exam_tbl_Question_tbl4">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl5" Association="LMSDBModel.FK_Exam_tbl_Question_tbl5">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl6" Association="LMSDBModel.FK_Exam_tbl_Question_tbl6">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl7" Association="LMSDBModel.FK_Exam_tbl_Question_tbl7">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl8" Association="LMSDBModel.FK_Exam_tbl_Question_tbl8">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exam_tbl_Question_tbl9" Association="LMSDBModel.FK_Exam_tbl_Question_tbl9">
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_tbl_Exam_tbl" Association="LMSDBModel.FK_Result_tbl_Exam_tbl">
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+            <End Role="Result_tbl" EntitySet="Result_tbl" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(LMSDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(LMSDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_Exam_tbl_Course_tbl" Association="LMSDBModel.FK_Exam_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Exam_tbl" EntitySet="Exam_tbl" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="File_tbl">
           <Key>
@@ -872,6 +1217,219 @@
             </Principal>
             <Dependent Role="File_tbl">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Exam_tbl">
+          <Key>
+            <PropertyRef Name="Exam_ID" />
+          </Key>
+          <Property Name="Exam_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Course_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q01" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q02" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q03" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q04" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q05" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q06" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q07" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q08" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q09" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Q10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Correct_Answers" Type="Int32" />
+          <Property Name="Total_Mark" Type="Int32" />
+          <Property Name="Achieved_Mark" Type="Int32" />
+          <NavigationProperty Name="Question_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl1" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl1" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl2" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl2" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl3" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl3" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl4" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl4" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl5" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl5" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl6" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl6" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl7" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl7" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl8" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl8" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Question_tbl9" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl9" FromRole="Exam_tbl" ToRole="Question_tbl" />
+          <NavigationProperty Name="Result_tbl" Relationship="LMSDBModel.FK_Result_tbl_Exam_tbl" FromRole="Exam_tbl" ToRole="Result_tbl" />
+          <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Course_tbl" FromRole="Exam_tbl" ToRole="Course_tbl" />
+        </EntityType>
+        <EntityType Name="Question_tbl">
+          <Key>
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="Q_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ch01" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ch02" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ch03" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ch04" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Correct_Ch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" />
+          <Property Name="Total_Mark" Type="Int32" />
+          <Property Name="Achieved_Mark" Type="Int32" />
+          <NavigationProperty Name="Exam_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl1" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl1" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl2" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl2" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl3" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl3" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl4" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl4" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl5" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl5" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl6" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl6" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl7" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl7" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl8" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl8" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Exam_tbl9" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl9" FromRole="Question_tbl" ToRole="Exam_tbl" />
+          <Property Name="Ques_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Exam_tbl_Question_tbl">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl1">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl2">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q03" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl3">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q04" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl4">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q05" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl5">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q06" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl6">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q07" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl7">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q08" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl8">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q09" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exam_tbl_Question_tbl9">
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Q10" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_tbl_Exam_tbl">
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Result_tbl" Role="Result_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam_tbl">
+              <PropertyRef Name="Exam_ID" />
+            </Principal>
+            <Dependent Role="Result_tbl">
+              <PropertyRef Name="Exam_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <Association Name="FK_Exam_tbl_Course_tbl">
+          <End Type="LMSDBModel.Course_tbl" Role="Course_tbl" Multiplicity="1" />
+          <End Type="LMSDBModel.Exam_tbl" Role="Exam_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Exam_tbl">
+              <PropertyRef Name="Course_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -958,7 +1516,8 @@
     <EntitySetMapping Name="Result_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Result_tbl)">
         <MappingFragment StoreEntitySet="Result_tbl">
-          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
           <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1006,6 +1565,68 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Exam_tbl">
+            <EntityTypeMapping TypeName="LMSDBModel.Exam_tbl">
+              <MappingFragment StoreEntitySet="Exam_tbl">
+                <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
+                <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />
+                <ScalarProperty Name="Correct_Answers" ColumnName="Correct_Answers" />
+                <ScalarProperty Name="Q10" ColumnName="Q10" />
+                <ScalarProperty Name="Q09" ColumnName="Q09" />
+                <ScalarProperty Name="Q08" ColumnName="Q08" />
+                <ScalarProperty Name="Q07" ColumnName="Q07" />
+                <ScalarProperty Name="Q06" ColumnName="Q06" />
+                <ScalarProperty Name="Q05" ColumnName="Q05" />
+                <ScalarProperty Name="Q04" ColumnName="Q04" />
+                <ScalarProperty Name="Q03" ColumnName="Q03" />
+                <ScalarProperty Name="Q02" ColumnName="Q02" />
+                <ScalarProperty Name="Q01" ColumnName="Q01" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Course_ID" ColumnName="Course_ID" />
+                <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question_tbl">
+            <EntityTypeMapping TypeName="LMSDBModel.Question_tbl">
+              <MappingFragment StoreEntitySet="Question_tbl">
+                <ScalarProperty Name="Ques_Title" ColumnName="Ques_Title" />
+                <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
+                <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Correct_Ch" ColumnName="Correct_Ch" />
+                <ScalarProperty Name="Ch04" ColumnName="Ch04" />
+                <ScalarProperty Name="Ch03" ColumnName="Ch03" />
+                <ScalarProperty Name="Ch02" ColumnName="Ch02" />
+                <ScalarProperty Name="Ch01" ColumnName="Ch01" />
+                <ScalarProperty Name="Q_ID" ColumnName="Q_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="LMSDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="LMSDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="LMSDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="LMSDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LMSDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="LMSDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LMSDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="LMSDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="LMSDBModel.Store.sp_upgraddiagrams" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

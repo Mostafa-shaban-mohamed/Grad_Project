@@ -33,6 +33,20 @@
         <AssociationConnector Association="LMSDBModel.FK_Student_tbl_Result_tbl" ManuallyRouted="false" />
         <EntityTypeShape EntityType="LMSDBModel.File_tbl" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="LMSDBModel.FK_File_tbl_Course_tbl" />
+        <EntityTypeShape EntityType="LMSDBModel.Exam_tbl" Width="1.5" PointX="7.5" PointY="15.375" />
+        <EntityTypeShape EntityType="LMSDBModel.Question_tbl" Width="1.5" PointX="5.25" PointY="16.125" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl1" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl2" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl3" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl4" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl5" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl6" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl7" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl8" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl9" />
+        <AssociationConnector Association="LMSDBModel.FK_Result_tbl_Exam_tbl" />
+        <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Course_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

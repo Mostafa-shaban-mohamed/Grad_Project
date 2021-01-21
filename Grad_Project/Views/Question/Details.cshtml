@@ -1,0 +1,82 @@
+﻿@model Grad_Project.Models.Question_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Question_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ch01)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ch01)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ch02)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ch02)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ch03)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ch03)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ch04)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ch04)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correct_Ch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correct_Ch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Mark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Mark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Achieved_Mark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Achieved_Mark)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Q_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -208,9 +208,11 @@
     <Compile Include="Controllers\AttendanceWebAPIController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LecturerController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RegisteredCoursesController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -232,6 +234,11 @@
     <Compile Include="Models\Departments.cs" />
     <Compile Include="Models\EventTypes.cs" />
     <Compile Include="Models\Event_tbl.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExamQues.cs" />
+    <Compile Include="Models\ExamType.cs" />
+    <Compile Include="Models\Exam_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FileDataVM.cs" />
@@ -256,6 +263,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LMSEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Question_tbl.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RegisteredCourses_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
@@ -263,6 +273,13 @@
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Solution_paper.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Student_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
@@ -330,6 +347,16 @@
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Lecturer\ChangePassword.cshtml" />
     <Content Include="Views\Student\ChangePassword.cshtml" />
+    <Content Include="Views\Exam\Create.cshtml" />
+    <Content Include="Views\Exam\Delete.cshtml" />
+    <Content Include="Views\Exam\Details.cshtml" />
+    <Content Include="Views\Exam\Edit.cshtml" />
+    <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\Question\Details.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

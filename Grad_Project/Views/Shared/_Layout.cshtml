@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Grad_Project.Models;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,26 +35,33 @@
                     {
                         if (User.IsInRole("Student"))
                         {
-                            <li><a href="/Student/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
+                            var db = new LMSDBEntities();
+                            var st = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                            <li><a href="/Student/Details/@st.ID">Hello - @st.Name</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student Options <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Results</a></li>
+                                    <li><a href="@Url.Action("Index", "Result")">Results</a></li>
                                     <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Exam")">Exams</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Events</a></li>
+                                    <li><a href="@Url.Action("Index", "Event")">Events</a></li>
                                 </ul>
                             </li>
                         }
                         else if (User.IsInRole("Lecturer"))
                         {
-                            <li><a href="/Lecturer/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
+                            var db = new LMSDBEntities();
+                            var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                            <li><a href="/Lecturer/Details/@lec.ID">Hello - Mr. @lec.Name</a></li>
                         }
                         else if (User.IsInRole("Admin"))
                         {
-                            <li><a href="/Admin/Details/@Session["UserID"]">Hello - @User.Identity.Name</a></li>
+                            var db = new LMSDBEntities();
+                            var ad = db.Admin_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                            <li><a href="/Admin/Details/@ad.ID">Hello - @ad.Email</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -125,7 +133,7 @@
                     <br />
                     <br />
                     <div class="col-md-8">
-                        <p>Developed and Designed By Ahmed Rizk &amp; Mostafa Shaaban</p>
+                        <p>Developed and Designed By Mostafa Shaaban</p>
                     </div>
                     <div class="col-md-4" style="left:0%;">
                         <div id="copy"><p style="text-align:right;">&copy; S.E.E.S</p></div>

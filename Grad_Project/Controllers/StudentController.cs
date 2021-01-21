@@ -21,6 +21,7 @@ namespace Grad_Project.Controllers
         private static string str;
 
         // GET: Student
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(string Search, int? Page_No)
         {
             var student_tbl = db.Student_tbl.Include(s => s.Attendance_tbl1).Include(s => s.RegisteredCourses_tbl).Include(s => s.Result_tbl1);

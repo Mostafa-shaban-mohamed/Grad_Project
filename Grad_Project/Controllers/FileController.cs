@@ -16,7 +16,7 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: File
-        [Authorize(Roles = "Lecturer, Admin")]
+        [Authorize(Roles = "Lecturer, Admin, Student")]
         public ActionResult Index(string Search, string Courses, int? Page_No)
         {
             ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");

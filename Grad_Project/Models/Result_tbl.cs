@@ -26,10 +26,12 @@ namespace Grad_Project.Models
         public Nullable<int> Total_Mark { get; set; }
         public Nullable<int> Achieved_Mark { get; set; }
         public string Title { get; set; }
+        public string Exam_ID { get; set; }
     
         public virtual Course_tbl Course_tbl { get; set; }
         public virtual Student_tbl Student_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student_tbl> Student_tbl1 { get; set; }
+        public virtual Exam_tbl Exam_tbl { get; set; }
     }
 }

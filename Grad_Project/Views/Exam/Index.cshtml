@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Grad_Project.Models.Exam_tbl>
+
+
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Exams</h2>
+    <br />
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees" })
+        </p>
+    }
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total_Mark)
+            </th>
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_Mark)
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Exam_ID }, new { @class = "btn btn-sees"}) &ensp;
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Exam_ID }, new { @class = "btn btn-danger"})
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
