@@ -10,6 +10,7 @@ using Grad_Project.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using PagedList;
 
 namespace Grad_Project.Controllers
 {
@@ -20,9 +21,17 @@ namespace Grad_Project.Controllers
 
 
         // GET: Lecturer
-        public ActionResult Index()
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index(string Search, int? Page_No)
         {
-            return View(db.Lecturer_tbl.ToList());
+            int Size_Of_Page = 2;
+            int No_Of_Page = (Page_No ?? 1);
+            if (!string.IsNullOrEmpty(Search))
+            {
+                return View(db.Lecturer_tbl.Where(m => m.Name.Contains(Search)).ToList().ToPagedList(No_Of_Page, Size_Of_Page));
+            }
+
+            return View(db.Lecturer_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
         // GET: Lecturer/Details/5

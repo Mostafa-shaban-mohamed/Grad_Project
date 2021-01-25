@@ -1,74 +1,24 @@
 ﻿@model Grad_Project.Models.Event_tbl
 
-@{
-    ViewBag.Title = "Details";
-}
+<div class="margin_30_95" style="margin-left:30px;">
 
-<h2>Details</h2>
+    <h2>@Model.Title - @Model.ReleaseDate</h2>
+    <div style="margin-top: 20px;margin-bottom:20px;">
+        <hr />
+        <p>@Model.Description</p>
+    </div>
 
-<div>
-    <h4>Event_tbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ed_Level)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ed_Level)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Course_tbl.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course_tbl.Name)
-        </dd>
-
-    </dl>
+    @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees"}) &ensp;
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
+        </p>
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
+    }
 </div>
-@if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
-{
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
-else
-{
-    @Html.ActionLink("Back to List", "Index")
-}
+
 

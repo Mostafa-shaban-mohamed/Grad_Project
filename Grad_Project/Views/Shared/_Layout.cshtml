@@ -37,6 +37,7 @@
                         {
                             var db = new LMSDBEntities();
                             var st = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                            var regCou = db.RegisteredCourses_tbl.Find(st.ID);
                             <li><a href="/Student/Details/@st.ID">Hello - @st.Name</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student Options <span class="caret"></span></a>
@@ -48,6 +49,19 @@
                                     <li><a href="@Url.Action("Index", "Exam")">Exams</a></li>
                                     <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        @if (regCou == null)
+                                        {
+                                            <a href="@Url.Action("Create", "RegisteredCourses")">Courses Registration</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Details", "RegisteredCourses", new { @id = st.ID })">Courses Registration</a>
+                                        }
+                                    </li>
+                                    
+                                    
                                 </ul>
                             </li>
                         }
@@ -56,6 +70,18 @@
                             var db = new LMSDBEntities();
                             var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
                             <li><a href="/Lecturer/Details/@lec.ID">Hello - Mr. @lec.Name</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Lecturer Options <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Exam")">Exams</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Attendance")">Attendance</a></li>
+                                </ul>
+                            </li>
                         }
                         else if (User.IsInRole("Admin"))
                         {
@@ -66,14 +92,14 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="@Url.Action("Index", "Student")">Students</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Lecturer")">Lecturers</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Results</a></li>
+                                    <li><a href="@Url.Action("Index", "RegisteredCourses")">Course Registration</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="@Url.Action("Index", "RegisteredCourses")">Register the Courses</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Events</a></li>
+                                    <li><a href="@Url.Action("Index", "Event")">Events</a></li>
                                 </ul>
                             </li>
                         }

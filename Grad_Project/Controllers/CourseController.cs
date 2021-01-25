@@ -65,6 +65,11 @@ namespace Grad_Project.Controllers
                     }
                 }
             }
+            else if (User.IsInRole("Lecturer"))
+            {
+                var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+                course_tbl = course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID).AsQueryable();
+            }
             
             if (!string.IsNullOrEmpty(Search))
             {

@@ -24,7 +24,8 @@ namespace Grad_Project.Controllers
             {
                 var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
                 ViewBag.Courses = new SelectList(db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID), "ID", "Name");
-                attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl);
+                attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl).Where(m => m.Course_tbl.Prof == lec.ID ||
+                m.Course_tbl.Assistant == lec.ID);
             }
             else if (User.IsInRole("Student"))
             {

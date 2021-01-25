@@ -56,7 +56,7 @@ namespace Grad_Project.Controllers
 
 
         // GET: RegisteredCourses/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Student")]
         public ActionResult Create()
         {
             return View();
@@ -196,7 +196,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: RegisteredCourses/Edit/5
-        [Authorize(Roles = "Admin, Student")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)

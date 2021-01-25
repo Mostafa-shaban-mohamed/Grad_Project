@@ -4,7 +4,7 @@
 <div class="margin_30_95" style="margin-left:30px;">
     <h2>Exams</h2>
     <br />
-    @if (User.IsInRole("Admin"))
+    @if (User.IsInRole("Lecturer"))
     {
         <p>
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees" })
@@ -39,10 +39,21 @@
                     @Html.DisplayFor(modelItem => item.Total_Mark)
                 </td>
                 
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Exam_ID }, new { @class = "btn btn-sees"}) &ensp;
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Exam_ID }, new { @class = "btn btn-danger"})
-                </td>
+                    @if(User.IsInRole("Student"))
+                    {
+                        <td>
+                            @Html.ActionLink("Take Exam", "Details", new { id = item.Exam_ID }, new { @class = "btn btn-sees" })
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Exam_ID }, new { @class = "btn btn-sees" }) &ensp;
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Exam_ID }, new { @class = "btn btn-danger" })
+                        </td>
+                        
+                    }
+                    
             </tr>
         }
 

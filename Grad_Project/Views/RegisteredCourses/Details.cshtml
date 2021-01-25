@@ -16,7 +16,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl.Name, "Details", "Course", new { id = Model.Course01 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course01" >@Model.Course_tbl.Name</a>
                 }
             </dd>
 
@@ -31,7 +31,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl1.Name, "Details", "Course", new { id = Model.Course02 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course02">@Model.Course_tbl1.Name</a>
                 }
             </dd>
 
@@ -46,7 +46,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl2.Name, "Details", "Course", new { id = Model.Course03 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course03">@Model.Course_tbl2.Name</a>
                 }
             </dd>
 
@@ -61,7 +61,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl3.Name, "Details", "Course", new { id = Model.Course04 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course04">@Model.Course_tbl3.Name</a>
                 }
             </dd>
 
@@ -76,7 +76,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl4.Name, "Details", "Course", new { id = Model.Course05 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course05">@Model.Course_tbl4.Name</a>
                 }
 
             </dd>
@@ -92,7 +92,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl5.Name, "Details", "Course", new { id = Model.Course06 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course06">@Model.Course_tbl5.Name</a>
                 }
 
             </dd>
@@ -108,7 +108,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink(Model.Course_tbl6.Name, "Details", "Course", new { id = Model.Course07 }, new { @class = "" })
+                    <a class="Target" data-target="@Model.Course07">@Model.Course_tbl6.Name</a>
                 }
 
             </dd>
@@ -119,3 +119,55 @@
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees" })
     </p>
 </div>
+<!-- modal pop up -->
+<div id='myModalS' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Details</h2>
+            </div>
+            <div id='myModalContentS' class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //click on target element
+            $('.Target').click(function () {
+                var targetID = $(this).data("target");
+                //ajax of modal pop up
+                var url = '/Course/Details';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": targetID },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContentS').html(data);
+                        $('#myModalS').modal(options);
+                        $('#myModalS').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#myModalS').modal('hide');
+            });
+        });
+    </script>
+}

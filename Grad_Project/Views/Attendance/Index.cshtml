@@ -2,68 +2,73 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>List of Attendance</h2>
 
-<h2>Index</h2>
 
-
-@using (Html.BeginForm("Index", "Attendance", FormMethod.Get, new { @class = "horizontal-form" }))
-{
-    <div>
-        <div class="form-group">
-            @Html.Label("Choose The Course", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Courses", null, "Select Course", htmlAttributes: new { @class = "form-control" })
+    @using (Html.BeginForm("Index", "Attendance", FormMethod.Get, new { @class = "horizontal-form" }))
+    {
+        <div>
+            <div class="form-group">
+                @Html.Label("Choose The Course", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Courses", null, "Select Course", htmlAttributes: new { @class = "form-control" })
+                </div>
             </div>
         </div>
-    </div>
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.Label("Search Box (Use ID Code): ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Search", null, new { @class = "form-control", @style = "display:inline-block;" })
+                <button type="submit" value="Search" style="display:inline-block;" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    }
     <br />
     <br />
-    <p>
-        Search Box (Use ID Code): @Html.TextBox("Search")
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
-    </p>
-}
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("No of Attendances")
+            </th>
+            <th>
+                @Html.DisplayName("Course")
+            </th>
+            <th>
+                @Html.DisplayName("Student")
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th></th>
+            }
+        </tr>
 
-<br />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("No of Attendances")
-        </th>
-        <th>
-            @Html.DisplayName("Course")
-        </th>
-        <th>
-            @Html.DisplayName("Student")
-        </th>
-        @if (User.IsInRole("Admin"))
+        @foreach (var item in Model)
         {
-            <th></th>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.No_of_Attendances)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course_tbl.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student_tbl.Name)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                }
+            </tr>
         }
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.No_of_Attendances)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course_tbl.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Student_tbl.Name)
-        </td>
-        @if (User.IsInRole("Admin"))
-        {
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        }
-    </tr>
-}
-
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Index",
     new { Page_No }))
+</div>

@@ -17,8 +17,9 @@ namespace Grad_Project.Controllers
         // GET: Exam
         public ActionResult Index()
         {
-            var exam_tbl = db.Exam_tbl.Include(e => e.Course_tbl).Include(e => e.Question_tbl).Include(e => e.Question_tbl1).Include(e => e.Question_tbl2).Include(e => e.Question_tbl3).Include(e => e.Question_tbl4).Include(e => e.Question_tbl5).Include(e => e.Question_tbl6).Include(e => e.Question_tbl7).Include(e => e.Question_tbl8).Include(e => e.Question_tbl9);
-            return View(exam_tbl.ToList());
+            var exam_tbl = db.Exam_tbl.Include(e => e.Course_tbl).Include(e => e.Question_tbl).Include(e => e.Question_tbl1).Include(e => e.Question_tbl2).Include(e => e.Question_tbl3).Include(e => e.Question_tbl4).Include(e => e.Question_tbl5).Include(e => e.Question_tbl6).Include(e => e.Question_tbl7).Include(e => e.Question_tbl8).Include(e => e.Question_tbl9).ToList();
+            
+            return View(exam_tbl);
         }
 
         // GET: Exam/Details/5

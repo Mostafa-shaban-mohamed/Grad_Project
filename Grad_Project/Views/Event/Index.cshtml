@@ -1,71 +1,59 @@
 ﻿@model IEnumerable<Grad_Project.Models.Event_tbl>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Events List</h2>
+    @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sees"})
+        </p>
+    }
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
 
-@if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ed_Level)
-        </th>
-        <th>
-            @Html.DisplayName("Courses Name")
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ed_Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course_tbl.Name)
-        </td>
-        @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+        @foreach (var item in Model)
         {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        }
-        else
-        {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
-            </td>
-        }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
 
-    </tr>
-}
+                @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sees"})
+                    </td>
+                }
 
-</table>
+            </tr>
+        }
+    </table>
+</div>

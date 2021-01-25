@@ -18,7 +18,7 @@ namespace Grad_Project.Controllers
         [Authorize(Roles = "Admin, Student, Lecturer")]
         public ActionResult Index()
         {
-            var event_tbl = db.Event_tbl.Include(e => e.Course_tbl);
+            var event_tbl = db.Event_tbl.Include(e => e.Course_tbl).OrderByDescending(m => m.ReleaseDate);
             if (User.IsInRole("Student"))
             {
                 var std = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
