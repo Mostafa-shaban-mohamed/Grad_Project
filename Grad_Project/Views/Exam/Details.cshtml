@@ -18,31 +18,43 @@
             
         </div>
 
+        <div style="margin-top:20px; margin-bottom:20px;">
+            @if(Model.Type == "Quiz")
+            {
+                @Html.Hidden("Quiz")
+            }
+            else
+            {
+                @Html.Hidden("Exam")
+            }
+            <p style="text-align:center; font-size:x-large" id="countTime"></p>
+        </div>
+
         @{
-                var Questions = new List<Question_tbl>();
-                if (Model.Type == "Quiz")
-                {
-                    Questions.Add(Model.Question_tbl);
-                    Questions.Add(Model.Question_tbl1);
-                    Questions.Add(Model.Question_tbl2);
-                    Questions.Add(Model.Question_tbl3);
-                    Questions.Add(Model.Question_tbl4);
-                }else
-                {
-                    Questions.Add(Model.Question_tbl);
-                    Questions.Add(Model.Question_tbl1);
-                    Questions.Add(Model.Question_tbl2);
-                    Questions.Add(Model.Question_tbl3);
-                    Questions.Add(Model.Question_tbl4);
-                    Questions.Add(Model.Question_tbl5);
-                    Questions.Add(Model.Question_tbl6);
-                    Questions.Add(Model.Question_tbl7);
-                    Questions.Add(Model.Question_tbl8);
-                    Questions.Add(Model.Question_tbl9);
-                }
-                int i = 1;
-                foreach (var q in Questions)
-                {
+            var Questions = new List<Question_tbl>();
+            if (Model.Type == "Quiz")
+            {
+                Questions.Add(Model.Question_tbl);
+                Questions.Add(Model.Question_tbl1);
+                Questions.Add(Model.Question_tbl2);
+                Questions.Add(Model.Question_tbl3);
+                Questions.Add(Model.Question_tbl4);
+            }else
+            {
+                Questions.Add(Model.Question_tbl);
+                Questions.Add(Model.Question_tbl1);
+                Questions.Add(Model.Question_tbl2);
+                Questions.Add(Model.Question_tbl3);
+                Questions.Add(Model.Question_tbl4);
+                Questions.Add(Model.Question_tbl5);
+                Questions.Add(Model.Question_tbl6);
+                Questions.Add(Model.Question_tbl7);
+                Questions.Add(Model.Question_tbl8);
+                Questions.Add(Model.Question_tbl9);
+            }
+            int i = 1;
+            foreach (var q in Questions)
+            {
                 <div class="form-group" style="margin-left:30px;">
                     <h4>@q.Ques_Title</h4>
                     <div class="col-md-10 col-xs-10" style="border:dashed;">
@@ -89,6 +101,49 @@
     <script>
         $(document).ready(function () {
             var sw = 0; //browser switch
+            //CountDown
+            var countdown = 0;
+            if (document.getElementById("Quiz") != null) {
+                countdown = 30 * 60 * 1000;
+            }else{
+                countdown = 60 * 60 * 1000;
+            }
+            var timerId = setInterval(function(){
+
+                countdown -= 1000;
+                var min = Math.floor(countdown / (60 * 1000));
+                var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+
+                if (countdown <= 0) {
+                    alert("30 min!");
+                    clearInterval(timerId);
+                    //Sumbit Answers;
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("Details")',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function () {
+                            alert("Data has been added successfully.");
+                        },
+                        error: function () {
+                            location.href = '@Url.Action("Index", "Result")';
+                        }
+                    });
+                } else {
+                    document.getElementById("countTime").innerHTML = min + " : " + sec;
+                }
+
+            }, 1000); //1000ms. = 1sec.
+            //on clicking back or reload page
+            window.onbeforeunload = function (e) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Details")',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                });
+            }
             $(window).focus(function () {
                 //do something
                 if (sw >= 2) {
@@ -98,7 +153,7 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function () {
-                            alert("Data has been added successfully.");  
+                            alert("Data has been added successfully.");
                         },
                         error: function () {
                             location.href = '@Url.Action("Index", "Result")';
