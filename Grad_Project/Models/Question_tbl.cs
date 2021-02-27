@@ -11,8 +11,7 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Question_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,21 +28,18 @@ namespace Grad_Project.Models
             this.Exam_tbl8 = new HashSet<Exam_tbl>();
             this.Exam_tbl9 = new HashSet<Exam_tbl>();
         }
-        [Display(Name = "Question ID")]
+    
         public string Q_ID { get; set; }
         public string Ch01 { get; set; }
         public string Ch02 { get; set; }
         public string Ch03 { get; set; }
         public string Ch04 { get; set; }
-        [Display(Name = "Correct Answer")]
         public string Correct_Ch { get; set; }
         public Nullable<bool> IsCorrect { get; set; }
-        [Display(Name = "Total Mark")]
         public Nullable<int> Total_Mark { get; set; }
-        [Display(Name = "Achieved Mark")]
         public Nullable<int> Achieved_Mark { get; set; }
-        [Display(Name = "Question")]
         public string Ques_Title { get; set; }
+        public string CourseID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exam_tbl> Exam_tbl { get; set; }
@@ -65,5 +61,6 @@ namespace Grad_Project.Models
         public virtual ICollection<Exam_tbl> Exam_tbl8 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exam_tbl> Exam_tbl9 { get; set; }
+        public virtual Course_tbl Course_tbl { get; set; }
     }
 }

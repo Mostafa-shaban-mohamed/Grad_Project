@@ -28,10 +28,18 @@ namespace Grad_Project.Controllers
             }
             return View(question_tbl);
         }
-
+        [Authorize(Roles = "Lecturer")]
         // GET: Question/Create
         public ActionResult Create()
         {
+            var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+            if (lec == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.CourseID = new SelectList(db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID), "ID", "Name");
+
             return PartialView("Create");
         }
 
@@ -46,7 +54,7 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create", "Exam");
             }
-
+            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name");
             return PartialView(question_tbl);
         }
 
@@ -62,15 +70,14 @@ namespace Grad_Project.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name");
             return View(question_tbl);
         }
 
         // POST: Question/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Q_ID,Ch01,Ch02,Ch03,Ch04,Correct_Ch,IsCorrect,Total_Mark,Achieved_Mark")] Question_tbl question_tbl)
+        public ActionResult Edit(Question_tbl question_tbl)
         {
             if (ModelState.IsValid)
             {

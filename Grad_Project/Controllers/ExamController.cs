@@ -166,9 +166,23 @@ namespace Grad_Project.Controllers
             return RedirectToAction("Index", "Result");
         }
 
+        //AutoComplete mechanism for Questions
+        public JsonResult Search(string term)
+        {
+            List<string> Loc = db.Question_tbl.Where(x => x.Ques_Title.Contains(term)).Select(x => x.Ques_Title).ToList();
+            return Json(Loc, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Exam/Create
+        [Authorize(Roles = "Lecturer")]
         public ActionResult Create()
         {
+            var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+            if(lec == null)
+            {
+                return HttpNotFound();
+            }
+            
             ViewBag.Q01 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
             ViewBag.Q02 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
             ViewBag.Q03 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
@@ -179,7 +193,7 @@ namespace Grad_Project.Controllers
             ViewBag.Q08 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
             ViewBag.Q09 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
             ViewBag.Q10 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title");
-            ViewBag.Course_ID = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course_ID = new SelectList(db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID), "ID", "Name");
             return View();
         }
 
@@ -191,32 +205,35 @@ namespace Grad_Project.Controllers
             if (ModelState.IsValid)
             {
                 var question = new List<Question_tbl>();
-                if(exam_tbl.Type == "Quiz")
+
+                question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q01).FirstOrDefault());
+                exam_tbl.Q01 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q01).FirstOrDefault().Q_ID;
+                question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q02).FirstOrDefault());
+                exam_tbl.Q02 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q02).FirstOrDefault().Q_ID;
+                question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q03).FirstOrDefault());
+                exam_tbl.Q03 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q03).FirstOrDefault().Q_ID;
+                question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q04).FirstOrDefault());
+                exam_tbl.Q04 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q04).FirstOrDefault().Q_ID;
+                question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q05).FirstOrDefault());
+                exam_tbl.Q05 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q05).FirstOrDefault().Q_ID;
+
+                if (exam_tbl.Type == "Quiz")
                 {
                     exam_tbl.Q06 = null; exam_tbl.Q07 = null; exam_tbl.Q08 = null; exam_tbl.Q09 = null;
                     exam_tbl.Q10 = null;
-
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q01).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q02).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q03).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q04).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q05).FirstOrDefault());
-                    
                 }
                 else
                 {
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q01).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q02).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q03).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q04).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q05).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q06).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q07).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q08).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q09).FirstOrDefault());
-                    question.Add(db.Question_tbl.Where(q => q.Q_ID == exam_tbl.Q10).FirstOrDefault());
-
-                    
+                    question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q06).FirstOrDefault());
+                    exam_tbl.Q06 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q06).FirstOrDefault().Q_ID;
+                    question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q07).FirstOrDefault());
+                    exam_tbl.Q07 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q07).FirstOrDefault().Q_ID;
+                    question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q08).FirstOrDefault());
+                    exam_tbl.Q08 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q08).FirstOrDefault().Q_ID;
+                    question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q09).FirstOrDefault());
+                    exam_tbl.Q09 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q09).FirstOrDefault().Q_ID;
+                    question.Add(db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q10).FirstOrDefault());
+                    exam_tbl.Q10 = db.Question_tbl.Where(q => q.Ques_Title == exam_tbl.Q10).FirstOrDefault().Q_ID;
                 }
                 // Adding total mark of each question to the exam
                 exam_tbl.Total_Mark = 0;
@@ -229,6 +246,11 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+            if (lec == null)
+            {
+                return HttpNotFound();
+            }
 
             ViewBag.Q01 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title", exam_tbl.Q01);
             ViewBag.Q02 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title", exam_tbl.Q02);
@@ -240,7 +262,7 @@ namespace Grad_Project.Controllers
             ViewBag.Q08 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title", exam_tbl.Q08);
             ViewBag.Q09 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title", exam_tbl.Q09);
             ViewBag.Q10 = new SelectList(db.Question_tbl, "Q_ID", "Ques_Title", exam_tbl.Q10);
-            ViewBag.Course_ID = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course_ID = new SelectList(db.Course_tbl.Where(m => m.Prof == lec.ID || m.Assistant == lec.ID), "ID", "Name");
             return View(exam_tbl);
         }
 

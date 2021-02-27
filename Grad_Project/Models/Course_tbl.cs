@@ -29,6 +29,7 @@ namespace Grad_Project.Models
             this.Result_tbl = new HashSet<Result_tbl>();
             this.File_tbl = new HashSet<File_tbl>();
             this.Exam_tbl = new HashSet<Exam_tbl>();
+            this.Question_tbl = new HashSet<Question_tbl>();
         }
     
         public string ID { get; set; }
@@ -65,5 +66,7 @@ namespace Grad_Project.Models
         public virtual ICollection<File_tbl> File_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exam_tbl> Exam_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Question_tbl> Question_tbl { get; set; }
     }
 }

@@ -105,6 +105,7 @@
           <Property Name="Total_Mark" Type="int" />
           <Property Name="Achieved_Mark" Type="int" />
           <Property Name="Ques_Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="CourseID" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="RegisteredCourses_tbl">
           <Key>
@@ -357,6 +358,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="File_tbl">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_tbl_Course_tbl">
+          <End Role="Course_tbl" Type="Self.Course_tbl" Multiplicity="0..1" />
+          <End Role="Question_tbl" Type="Self.Question_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question_tbl">
               <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -629,6 +642,10 @@
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="File_tbl" EntitySet="File_tbl" />
           </AssociationSet>
+          <AssociationSet Name="FK_Question_tbl_Course_tbl" Association="Self.FK_Question_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+          </AssociationSet>
           <AssociationSet Name="FK_RegisteredCourses_tbl_Course_tbl" Association="Self.FK_RegisteredCourses_tbl_Course_tbl">
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="RegisteredCourses_tbl" EntitySet="RegisteredCourses_tbl" />
@@ -732,6 +749,7 @@
           <Property Name="Ed_Level" Type="Int32" />
           <NavigationProperty Name="File_tbl" Relationship="LMSDBModel.FK_File_tbl_Course_tbl" FromRole="Course_tbl" ToRole="File_tbl" />
           <NavigationProperty Name="Exam_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Exam_tbl" />
+          <NavigationProperty Name="Question_tbl" Relationship="LMSDBModel.FK_Question_tbl_Course_tbl" FromRole="Course_tbl" ToRole="Question_tbl" />
         </EntityType>
         <EntityType Name="Event_tbl">
           <Key>
@@ -1196,6 +1214,10 @@
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="Exam_tbl" EntitySet="Exam_tbl" />
           </AssociationSet>
+          <AssociationSet Name="FK_Question_tbl_Course_tbl" Association="LMSDBModel.FK_Question_tbl_Course_tbl">
+            <End Role="Course_tbl" EntitySet="Course_tbl" />
+            <End Role="Question_tbl" EntitySet="Question_tbl" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="File_tbl">
           <Key>
@@ -1277,6 +1299,8 @@
           <NavigationProperty Name="Exam_tbl8" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl8" FromRole="Question_tbl" ToRole="Exam_tbl" />
           <NavigationProperty Name="Exam_tbl9" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl9" FromRole="Question_tbl" ToRole="Exam_tbl" />
           <Property Name="Ques_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_Question_tbl_Course_tbl" FromRole="Question_tbl" ToRole="Course_tbl" />
         </EntityType>
         <Association Name="FK_Exam_tbl_Question_tbl">
           <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
@@ -1430,6 +1454,18 @@
             </Principal>
             <Dependent Role="Exam_tbl">
               <PropertyRef Name="Course_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_tbl_Course_tbl">
+          <End Type="LMSDBModel.Course_tbl" Role="Course_tbl" Multiplicity="0..1" />
+          <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question_tbl">
+              <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1590,6 +1626,7 @@
           <EntitySetMapping Name="Question_tbl">
             <EntityTypeMapping TypeName="LMSDBModel.Question_tbl">
               <MappingFragment StoreEntitySet="Question_tbl">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="Ques_Title" ColumnName="Ques_Title" />
                 <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
                 <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />

@@ -47,6 +47,7 @@
         <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Question_tbl9" />
         <AssociationConnector Association="LMSDBModel.FK_Result_tbl_Exam_tbl" />
         <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Course_tbl" />
+        <AssociationConnector Association="LMSDBModel.FK_Question_tbl_Course_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

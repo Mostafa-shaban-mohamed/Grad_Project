@@ -11,8 +11,7 @@ namespace Grad_Project.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Exam_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,9 +19,8 @@ namespace Grad_Project.Models
         {
             this.Result_tbl = new HashSet<Result_tbl>();
         }
-        [Display(Name = "Exam ID")]
+    
         public string Exam_ID { get; set; }
-        [Display(Name = "Course")]
         public string Course_ID { get; set; }
         public string Type { get; set; }
         public string Q01 { get; set; }

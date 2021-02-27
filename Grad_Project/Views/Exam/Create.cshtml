@@ -2,7 +2,7 @@
 @using Grad_Project.Models;
 
 <div class="margin_30_95" style="margin-left:30px;">
-    <h2>Create</h2>
+    <h2>Create New Exam</h2>
 
     @using (Html.BeginForm())
     {
@@ -38,96 +38,87 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Q01, "Q01", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q01", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Q02, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
+                    @Html.EditorFor(model => model.Q01, new { htmlAttributes = new { @class = "form-control" }})
+                    @Html.ValidationMessageFor(model => model.Q01, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Q02, "Q02", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q02", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(m => m.Q02, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q02, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Q03, "Q03", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q03", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q03, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q03, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Q04, "Q04", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q04", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q04, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q04, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Q05, "Q05", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q05", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q05, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q05, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group ex">
                 @Html.LabelFor(model => model.Q06, "Q06", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q06", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q06, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q06, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group ex">
                 @Html.LabelFor(model => model.Q07, "Q07", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q07", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q07, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q07, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group ex">
                 @Html.LabelFor(model => model.Q08, "Q08", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q08", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q08, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q08, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group ex">
                 @Html.LabelFor(model => model.Q09, "Q09", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q09", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q09, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q09, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group ex">
                 @Html.LabelFor(model => model.Q10, "Q10", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Q10", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Q10, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Q10, "", new { @class = "text-danger" })
-                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-sees" />
+                    <input type="submit" value="Create" class="btn btn-sees" /> &ensp;
+                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
         </div>
@@ -143,7 +134,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title">Details</h2>
+                    <h2 class="modal-title">Create Question</h2>
                 </div>
                 <div id='myModalContentAL' class="modal-body"></div>
                 <div class="modal-footer">
@@ -159,17 +150,18 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
+
             $('.card').on('click', function () {
-                var id_art = $(this).attr("id");
                 var url = '/Question/Create';
                 var options = { "backdrop": "static", keyboard: true };
                 $.ajax({
                     type: "GET",
                     url: url,
                     contentType: "application/json; charset=utf-8",
-                    data: { "Id": id_art },
                     datatype: "json",
                     success: function (data) {
                         $('#myModalContentAL').html(data);
@@ -185,6 +177,39 @@
             $("#closbtn").click(function () {
                 $('#myModalAL').modal('hide');
             });
+
+
+            $('#Q01').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q02').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q03').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q04').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q05').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q06').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q07').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q08').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q09').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q10').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+
             $('#DropDown').change(function () {
                 var selectedType = $(this).children("option:selected").val();
                 if (selectedType == "Quiz") {
@@ -193,7 +218,7 @@
                     $('.ex').show();
                 }
             });
-            
+
         });
     </script>
 }
