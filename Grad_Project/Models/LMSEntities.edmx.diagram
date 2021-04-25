@@ -48,6 +48,7 @@
         <AssociationConnector Association="LMSDBModel.FK_Result_tbl_Exam_tbl" />
         <AssociationConnector Association="LMSDBModel.FK_Exam_tbl_Course_tbl" />
         <AssociationConnector Association="LMSDBModel.FK_Question_tbl_Course_tbl" />
+        <EntityTypeShape EntityType="LMSDBModel.Answer_tbl" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

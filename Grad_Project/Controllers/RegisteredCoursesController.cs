@@ -196,7 +196,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: RegisteredCourses/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Student, Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)

@@ -14,6 +14,24 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Salt" Type="varbinary" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Answer_tbl">
+          <Key>
+            <PropertyRef Name="Ans_ID" />
+          </Key>
+          <Property Name="Ans_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Exam_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stu_Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ans_1" Type="nvarchar(max)" />
+          <Property Name="Ans_2" Type="nvarchar(max)" />
+          <Property Name="Ans_3" Type="nvarchar(max)" />
+          <Property Name="Ans_4" Type="nvarchar(max)" />
+          <Property Name="Ans_5" Type="nvarchar(max)" />
+          <Property Name="Ans_6" Type="nvarchar(max)" />
+          <Property Name="Ans_7" Type="nvarchar(max)" />
+          <Property Name="Ans_8" Type="nvarchar(max)" />
+          <Property Name="Ans_9" Type="nvarchar(max)" />
+          <Property Name="Ans_10" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Attendance_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -67,6 +85,8 @@
           <Property Name="Correct_Answers" Type="int" />
           <Property Name="Total_Mark" Type="int" />
           <Property Name="Achieved_Mark" Type="int" />
+          <Property Name="ReleaseTime" Type="datetime" />
+          <Property Name="AvailabilityTime" Type="datetime" />
         </EntityType>
         <EntityType Name="File_tbl">
           <Key>
@@ -106,6 +126,8 @@
           <Property Name="Achieved_Mark" Type="int" />
           <Property Name="Ques_Title" Type="nvarchar" MaxLength="50" />
           <Property Name="CourseID" Type="nvarchar" MaxLength="10" />
+          <Property Name="Ques_Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="WrittenAns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RegisteredCourses_tbl">
           <Key>
@@ -563,6 +585,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="LMSDBModelStoreContainer">
           <EntitySet Name="Admin_tbl" EntityType="Self.Admin_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Answer_tbl" EntityType="Self.Answer_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance_tbl" EntityType="Self.Attendance_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course_tbl" EntityType="Self.Course_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_tbl" EntityType="Self.Event_tbl" Schema="dbo" store:Type="Tables" />
@@ -1218,6 +1241,7 @@
             <End Role="Course_tbl" EntitySet="Course_tbl" />
             <End Role="Question_tbl" EntitySet="Question_tbl" />
           </AssociationSet>
+          <EntitySet Name="Answer_tbl" EntityType="LMSDBModel.Answer_tbl" />
         </EntityContainer>
         <EntityType Name="File_tbl">
           <Key>
@@ -1274,6 +1298,8 @@
           <NavigationProperty Name="Question_tbl9" Relationship="LMSDBModel.FK_Exam_tbl_Question_tbl9" FromRole="Exam_tbl" ToRole="Question_tbl" />
           <NavigationProperty Name="Result_tbl" Relationship="LMSDBModel.FK_Result_tbl_Exam_tbl" FromRole="Exam_tbl" ToRole="Result_tbl" />
           <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Course_tbl" FromRole="Exam_tbl" ToRole="Course_tbl" />
+          <Property Name="ReleaseTime" Type="DateTime" Precision="3" />
+          <Property Name="AvailabilityTime" Type="DateTime" />
         </EntityType>
         <EntityType Name="Question_tbl">
           <Key>
@@ -1301,6 +1327,8 @@
           <Property Name="Ques_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_Question_tbl_Course_tbl" FromRole="Question_tbl" ToRole="Course_tbl" />
+          <Property Name="Ques_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WrittenAns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Exam_tbl_Question_tbl">
           <End Type="LMSDBModel.Question_tbl" Role="Question_tbl" Multiplicity="0..1" />
@@ -1469,6 +1497,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Answer_tbl">
+          <Key>
+            <PropertyRef Name="Ans_ID" />
+          </Key>
+          <Property Name="Ans_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exam_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Stu_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_8" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_9" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_10" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1604,6 +1650,8 @@
           <EntitySetMapping Name="Exam_tbl">
             <EntityTypeMapping TypeName="LMSDBModel.Exam_tbl">
               <MappingFragment StoreEntitySet="Exam_tbl">
+                <ScalarProperty Name="AvailabilityTime" ColumnName="AvailabilityTime" />
+                <ScalarProperty Name="ReleaseTime" ColumnName="ReleaseTime" />
                 <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
                 <ScalarProperty Name="Total_Mark" ColumnName="Total_Mark" />
                 <ScalarProperty Name="Correct_Answers" ColumnName="Correct_Answers" />
@@ -1626,6 +1674,8 @@
           <EntitySetMapping Name="Question_tbl">
             <EntityTypeMapping TypeName="LMSDBModel.Question_tbl">
               <MappingFragment StoreEntitySet="Question_tbl">
+                <ScalarProperty Name="WrittenAns" ColumnName="WrittenAns" />
+                <ScalarProperty Name="Ques_Type" ColumnName="Ques_Type" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="Ques_Title" ColumnName="Ques_Title" />
                 <ScalarProperty Name="Achieved_Mark" ColumnName="Achieved_Mark" />
@@ -1664,6 +1714,25 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="LMSDBModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="LMSDBModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Answer_tbl">
+            <EntityTypeMapping TypeName="LMSDBModel.Answer_tbl">
+              <MappingFragment StoreEntitySet="Answer_tbl">
+                <ScalarProperty Name="Ans_10" ColumnName="Ans_10" />
+                <ScalarProperty Name="Ans_9" ColumnName="Ans_9" />
+                <ScalarProperty Name="Ans_8" ColumnName="Ans_8" />
+                <ScalarProperty Name="Ans_7" ColumnName="Ans_7" />
+                <ScalarProperty Name="Ans_6" ColumnName="Ans_6" />
+                <ScalarProperty Name="Ans_5" ColumnName="Ans_5" />
+                <ScalarProperty Name="Ans_4" ColumnName="Ans_4" />
+                <ScalarProperty Name="Ans_3" ColumnName="Ans_3" />
+                <ScalarProperty Name="Ans_2" ColumnName="Ans_2" />
+                <ScalarProperty Name="Ans_1" ColumnName="Ans_1" />
+                <ScalarProperty Name="Stu_Code" ColumnName="Stu_Code" />
+                <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
+                <ScalarProperty Name="Ans_ID" ColumnName="Ans_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

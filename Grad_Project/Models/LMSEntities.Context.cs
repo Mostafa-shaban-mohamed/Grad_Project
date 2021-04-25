@@ -39,6 +39,7 @@ namespace Grad_Project.Models
         public virtual DbSet<File_tbl> File_tbl { get; set; }
         public virtual DbSet<Exam_tbl> Exam_tbl { get; set; }
         public virtual DbSet<Question_tbl> Question_tbl { get; set; }
+        public virtual DbSet<Answer_tbl> Answer_tbl { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

@@ -1,48 +1,44 @@
 ﻿@model Grad_Project.Models.Attendance_tbl
 
-@{
-    ViewBag.Title = "Delete";
-}
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Are you sure you want to delete this?</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("No of Attendances")
+            </dt>
 
-<h2>Delete</h2>
+            <dd>
+                @Html.DisplayFor(model => model.No_of_Attendances)
+            </dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Attendance_tbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayName("No of Attendances")
-        </dt>
+            <dt>
+                @Html.DisplayName("Course")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.No_of_Attendances)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Course_tbl.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Course")
-        </dt>
+            <dt>
+                @Html.DisplayName("Student")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Course_tbl.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Student_tbl.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Student")
-        </dt>
+        </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Student_tbl.Name)
-        </dd>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" /> &ensp;
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success"})
+            </div>
+        }
+    </div>
 </div>

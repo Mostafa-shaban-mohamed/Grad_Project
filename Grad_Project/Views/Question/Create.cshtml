@@ -1,4 +1,5 @@
 ﻿@model Grad_Project.Models.Question_tbl
+@using Grad_Project.Models
 
 @using (Html.BeginForm()) 
 {
@@ -15,11 +16,19 @@
             </div>
         </div>
 
-        <div class="form-group ex">
+        <div class="form-group">
             @Html.LabelFor(model => model.CourseID, "CourseID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ques_Type, "Ques_Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Ques_Type,  new SelectList(new QestionType().GetQT()), "Select Exam Type", new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Ques_Type, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -30,6 +39,8 @@
                 @Html.ValidationMessageFor(model => model.Ques_Title, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        If type is not Multi-chose, please leave those empty
 
         <div class="form-group">
             @Html.LabelFor(model => model.Ch01, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -70,6 +81,8 @@
                 @Html.ValidationMessageFor(model => model.Correct_Ch, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @Html.HiddenFor(model => model.WrittenAns)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Total_Mark, htmlAttributes: new { @class = "control-label col-md-2" })

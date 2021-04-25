@@ -110,8 +110,17 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.AvailabilityTime, "Available to:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="datetime-local" name="AvailabilityTime" value="@String.Format("{0:s}", Model.AvailabilityTime)"/>
+                    @Html.ValidationMessageFor(model => model.AvailabilityTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-sees" />
+                    <input type="submit" value="Save" class="btn btn-sees" /> &ensp;
+                    <button type="button" class="btn btn-sees card">Create Question</button>
                 </div>
             </div>
         </div>
@@ -120,13 +129,88 @@
     <div>
         @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
     </div>
+
+    <!-- modal pop up -->
+    <div id='myModalAL' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Create Question</h2>
+                </div>
+                <div id='myModalContentAL' class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @section Scripts{
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
+            $('.card').on('click', function () {
+                var url = '/Question/Create';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContentAL').html(data);
+                        $('#myModalAL').modal(options);
+                        $('#myModalAL').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#myModalAL').modal('hide');
+            });
+
+            //AutoComplete
+            $('#Q01').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q02').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q03').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q04').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q05').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q06').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q07').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q08').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q09').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+            $('#Q10').autocomplete({
+                source: '@Url.Action("Search")'
+            });
+
+            //Dropdownlist part
             if($('#DropDown').children("option:selected").val() == "Quiz") {
                 $('.ex').hide();
             } else {

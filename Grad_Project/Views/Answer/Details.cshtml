@@ -1,0 +1,131 @@
+﻿@model Grad_Project.Models.Answer_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="margin_30_95" style="margin-left:30px;">
+    
+    <h2>Answer Paper of @Model.Stu_Code</h2>
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Stu_Code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Stu_Code)
+            </dd>
+            <br />
+            <dt>
+                @Html.DisplayNameFor(model => model.Ans_1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ans_1) &ensp;
+                @Html.TextBox("mark01", null, new { @class = "form-control", @type = "number" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ans_2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ans_2) &ensp;
+                @Html.TextBox("mark02", null, new { @class = "form-control", @type = "number" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ans_3)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ans_3) &ensp;
+                @Html.TextBox("mark03", null, new { @class = "form-control", @type = "number" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ans_4)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ans_4) &ensp;
+                @Html.TextBox("mark04", null, new { @class = "form-control", @type = "number" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ans_5)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ans_5) &ensp;
+                @Html.TextBox("mark05", null, new { @class = "form-control", @type = "number" })
+            </dd>
+
+            @if (Model.Ans_6 != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ans_6)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ans_6) &ensp;
+                    @Html.TextBox("mark06", null, new { @class = "form-control", @type = "number" })
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ans_7)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ans_7) &ensp;
+                    @Html.TextBox("mark07", null, new { @class = "form-control", @type = "number" })
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ans_8)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ans_8) &ensp;
+                    @Html.TextBox("mark08", null, new { @class = "form-control", @type = "number" })
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ans_9)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ans_9) &ensp;
+                    @Html.TextBox("mark09", null, new { @class = "form-control", @type = "number" })
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ans_10)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ans_10) &ensp;
+                    @Html.TextBox("mark10", null, new { @class = "form-control", @type = "number" })
+                </dd>
+            }
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" class="btn btn-sees" value="Save" />
+            </div>
+        </div>
+    </div>
+    }
+    
+    <p>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+    </p>
+
+</div>
+

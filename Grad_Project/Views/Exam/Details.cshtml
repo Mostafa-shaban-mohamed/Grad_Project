@@ -55,7 +55,9 @@
             int i = 1;
             foreach (var q in Questions)
             {
-                <div class="form-group" style="margin-left:30px;">
+                if (q.Ques_Type == "Multi-chose")
+                {
+                    <div class="form-group" style="margin-left:30px;">
                     <h4>@q.Ques_Title</h4>
                     <div class="col-md-10 col-xs-10" style="border:dashed;">
                         <input name="StudentAnsQ_@i"
@@ -84,6 +86,12 @@
 
                     </div>
                 </div>
+                }
+                else/* if (q.Ques_Type == "Written")*/
+                {
+                    <h4>@q.Ques_Title</h4>
+                    <textarea name="StudentAnsQ_@i" id="@q.Q_ID" rows="5" cols="10" ></textarea>
+                }
                 i += 1;
             }
         }

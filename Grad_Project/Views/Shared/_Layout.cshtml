@@ -21,14 +21,14 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapse" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MainNavBar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("S.E.E.S", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse" id="MainNavBar">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
@@ -69,7 +69,14 @@
                         {
                             var db = new LMSDBEntities();
                             var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
-                            <li><a href="/Lecturer/Details/@lec.ID">Hello - Mr. @lec.Name</a></li>
+                            if (lec.Role == "Prof")
+                            {
+                                <li><a href="/Lecturer/Details/@lec.ID">Hello - Prof. @lec.Name</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="/Lecturer/Details/@lec.ID">Hello - Eng. @lec.Name</a></li>
+                            }
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Lecturer Options <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -139,10 +146,8 @@
                     <div class="col-lg-3 col-md-6" style="margin-left: 30px;">
                         <h3>Useful Links</h3>
                         <ul style="list-style:none;">
-                            <li><a href="#">Log in</a></li>
-                            <li><a href="#">Register</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="@Url.Action("LogIn", "Home")">Log in</a></li>
+                            <li><a href="@Url.Action("Create", "Student")">Register</a></li>
                         </ul>
                     </div>
                     <!-- Right Part of Footer-->
@@ -159,7 +164,7 @@
                     <br />
                     <br />
                     <div class="col-md-8">
-                        <p>Developed and Designed By Mostafa Shaaban</p>
+                        <p>Developed and Designed By <a href="http://mostafashaaban-001-site1.itempurl.com/" style="color:white;">Mostafa Shaaban</a></p>
                     </div>
                     <div class="col-md-4" style="left:0%;">
                         <div id="copy"><p style="text-align:right;">&copy; S.E.E.S</p></div>

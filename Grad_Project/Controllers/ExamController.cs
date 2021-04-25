@@ -38,26 +38,66 @@ namespace Grad_Project.Controllers
                 return HttpNotFound();
             }
             var st = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+            var pretended_ans_ID = st.ID + id;
+            var ans = db.Answer_tbl.FirstOrDefault(m => m.Ans_ID == pretended_ans_ID);
             var res = db.Result_tbl.FirstOrDefault(m => m.StudentID == st.ID && m.Exam_ID == id);
-            if(res != null)
+            //calculate the difference in time
+            //TimeSpan difftm = exam_tbl.AvailabilityTime.Value - DateTime.Now;
+            int diff = DateTime.Compare(exam_tbl.AvailabilityTime.Value, DateTime.Now);
+            if(diff < 0 && ans == null)
+            {
+                //create res and ans paper and leave it blank
+                var result = new Result_tbl();
+                result.Exam_ID = id;
+                result.ID = "R0" + db.Result_tbl.Count().ToString();
+                result.StudentID = st.ID;
+                result.CourseID = exam_tbl.Course_ID;
+                result.Title = exam_tbl.Type;
+                //create answer paper
+                var Ans = new Answer_tbl()
+                {
+                    Ans_ID = st.ID + id,
+                    Exam_ID = id,
+                    Stu_Code = st.ID
+                };
+
+                Ans.Ans_1 = string.Empty;
+                Ans.Ans_2 = string.Empty;
+                Ans.Ans_3 = string.Empty;
+                Ans.Ans_4 = string.Empty;
+                Ans.Ans_5 = string.Empty;
+
+                if (exam_tbl.Type != "Quiz")
+                {
+                    Ans.Ans_6 = string.Empty;
+                    Ans.Ans_7 = string.Empty;
+                    Ans.Ans_8 = string.Empty;
+                    Ans.Ans_9 = string.Empty;
+                    Ans.Ans_10 = string.Empty;
+                }
+                db.Result_tbl.Add(result);
+                db.Answer_tbl.Add(Ans);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Result");
+            }
+            if(ans != null || res != null)
             {
                 return RedirectToAction("Index", "Result");
             }
-            Session["ExamID"] = id;
             return View(exam_tbl);
         }
 
         [HttpPost]
-        public ActionResult Details(string Code, string StudentAnsQ_1, string StudentAnsQ_2, string StudentAnsQ_3, string StudentAnsQ_4, string StudentAnsQ_5,
+        public ActionResult Details(string id, string Code, string StudentAnsQ_1, string StudentAnsQ_2, string StudentAnsQ_3, string StudentAnsQ_4, string StudentAnsQ_5,
             string StudentAnsQ_6, string StudentAnsQ_7, string StudentAnsQ_8, string StudentAnsQ_9, string StudentAnsQ_10)
         {
-            var exam = db.Exam_tbl.Find(Session["ExamID"].ToString());
+            var exam = db.Exam_tbl.Find(id);
             if (exam == null)
             {
                 return HttpNotFound();
             }
             var result = new Result_tbl();
-            result.Exam_ID = Session["ExamID"].ToString();
+            result.Exam_ID = id;
             result.ID = "R0" + db.Result_tbl.Count().ToString();
             var st = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
 
@@ -71,7 +111,15 @@ namespace Grad_Project.Controllers
             }
             
             result.CourseID = exam.Course_ID;
+            //change result title in future
             result.Title = exam.Type;
+            //create answer paper
+            var ans = new Answer_tbl()
+            {
+                Ans_ID = st.ID + exam.Exam_ID,
+                Exam_ID = exam.Exam_ID,
+                Stu_Code = st.ID
+            };
 
             if(exam.Type == "Quiz")
             {
@@ -83,27 +131,12 @@ namespace Grad_Project.Controllers
                 result.Total_Mark += exam.Question_tbl4.Total_Mark;
                 //Achieved mark of exam
                 result.Achieved_Mark = 0;
-                if(StudentAnsQ_1 == exam.Question_tbl.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl.Total_Mark;
-                }
-                if (StudentAnsQ_2 == exam.Question_tbl1.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl1.Total_Mark;
-                }
-                if (StudentAnsQ_3 == exam.Question_tbl2.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl2.Total_Mark;
-                }
-                if (StudentAnsQ_4 == exam.Question_tbl3.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl3.Total_Mark;
-                }
-                if (StudentAnsQ_5 == exam.Question_tbl4.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl4.Total_Mark;
-                }
                 
+                ans.Ans_1 = StudentAnsQ_1;
+                ans.Ans_2 = StudentAnsQ_2;
+                ans.Ans_3 = StudentAnsQ_3;
+                ans.Ans_4 = StudentAnsQ_4;
+                ans.Ans_5 = StudentAnsQ_5;
             }
             else
             {
@@ -120,48 +153,20 @@ namespace Grad_Project.Controllers
                 result.Total_Mark += exam.Question_tbl9.Total_Mark;
                 //Achieved mark of exam
                 result.Achieved_Mark = 0;
-                if (StudentAnsQ_1 == exam.Question_tbl.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl.Total_Mark;
-                }
-                if (StudentAnsQ_2 == exam.Question_tbl1.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl1.Total_Mark;
-                }
-                if (StudentAnsQ_3 == exam.Question_tbl2.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl2.Total_Mark;
-                }
-                if (StudentAnsQ_4 == exam.Question_tbl3.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl3.Total_Mark;
-                }
-                if (StudentAnsQ_5 == exam.Question_tbl4.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl4.Total_Mark;
-                }
-                if (StudentAnsQ_6 == exam.Question_tbl5.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl5.Total_Mark;
-                }
-                if (StudentAnsQ_7 == exam.Question_tbl6.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl6.Total_Mark;
-                }
-                if (StudentAnsQ_8 == exam.Question_tbl7.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl7.Total_Mark;
-                }
-                if (StudentAnsQ_9 == exam.Question_tbl8.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl8.Total_Mark;
-                }
-                if (StudentAnsQ_10 == exam.Question_tbl9.Correct_Ch)
-                {
-                    result.Achieved_Mark += exam.Question_tbl9.Total_Mark;
-                }
+                
+                ans.Ans_1 = StudentAnsQ_1;
+                ans.Ans_2 = StudentAnsQ_2;
+                ans.Ans_3 = StudentAnsQ_3;
+                ans.Ans_4 = StudentAnsQ_4;
+                ans.Ans_5 = StudentAnsQ_5;
+                ans.Ans_6 = StudentAnsQ_6;
+                ans.Ans_7 = StudentAnsQ_7;
+                ans.Ans_8 = StudentAnsQ_8;
+                ans.Ans_9 = StudentAnsQ_9;
+                ans.Ans_10 = StudentAnsQ_10;
             }
             db.Result_tbl.Add(result);
+            db.Answer_tbl.Add(ans);
             db.SaveChanges();
             return RedirectToAction("Index", "Result");
         }
@@ -241,7 +246,7 @@ namespace Grad_Project.Controllers
                 {
                     exam_tbl.Total_Mark += question[i].Total_Mark;
                 }
-
+                exam_tbl.ReleaseTime = DateTime.Now;
                 db.Exam_tbl.Add(exam_tbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");

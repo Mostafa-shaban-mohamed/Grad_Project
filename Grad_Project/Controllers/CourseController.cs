@@ -35,6 +35,10 @@ namespace Grad_Project.Controllers
                 {
                     var IDCode = std.ID;
                     var reg = db.RegisteredCourses_tbl.Find(IDCode);
+                    if(reg == null)
+                    {
+                        return RedirectToAction("Create", "RegisteredCourses");
+                    }
                     if (reg.Course01 != null)
                     {
                         coursesList.Add(db.Course_tbl.Find(reg.Course01));
@@ -62,6 +66,10 @@ namespace Grad_Project.Controllers
                     if (reg.Course07 != null)
                     {
                         coursesList.Add(db.Course_tbl.Find(reg.Course07));
+                    }
+                    if(coursesList.Count == 0)
+                    {
+                        return RedirectToAction("Edit", "RegisteredCourses", new { id = std.ID });
                     }
                 }
             }
@@ -117,8 +125,8 @@ namespace Grad_Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.Prof = new SelectList(db.Lecturer_tbl, "ID", "Name");
-            ViewBag.Assistant = new SelectList(db.Lecturer_tbl, "ID", "Name");
+            ViewBag.Prof = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Prof"), "ID", "Name");
+            ViewBag.Assistant = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Assistant"), "ID", "Name");
             return View();
         }
 
@@ -134,8 +142,8 @@ namespace Grad_Project.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Prof = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Prof);
-            ViewBag.Assistant = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Assistant);
+            ViewBag.Prof = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Prof"), "ID", "Name");
+            ViewBag.Assistant = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Assistant"), "ID", "Name");
             return View(course_tbl);
         }
 
@@ -157,8 +165,8 @@ namespace Grad_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            ViewBag.Prof = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Prof);
-            ViewBag.Assistant = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Assistant);
+            ViewBag.Prof = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Prof"), "ID", "Name");
+            ViewBag.Assistant = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Assistant"), "ID", "Name");
             course_ID = id;
             return View(course_tbl);
         }
@@ -175,8 +183,8 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Prof = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Prof);
-            ViewBag.Assistant = new SelectList(db.Lecturer_tbl, "ID", "Name", course_tbl.Assistant);
+            ViewBag.Prof = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Prof"), "ID", "Name");
+            ViewBag.Assistant = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Assistant"), "ID", "Name");
             return View(course_tbl);
         }
 

@@ -1,28 +1,34 @@
 ﻿@model Grad_Project.Models.Admin_tbl
 
-<h2>@Model.Email</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
+<div class="margin_30_95" style="margin-left: 30px;">
+    <h2>@Model.Email</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <button id="btnCP" class="btn btn-success">Change Password</button>
+    </div>
+
+    <div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-sees" }) &ensp;
+            @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID }, new { @class = "btn btn-warning" })
+        </p>
+    </div>
+    
 </div>
-
-<div>
-    <button id="btnCP" class="btn btn-success">Change Password</button>
-</div>
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Delete This Account", "Delete", new { id = Model.ID })
-</p>
 
 @section Scripts{
     <script>

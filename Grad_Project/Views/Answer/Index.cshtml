@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Grad_Project.Models.Answer_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="margin_30_95" style="margin-left:30px;">
+    <h2>Answer Papers</h2>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Exam_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stu_Code)
+            </th>
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exam_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stu_Code)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Set Marks", "Details", new { id = item.Ans_ID }, new { @class = "btn btn-sees"})
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

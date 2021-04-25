@@ -4118,6 +4118,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-bottom: 0;
   border: 1px solid transparent;
 }
+/* --------------------------------  */
 
 .navbar:before,
 .navbar:after {
@@ -4306,7 +4307,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-top: 8px;
   margin-right: 15px;
   margin-bottom: 8px;
-  background-color: transparent;
+  background-color: white;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -4533,7 +4534,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #cccccc;
+  background-color: blue;
 }
 
 .navbar-default .navbar-collapse,

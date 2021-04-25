@@ -36,6 +36,8 @@ namespace Grad_Project.Models
         public Nullable<int> Correct_Answers { get; set; }
         public Nullable<int> Total_Mark { get; set; }
         public Nullable<int> Achieved_Mark { get; set; }
+        public Nullable<System.DateTime> ReleaseTime { get; set; }
+        public Nullable<System.DateTime> AvailabilityTime { get; set; }
     
         public virtual Question_tbl Question_tbl { get; set; }
         public virtual Question_tbl Question_tbl1 { get; set; }

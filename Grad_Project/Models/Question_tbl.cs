@@ -40,6 +40,8 @@ namespace Grad_Project.Models
         public Nullable<int> Achieved_Mark { get; set; }
         public string Ques_Title { get; set; }
         public string CourseID { get; set; }
+        public string Ques_Type { get; set; }
+        public string WrittenAns { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exam_tbl> Exam_tbl { get; set; }

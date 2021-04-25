@@ -177,16 +177,25 @@
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="fonts\Raleway-Regular.ttf" />
+    <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\PHI.pubxml" />
+    <None Include="Properties\PublishProfiles\SEES-PHI - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\SEES-PHI - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\SEES-PHI - Web Deploy.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Lecturer\Create.cshtml" />
     <Content Include="Views\Lecturer\Delete.cshtml" />
     <Content Include="Views\Lecturer\Details.cshtml" />
@@ -204,9 +213,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\AttendanceWebAPIController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CustomErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -220,6 +231,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin_tbl.cs">
+      <DependentUpon>LMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AnswerPaper.cs" />
+    <Compile Include="Models\Answer_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Attendance_tbl.cs">
@@ -263,6 +278,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LMSEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\QestionType.cs" />
     <Compile Include="Models\Question_tbl.cs">
       <DependentUpon>LMSEntities.tt</DependentUpon>
     </Compile>
@@ -288,7 +304,6 @@
     </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersRoleProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -332,17 +347,11 @@
     <Content Include="Views\Result\Details.cshtml" />
     <Content Include="Views\Result\Edit.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
-    <Content Include="Views\Attendance\Create.cshtml" />
     <Content Include="Views\Attendance\Delete.cshtml" />
-    <Content Include="Views\Attendance\Details.cshtml" />
-    <Content Include="Views\Attendance\Edit.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
     <Content Include="Views\Course\UploadFiles.cshtml" />
     <Content Include="Views\Course\DownloadFiles.cshtml" />
-    <Content Include="Views\File\Create.cshtml" />
     <Content Include="Views\File\Delete.cshtml" />
-    <Content Include="Views\File\Details.cshtml" />
-    <Content Include="Views\File\Edit.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Lecturer\ChangePassword.cshtml" />
@@ -357,6 +366,12 @@
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\CustomError\NotFound.cshtml" />
+    <Content Include="Views\Answer\Create.cshtml" />
+    <Content Include="Views\Answer\Delete.cshtml" />
+    <Content Include="Views\Answer\Details.cshtml" />
+    <Content Include="Views\Answer\Edit.cshtml" />
+    <Content Include="Views\Answer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

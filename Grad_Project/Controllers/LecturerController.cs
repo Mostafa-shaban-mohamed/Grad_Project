@@ -88,10 +88,9 @@ namespace Grad_Project.Controllers
             {
                 lecturer_tbl.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(lecturer_tbl.Password), salt));
                 lecturer_tbl.Salt = salt;
-                str = lecturer_tbl.ID;
                 db.Lecturer_tbl.Add(lecturer_tbl);
                 db.SaveChanges();
-                return RedirectToAction("UploadImage");
+                return RedirectToAction("UploadImage", "Lecturer", new { id = lecturer_tbl.ID});
             }
 
             return View(lecturer_tbl);
@@ -141,8 +140,7 @@ namespace Grad_Project.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Lecturer")]
-        public ActionResult UploadImage()
+        public ActionResult UploadImage(string id)
         {
             return View();
         }
