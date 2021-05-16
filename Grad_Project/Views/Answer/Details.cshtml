@@ -28,7 +28,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Ans_1) &ensp;
-                @Html.TextBox("mark01", null, new { @class = "form-control", @type = "number" })
+                @Html.TextBox("mark01", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[0], @min = "0" })
             </dd>
 
             <dt>
@@ -37,7 +37,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Ans_2) &ensp;
-                @Html.TextBox("mark02", null, new { @class = "form-control", @type = "number" })
+                @Html.TextBox("mark02", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[1], @min = "0" })
             </dd>
 
             <dt>
@@ -46,7 +46,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Ans_3) &ensp;
-                @Html.TextBox("mark03", null, new { @class = "form-control", @type = "number" })
+                @Html.TextBox("mark03", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[2], @min = "0" })
             </dd>
 
             <dt>
@@ -55,7 +55,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Ans_4) &ensp;
-                @Html.TextBox("mark04", null, new { @class = "form-control", @type = "number" })
+                @Html.TextBox("mark04", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[3], @min = "0" })
             </dd>
 
             <dt>
@@ -64,7 +64,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Ans_5) &ensp;
-                @Html.TextBox("mark05", null, new { @class = "form-control", @type = "number" })
+                @Html.TextBox("mark05", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[4], @min = "0" })
             </dd>
 
             @if (Model.Ans_6 != null)
@@ -75,7 +75,7 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Ans_6) &ensp;
-                    @Html.TextBox("mark06", null, new { @class = "form-control", @type = "number" })
+                    @Html.TextBox("mark06", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[5], @min = "0" })
                 </dd>
 
                 <dt>
@@ -84,7 +84,7 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Ans_7) &ensp;
-                    @Html.TextBox("mark07", null, new { @class = "form-control", @type = "number" })
+                    @Html.TextBox("mark07", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[6], @min = "0" })
                 </dd>
 
                 <dt>
@@ -93,7 +93,7 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Ans_8) &ensp;
-                    @Html.TextBox("mark08", null, new { @class = "form-control", @type = "number" })
+                    @Html.TextBox("mark08", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[7], @min = "0" })
                 </dd>
 
                 <dt>
@@ -102,7 +102,7 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Ans_9) &ensp;
-                    @Html.TextBox("mark09", null, new { @class = "form-control", @type = "number" })
+                    @Html.TextBox("mark09", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[8], @min = "0" })
                 </dd>
 
                 <dt>
@@ -111,7 +111,7 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Ans_10) &ensp;
-                    @Html.TextBox("mark10", null, new { @class = "form-control", @type = "number" })
+                    @Html.TextBox("mark10", null, new { @class = "form-control", @type = "number", @max = ViewBag.mm[9], @min = "0" })
                 </dd>
             }
         </dl>

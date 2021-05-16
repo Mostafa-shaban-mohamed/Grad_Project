@@ -15,8 +15,12 @@ namespace Grad_Project.Controllers
         private LMSDBEntities db = new LMSDBEntities();
 
         // GET: Exam
+        [Authorize(Roles = "Student, Lecturer")]
         public ActionResult Index()
         {
+            var st = db.Student_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
+            var reg = db.RegisteredCourses_tbl.Find(st.ID);
+
             var exam_tbl = db.Exam_tbl.Include(e => e.Course_tbl).Include(e => e.Question_tbl).Include(e => e.Question_tbl1).Include(e => e.Question_tbl2).Include(e => e.Question_tbl3).Include(e => e.Question_tbl4).Include(e => e.Question_tbl5).Include(e => e.Question_tbl6).Include(e => e.Question_tbl7).Include(e => e.Question_tbl8).Include(e => e.Question_tbl9).ToList();
             
             return View(exam_tbl);
@@ -27,7 +31,6 @@ namespace Grad_Project.Controllers
         [HttpGet]
         public ActionResult Details(string id)
         {
-            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,13 +41,21 @@ namespace Grad_Project.Controllers
                 return HttpNotFound();
             }
             var st = db.Student_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
+            //check if student registered in this course of exam
+            var reg = db.RegisteredCourses_tbl.Find(st.ID);
+            bool isregistered = false;
+            if(reg.Course01 == id || reg.Course02 == id || reg.Course03 == id || reg.Course04 == id || reg.Course05 == id || reg.Course06 == id
+                || reg.Course07 == id)
+            {
+                isregistered = true;
+            }
             var pretended_ans_ID = st.ID + id;
             var ans = db.Answer_tbl.FirstOrDefault(m => m.Ans_ID == pretended_ans_ID);
             var res = db.Result_tbl.FirstOrDefault(m => m.StudentID == st.ID && m.Exam_ID == id);
             //calculate the difference in time
             //TimeSpan difftm = exam_tbl.AvailabilityTime.Value - DateTime.Now;
             int diff = DateTime.Compare(exam_tbl.AvailabilityTime.Value, DateTime.Now);
-            if(diff < 0 && ans == null)
+            if(diff < 0 && ans == null && isregistered)
             {
                 //create res and ans paper and leave it blank
                 var result = new Result_tbl();
@@ -80,7 +91,7 @@ namespace Grad_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "Result");
             }
-            if(ans != null || res != null)
+            if(ans != null || res != null || isregistered == false)
             {
                 return RedirectToAction("Index", "Result");
             }

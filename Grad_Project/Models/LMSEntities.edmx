@@ -97,6 +97,7 @@
           <Property Name="UploadOn" Type="datetime" />
           <Property Name="File" Type="varbinary(max)" Nullable="false" />
           <Property Name="CourseID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="AssignmentID" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Lecturer_tbl">
           <Key>
@@ -1253,6 +1254,7 @@
           <Property Name="File" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="CourseID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_File_tbl_Course_tbl" FromRole="File_tbl" ToRole="Course_tbl" />
+          <Property Name="AssignmentID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_File_tbl_Course_tbl">
           <End Type="LMSDBModel.Course_tbl" Role="Course_tbl" Multiplicity="1" />
@@ -1299,7 +1301,7 @@
           <NavigationProperty Name="Result_tbl" Relationship="LMSDBModel.FK_Result_tbl_Exam_tbl" FromRole="Exam_tbl" ToRole="Result_tbl" />
           <NavigationProperty Name="Course_tbl" Relationship="LMSDBModel.FK_Exam_tbl_Course_tbl" FromRole="Exam_tbl" ToRole="Course_tbl" />
           <Property Name="ReleaseTime" Type="DateTime" Precision="3" />
-          <Property Name="AvailabilityTime" Type="DateTime" />
+          <Property Name="AvailabilityTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Question_tbl">
           <Key>
@@ -1639,6 +1641,7 @@
           <EntitySetMapping Name="File_tbl">
             <EntityTypeMapping TypeName="LMSDBModel.File_tbl">
               <MappingFragment StoreEntitySet="File_tbl">
+                <ScalarProperty Name="AssignmentID" ColumnName="AssignmentID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="File" ColumnName="File" />
                 <ScalarProperty Name="UploadOn" ColumnName="UploadOn" />

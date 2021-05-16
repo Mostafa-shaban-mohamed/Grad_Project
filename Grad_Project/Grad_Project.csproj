@@ -372,6 +372,7 @@
     <Content Include="Views\Answer\Details.cshtml" />
     <Content Include="Views\Answer\Edit.cshtml" />
     <Content Include="Views\Answer\Index.cshtml" />
+    <Content Include="Views\Event\UploadAssig.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

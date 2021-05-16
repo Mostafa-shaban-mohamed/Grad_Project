@@ -69,6 +69,42 @@ namespace Grad_Project.Controllers
             return View(event_tbl);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public ActionResult UploadAssig(string id)
+        {
+            var model = new FileDataVM();
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult UploadAssig(string id, FileDataVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            byte[] uploadedFile = new byte[model.File.InputStream.Length];
+            model.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+            var assig = db.Event_tbl.Find(id);
+
+            // now you could pass the byte array to your model and store wherever 
+            // you intended to store it
+            File_tbl fl = new File_tbl()
+            {
+                FileName = model.File.FileName,
+                UploadOn = DateTime.Now,
+                File = uploadedFile,
+                CourseID = assig.CourseID,
+                AssignmentID = assig.ID
+            };
+            db.File_tbl.Add(fl);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Event/Create
         [Authorize(Roles = "Admin, Lecturer")]
         public ActionResult Create()

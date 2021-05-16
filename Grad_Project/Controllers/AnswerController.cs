@@ -34,6 +34,24 @@ namespace Grad_Project.Controllers
             {
                 return HttpNotFound();
             }
+            var ex = db.Exam_tbl.Find(answer_tbl.Exam_ID);
+            var maxMark = new List<int>();   // store mark of each question in exam before assign it to viewbag
+
+            maxMark.Add(ex.Question_tbl.Total_Mark.GetValueOrDefault());
+            maxMark.Add(ex.Question_tbl1.Total_Mark.GetValueOrDefault());
+            maxMark.Add(ex.Question_tbl2.Total_Mark.GetValueOrDefault());
+            maxMark.Add(ex.Question_tbl3.Total_Mark.GetValueOrDefault());
+            maxMark.Add(ex.Question_tbl4.Total_Mark.GetValueOrDefault());
+
+            if (ex.Type != "Quiz")
+            {
+                maxMark.Add(ex.Question_tbl5.Total_Mark.GetValueOrDefault());
+                maxMark.Add(ex.Question_tbl6.Total_Mark.GetValueOrDefault());
+                maxMark.Add(ex.Question_tbl7.Total_Mark.GetValueOrDefault());
+                maxMark.Add(ex.Question_tbl8.Total_Mark.GetValueOrDefault());
+                maxMark.Add(ex.Question_tbl9.Total_Mark.GetValueOrDefault());
+            }
+            ViewBag.mm = maxMark;
             return View(answer_tbl);
         }
         [HttpPost]

@@ -282,7 +282,7 @@ namespace Grad_Project.Controllers
                 db.Entry(registeredCourses_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 EditAttendance(registeredCourses_tbl);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Student", new { id = registeredCourses_tbl.ID });
             }
 
             return View(registeredCourses_tbl);

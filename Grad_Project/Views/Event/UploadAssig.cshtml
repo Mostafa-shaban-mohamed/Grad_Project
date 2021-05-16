@@ -1,0 +1,23 @@
+﻿@model Grad_Project.Models.FileDataVM
+
+<div class="margin_120_95">
+    @using (Html.BeginForm("UploadAssig", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="centered-form">
+            <div>
+                @Html.LabelFor(x => x.File)
+                <br />
+                <br />
+                @Html.TextBoxFor(x => x.File, new { type = "file" })
+                <br />
+                @Html.ValidationMessageFor(x => x.File)
+            </div>
+
+            <button type="submit" class="btn btn-sees"><span class="glyphicon glyphicon-cloud-upload"></span>Upload</button>
+        </div>
+
+    }
+</div>
+
+
+

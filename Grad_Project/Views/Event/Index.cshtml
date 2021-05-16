@@ -32,18 +32,27 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    @Html.Encode(String.Format("{0:MM/dd/yyyy}", item.ReleaseDate))
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
 
-                @if (User.IsInRole("Admin") || User.IsInRole("Lecturer"))
+                @if (User.IsInRole("Admin"))
                 {
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
                         @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                    </td>
+                }
+                else if (User.IsInRole("Lecturer"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sees" }) &ensp;
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" }) &ensp;
+                        @Html.ActionLink("Check Documents", "Index", "File", new { assigID = item.ID }, new { @class = "btn btn-success" })
                     </td>
                 }
                 else

@@ -19,6 +19,7 @@ namespace Grad_Project.Models
         public Nullable<System.DateTime> UploadOn { get; set; }
         public byte[] File { get; set; }
         public string CourseID { get; set; }
+        public string AssignmentID { get; set; }
     
         public virtual Course_tbl Course_tbl { get; set; }
     }

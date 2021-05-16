@@ -17,7 +17,7 @@ namespace Grad_Project.Controllers
 
         // GET: File
         [Authorize(Roles = "Lecturer, Admin, Student")]
-        public ActionResult Index(string Search, string Courses, int? Page_No)
+        public ActionResult Index(string Search, string Courses, string assigID, int? Page_No)
         {
             ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");
             int Size_Of_Page = 2;
@@ -30,6 +30,11 @@ namespace Grad_Project.Controllers
                 var fls = new List<File_tbl>();
                 fls = db.File_tbl.Where(m => m.CourseID == Courses).ToList();
 
+                //Assig Documents
+                if(assigID != null)
+                {
+                    fls = fls.Where(m => m.AssignmentID == assigID).ToList();
+                }
                 //Search box
                 if (!string.IsNullOrEmpty(Search))
                 {

@@ -2,7 +2,7 @@
 
 <div class="margin_30_95" style="margin-left:30px;">
 
-    <h2>@Model.Title - @Model.ReleaseDate</h2>
+    <h2>@Model.Title - @Html.Encode(String.Format("{0:MM/dd/yyyy}", Model.ReleaseDate))</h2>
     <div style="margin-top: 20px;margin-bottom:20px;">
         <hr />
         <p>@Model.Description</p>
@@ -17,7 +17,11 @@
     }
     else
     {
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
+        <p>
+            @Html.ActionLink("Upload", "UploadAssig", new { id = Model.ID }, new { @class = "btn btn-success" }) &ensp;
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sees" })
+        </p>   
+       
     }
 </div>
 
