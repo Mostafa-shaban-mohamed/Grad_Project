@@ -31,7 +31,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Prof, "Prof", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Prof", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Prof, (SelectList)ViewBag.Prof, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Prof, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -39,19 +39,12 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Assistant, "Assistant", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Assistant", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Assistant, (SelectList)ViewBag.Assistant, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Assistant, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             @Html.HiddenFor(model => model.PDFs)
-
-            <div class="form-group">
-                @Html.Label("Course Documents", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.ActionLink("Upload Files", "UploadFiles", null, new { @class = "btn btn-success" }) &ensp; @Html.ActionLink("View Files", "Index", "File", null, new { @class = "btn btn-sees" })
-                </div>
-            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Links, htmlAttributes: new { @class = "control-label col-md-2" })

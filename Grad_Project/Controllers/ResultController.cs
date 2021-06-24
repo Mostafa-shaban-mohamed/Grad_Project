@@ -26,7 +26,7 @@ namespace Grad_Project.Controllers
                 result_tbl = db.Result_tbl.Where(m => m.StudentID == std.ID).Include(r => r.Course_tbl).Include(r => r.Student_tbl);
             }
             
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
             if (!string.IsNullOrEmpty(Search))
             {

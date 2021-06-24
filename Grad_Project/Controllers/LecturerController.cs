@@ -17,14 +17,12 @@ namespace Grad_Project.Controllers
     public class LecturerController : Controller
     {
         private LMSDBEntities db = new LMSDBEntities();
-        private static string str;
-
 
         // GET: Lecturer
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string Search, int? Page_No)
         {
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
             if (!string.IsNullOrEmpty(Search))
             {
@@ -71,7 +69,7 @@ namespace Grad_Project.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Lecturer/Create
         public ActionResult Create()
         {

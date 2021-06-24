@@ -27,6 +27,7 @@ namespace Grad_Project.Controllers
         [HttpGet]
         public ActionResult LogIn()
         {
+            
             return View();
         }
 

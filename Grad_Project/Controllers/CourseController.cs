@@ -25,7 +25,7 @@ namespace Grad_Project.Controllers
         {
             var course_tbl = db.Course_tbl.Include(c => c.Lecturer_tbl).Include(c => c.Lecturer_tbl1);
             var coursesList = new List<Course_tbl>();
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
 
             if (User.IsInRole("Student"))
@@ -167,7 +167,7 @@ namespace Grad_Project.Controllers
             }
             ViewBag.Prof = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Prof"), "ID", "Name");
             ViewBag.Assistant = new SelectList(db.Lecturer_tbl.Where(m => m.Role == "Assistant"), "ID", "Name");
-            course_ID = id;
+            //course_ID = id;
             return View(course_tbl);
         }
 
@@ -192,14 +192,14 @@ namespace Grad_Project.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Lecturer, Admin")]
-        public ActionResult UploadFiles()
+        public ActionResult UploadFiles(string id)
         {
             var model = new FileDataVM();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult UploadFiles(FileDataVM model)
+        public ActionResult UploadFiles(string id, FileDataVM model)
         {
             if (!ModelState.IsValid)
             {
@@ -216,14 +216,14 @@ namespace Grad_Project.Controllers
                 FileName = model.File.FileName,
                 UploadOn = DateTime.Now,
                 File = uploadedFile,
-                CourseID = course_ID
+                CourseID = id
             };
             db.File_tbl.Add(fl);
             db.SaveChanges();
-            db.Course_tbl.Find(course_ID).PDFs = db.File_tbl.Where(m => m.CourseID == course_ID).Count().ToString();
+            db.Course_tbl.Find(id).PDFs = db.File_tbl.Where(m => m.CourseID == id).Count().ToString();
             db.SaveChanges();
 
-            return RedirectToAction("Edit", new { id = course_ID });
+            return RedirectToAction("Index");
         }
         
         public FileResult ViewFile(string Name)

@@ -26,7 +26,7 @@ namespace Grad_Project.Controllers
         {
             var student_tbl = db.Student_tbl.Include(s => s.Attendance_tbl1).Include(s => s.RegisteredCourses_tbl).Include(s => s.Result_tbl1);
             var studentList = new List<Student_tbl>();
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
             if (!string.IsNullOrEmpty(Search))
             {

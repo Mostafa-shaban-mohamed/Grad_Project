@@ -19,8 +19,52 @@ namespace Grad_Project.Controllers
         [Authorize(Roles = "Lecturer, Admin, Student")]
         public ActionResult Index(string Search, string Courses, string assigID, int? Page_No)
         {
-            ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");
-            int Size_Of_Page = 2;
+            if (User.IsInRole("Student"))
+            {
+                var stu = db.Student_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
+                var reg = db.RegisteredCourses_tbl.Find(stu.ID);
+                if(reg == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                //add registered courses in list
+                var stuCourses = new List<Course_tbl>();
+                if(reg.Course01 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course01));
+                }
+                if (reg.Course02 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course02));
+                }
+                if (reg.Course03 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course03));
+                }
+                if (reg.Course04 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course04));
+                }
+                if (reg.Course05 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course05));
+                }
+                if (reg.Course06 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course06));
+                }
+                if (reg.Course07 != null)
+                {
+                    stuCourses.Add(db.Course_tbl.Find(reg.Course07));
+                }
+                ViewBag.Courses = new SelectList(stuCourses, "ID", "Name");
+            }
+            else
+            {
+                ViewBag.Courses = new SelectList(db.Course_tbl, "ID", "Name");
+            }
+            
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
 
             //Drop down List

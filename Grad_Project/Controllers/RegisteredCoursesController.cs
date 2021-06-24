@@ -21,7 +21,7 @@ namespace Grad_Project.Controllers
         public ActionResult Index(string Search, int? Page_No)
         {
             var registeredCourses_tbl = db.RegisteredCourses_tbl.Include(r => r.Course_tbl).Include(r => r.Course_tbl1).Include(r => r.Course_tbl2).Include(r => r.Course_tbl3).Include(r => r.Course_tbl4).Include(r => r.Course_tbl5).Include(r => r.Course_tbl6);
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
             if (!string.IsNullOrEmpty(Search))
             {
@@ -59,6 +59,15 @@ namespace Grad_Project.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult Create()
         {
+            //create dropdownlist in controller
+            ViewBag.Course01 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course02 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course03 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course04 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course05 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course06 = new SelectList(db.Course_tbl, "ID", "Name");
+            ViewBag.Course07 = new SelectList(db.Course_tbl, "ID", "Name");
+
             return View();
         }
 
@@ -69,41 +78,41 @@ namespace Grad_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(registeredCourses_tbl.Course01 != null)
-                {
-                    registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course01).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course02 != null)
-                {
-                    registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course02).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course03 != null)
-                {
-                    registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course03).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course04 != null)
-                {
-                    registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course04).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course05 != null)
-                {
-                    registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course05).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course06 != null)
-                {
-                    registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course06).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course07 != null)
-                {
-                    registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course07).FirstOrDefault().ID;
-                }
+                //if(registeredCourses_tbl.Course01 != null)
+                //{
+                //    registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course01).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course02 != null)
+                //{
+                //    registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course02).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course03 != null)
+                //{
+                //    registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course03).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course04 != null)
+                //{
+                //    registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course04).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course05 != null)
+                //{
+                //    registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course05).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course06 != null)
+                //{
+                //    registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course06).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course07 != null)
+                //{
+                //    registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course07).FirstOrDefault().ID;
+                //}
                 
                 db.RegisteredCourses_tbl.Add(registeredCourses_tbl);
                 var std = db.Student_tbl.Find(registeredCourses_tbl.ID);
                 std.Registered_Courses = registeredCourses_tbl.ID;
                 db.SaveChanges();
                 CreateAttendance(registeredCourses_tbl);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(registeredCourses_tbl);
@@ -210,35 +219,44 @@ namespace Grad_Project.Controllers
                 return HttpNotFound();
             }
 
+            //create dropdownlist in controller
+            ViewBag.Course01 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course01);
+            ViewBag.Course02 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course02);
+            ViewBag.Course03 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course03);
+            ViewBag.Course04 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course04);
+            ViewBag.Course05 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course05);
+            ViewBag.Course06 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course06);
+            ViewBag.Course07 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course07);
+
             //Redo the code of courses to their names
-            if (registeredCourses_tbl.Course01 != null)
-            {
-                registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course01).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course02 != null)
-            {
-                registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course02).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course03 != null)
-            {
-                registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course03).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course04 != null)
-            {
-                registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course04).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course05 != null)
-            {
-                registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course05).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course06 != null)
-            {
-                registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course06).FirstOrDefault().Name;
-            }
-            if (registeredCourses_tbl.Course07 != null)
-            {
-                registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course07).FirstOrDefault().Name;
-            }
+            //if (registeredCourses_tbl.Course01 != null)
+            //{
+            //    registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course01).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course02 != null)
+            //{
+            //    registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course02).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course03 != null)
+            //{
+            //    registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course03).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course04 != null)
+            //{
+            //    registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course04).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course05 != null)
+            //{
+            //    registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course05).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course06 != null)
+            //{
+            //    registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course06).FirstOrDefault().Name;
+            //}
+            //if (registeredCourses_tbl.Course07 != null)
+            //{
+            //    registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.ID == registeredCourses_tbl.Course07).FirstOrDefault().Name;
+            //}
 
             return View(registeredCourses_tbl);
         }
@@ -250,40 +268,47 @@ namespace Grad_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (registeredCourses_tbl.Course01 != null)
-                {
-                    registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course01).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course02 != null)
-                {
-                    registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course02).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course03 != null)
-                {
-                    registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course03).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course04 != null)
-                {
-                    registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course04).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course05 != null)
-                {
-                    registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course05).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course06 != null)
-                {
-                    registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course06).FirstOrDefault().ID;
-                }
-                if (registeredCourses_tbl.Course07 != null)
-                {
-                    registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course07).FirstOrDefault().ID;
-                }
+                //if (registeredCourses_tbl.Course01 != null)
+                //{
+                //    registeredCourses_tbl.Course01 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course01).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course02 != null)
+                //{
+                //    registeredCourses_tbl.Course02 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course02).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course03 != null)
+                //{
+                //    registeredCourses_tbl.Course03 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course03).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course04 != null)
+                //{
+                //    registeredCourses_tbl.Course04 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course04).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course05 != null)
+                //{
+                //    registeredCourses_tbl.Course05 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course05).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course06 != null)
+                //{
+                //    registeredCourses_tbl.Course06 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course06).FirstOrDefault().ID;
+                //}
+                //if (registeredCourses_tbl.Course07 != null)
+                //{
+                //    registeredCourses_tbl.Course07 = db.Course_tbl.Where(m => m.Name == registeredCourses_tbl.Course07).FirstOrDefault().ID;
+                //}
                 //------
                 db.Entry(registeredCourses_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 EditAttendance(registeredCourses_tbl);
                 return RedirectToAction("Details", "Student", new { id = registeredCourses_tbl.ID });
             }
+            ViewBag.Course01 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course01);
+            ViewBag.Course02 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course02);
+            ViewBag.Course03 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course03);
+            ViewBag.Course04 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course04);
+            ViewBag.Course05 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course05);
+            ViewBag.Course06 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course06);
+            ViewBag.Course07 = new SelectList(db.Course_tbl, "ID", "Name", registeredCourses_tbl.Course07);
 
             return View(registeredCourses_tbl);
         }

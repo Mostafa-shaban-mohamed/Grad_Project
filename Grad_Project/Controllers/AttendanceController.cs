@@ -42,7 +42,7 @@ namespace Grad_Project.Controllers
                 attendance_tbl = db.Attendance_tbl.Include(a => a.Course_tbl).Include(a => a.Student_tbl);
             }
             
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 6;
             int No_Of_Page = (Page_No ?? 1);
             if (!string.IsNullOrEmpty(Courses))
             {

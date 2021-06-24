@@ -19,7 +19,6 @@ namespace Grad_Project.Controllers
         public ActionResult Index()
         {
             var st = db.Student_tbl.Where(m => m.Email == User.Identity.Name).FirstOrDefault();
-            var reg = db.RegisteredCourses_tbl.Find(st.ID);
 
             var exam_tbl = db.Exam_tbl.Include(e => e.Course_tbl).Include(e => e.Question_tbl).Include(e => e.Question_tbl1).Include(e => e.Question_tbl2).Include(e => e.Question_tbl3).Include(e => e.Question_tbl4).Include(e => e.Question_tbl5).Include(e => e.Question_tbl6).Include(e => e.Question_tbl7).Include(e => e.Question_tbl8).Include(e => e.Question_tbl9).ToList();
             

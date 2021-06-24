@@ -65,7 +65,9 @@
                 else if(User.IsInRole("Lecturer"))
                 {
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) &ensp;
+                        @Html.ActionLink("Upload Files", "UploadFiles", new { id = item.ID }, new { @class = "btn btn-success" }) &ensp;
+                        @Html.ActionLink("View Files", "Index", "File", null, new { @class = "btn btn-primary" })
                     </td>
                 }
             </tr>
