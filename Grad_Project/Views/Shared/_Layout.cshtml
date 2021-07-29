@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     @RenderSection("Scripts", required: false)
@@ -40,7 +44,7 @@
                             var regCou = db.RegisteredCourses_tbl.Find(st.ID);
                             <li><a href="/Student/Details/@st.ID">Hello - @st.Name</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student Options <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student Options <span class="caret"></span><span class="badge">@db.Notification_tbl.Where(m => m.Role == "Student").Count().ToString()</span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
                                     <li class="divider"></li>
@@ -49,6 +53,8 @@
                                     <li><a href="@Url.Action("Index", "Exam")">Exams</a></li>
                                     <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Notification")">Notifications</a></li>
                                     <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "File")">Courses Material</a></li>
                                     <li class="divider"></li>
@@ -80,7 +86,7 @@
                                 <li><a href="/Lecturer/Details/@lec.ID">Hello - Eng. @lec.Name</a></li>
                             }
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Lecturer Options <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Lecturer Options <span class="caret"></span><span class="badge">@db.Notification_tbl.Where(m => m.Role == "Lecturer").Count().ToString()</span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
                                     <li class="divider"></li>
@@ -89,6 +95,8 @@
                                     <li><a href="@Url.Action("Index", "Event")">Events</a></li>
                                     <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Attendance")">Attendance</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Notification")">Notification</a></li>
                                 </ul>
                             </li>
                         }
@@ -98,7 +106,7 @@
                             var ad = db.Admin_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
                             <li><a href="/Admin/Details/@ad.ID">Hello - @ad.Email</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Options <span class="caret"></span><span class="badge">@db.Notification_tbl.Where(m => m.Role == "Admin").Count().ToString()</span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="@Url.Action("Index", "Student")">Students</a></li>
                                     <li class="divider"></li>
@@ -109,6 +117,10 @@
                                     <li><a href="@Url.Action("Index", "RegisteredCourses")">Course Registration</a></li>
                                     <li class="divider"></li>
                                     <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Notification")">Notification</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("ResetPasswords", "Admin")">Reset Passwords</a></li>
                                 </ul>
                             </li>
                         }

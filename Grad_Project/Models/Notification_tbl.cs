@@ -12,13 +12,10 @@ namespace Grad_Project.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Admin_tbl
+    public partial class Notification_tbl
     {
-        public string ID { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public byte[] Salt { get; set; }
-        public Nullable<int> No_Notifications { get; set; }
-        public Nullable<bool> ForgetPassword { get; set; }
+        public string NotificationID { get; set; }
+        public string Description { get; set; }
+        public string Role { get; set; }
     }
 }

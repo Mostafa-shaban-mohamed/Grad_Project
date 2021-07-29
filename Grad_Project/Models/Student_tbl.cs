@@ -32,6 +32,8 @@ namespace Grad_Project.Models
         public string Attend_Courses { get; set; }
         public string Registered_Courses { get; set; }
         public string Results { get; set; }
+        public bool ForgetPassword { get; set; }
+        public Nullable<int> No_Notifications { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance_tbl> Attendance_tbl { get; set; }

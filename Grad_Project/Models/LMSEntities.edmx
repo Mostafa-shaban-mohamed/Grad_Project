@@ -13,6 +13,8 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Salt" Type="varbinary" MaxLength="50" />
+          <Property Name="No_Notifications" Type="int" />
+          <Property Name="ForgetPassword" Type="bit" />
         </EntityType>
         <EntityType Name="Answer_tbl">
           <Key>
@@ -111,6 +113,16 @@
           <Property Name="Role" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Image" Type="image" />
           <Property Name="RegisteredCourses" Type="nvarchar" MaxLength="50" />
+          <Property Name="No_Notification" Type="int" />
+          <Property Name="ForgetPassword" Type="bit" />
+        </EntityType>
+        <EntityType Name="Notification_tbl">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Question_tbl">
           <Key>
@@ -170,6 +182,8 @@
           <Property Name="Attend_Courses" Type="nvarchar" MaxLength="10" />
           <Property Name="Registered_Courses" Type="nvarchar" MaxLength="10" />
           <Property Name="Results" Type="nvarchar" MaxLength="10" />
+          <Property Name="ForgetPassword" Type="bit" Nullable="false" />
+          <Property Name="No_Notifications" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -593,6 +607,7 @@
           <EntitySet Name="Exam_tbl" EntityType="Self.Exam_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="File_tbl" EntityType="Self.File_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lecturer_tbl" EntityType="Self.Lecturer_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification_tbl" EntityType="Self.Notification_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question_tbl" EntityType="Self.Question_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegisteredCourses_tbl" EntityType="Self.RegisteredCourses_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Result_tbl" EntityType="Self.Result_tbl" Schema="dbo" store:Type="Tables" />
@@ -735,6 +750,8 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="Binary" Nullable="true" MaxLength="50" FixedLength="false" />
+          <Property Name="No_Notifications" Type="Int32" />
+          <Property Name="ForgetPassword" Type="Boolean" />
         </EntityType>
         <EntityType Name="Attendance_tbl">
           <Key>
@@ -802,6 +819,8 @@
           <NavigationProperty Name="Course_tbl" Relationship="Self.FK_Course_tbl_Lecturer_tbl" FromRole="Lecturer_tbl" ToRole="Course_tbl" />
           <NavigationProperty Name="Course_tbl1" Relationship="Self.FK_Course_tbl_Lecturer_tbl1" FromRole="Lecturer_tbl" ToRole="Course_tbl" />
           <Property Name="RegisteredCourses" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="No_Notification" Type="Int32" />
+          <Property Name="ForgetPassword" Type="Boolean" />
         </EntityType>
         <EntityType Name="RegisteredCourses_tbl">
           <Key>
@@ -860,6 +879,8 @@
           <NavigationProperty Name="RegisteredCourses_tbl" Relationship="Self.FK_Student_tbl_RegisteredCourses_tbl" FromRole="Student_tbl" ToRole="RegisteredCourses_tbl" />
           <NavigationProperty Name="Result_tbl" Relationship="Self.FK_Result_tbl_Student_tbl" FromRole="Student_tbl" ToRole="Result_tbl" />
           <NavigationProperty Name="Result_tbl1" Relationship="Self.FK_Student_tbl_Result_tbl" FromRole="Student_tbl" ToRole="Result_tbl" />
+          <Property Name="ForgetPassword" Type="Boolean" Nullable="false" />
+          <Property Name="No_Notifications" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1243,6 +1264,7 @@
             <End Role="Question_tbl" EntitySet="Question_tbl" />
           </AssociationSet>
           <EntitySet Name="Answer_tbl" EntityType="LMSDBModel.Answer_tbl" />
+          <EntitySet Name="Notification_tbl" EntityType="LMSDBModel.Notification_tbl" />
         </EntityContainer>
         <EntityType Name="File_tbl">
           <Key>
@@ -1517,6 +1539,14 @@
           <Property Name="Ans_9" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Ans_10" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Notification_tbl">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1526,7 +1556,9 @@
     <EntitySetMapping Name="Admin_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Admin_tbl)">
         <MappingFragment StoreEntitySet="Admin_tbl">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ForgetPassword" ColumnName="ForgetPassword" />
+                <ScalarProperty Name="No_Notifications" ColumnName="No_Notifications" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Salt" ColumnName="Salt" />
@@ -1572,7 +1604,9 @@
     <EntitySetMapping Name="Lecturer_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Lecturer_tbl)">
         <MappingFragment StoreEntitySet="Lecturer_tbl">
-          <ScalarProperty Name="RegisteredCourses" ColumnName="RegisteredCourses" />
+          <ScalarProperty Name="ForgetPassword" ColumnName="ForgetPassword" />
+                <ScalarProperty Name="No_Notification" ColumnName="No_Notification" />
+                <ScalarProperty Name="RegisteredCourses" ColumnName="RegisteredCourses" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1613,7 +1647,9 @@
     <EntitySetMapping Name="Student_tbl">
       <EntityTypeMapping TypeName="IsTypeOf(LMSDBModel.Student_tbl)">
         <MappingFragment StoreEntitySet="Student_tbl">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="No_Notifications" ColumnName="No_Notifications" />
+                <ScalarProperty Name="ForgetPassword" ColumnName="ForgetPassword" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1733,6 +1769,15 @@
                 <ScalarProperty Name="Stu_Code" ColumnName="Stu_Code" />
                 <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
                 <ScalarProperty Name="Ans_ID" ColumnName="Ans_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notification_tbl">
+            <EntityTypeMapping TypeName="LMSDBModel.Notification_tbl">
+              <MappingFragment StoreEntitySet="Notification_tbl">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

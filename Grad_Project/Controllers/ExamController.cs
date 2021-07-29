@@ -26,6 +26,7 @@ namespace Grad_Project.Controllers
         }
 
         // GET: Exam/Details/5
+        //Answer Paper
         [Authorize(Roles = "Student")]
         [HttpGet]
         public ActionResult Details(string id)
@@ -259,7 +260,16 @@ namespace Grad_Project.Controllers
                 exam_tbl.ReleaseTime = DateTime.Now;
                 db.Exam_tbl.Add(exam_tbl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                // Add notification
+                return RedirectToAction("Create", "Notification", new
+                {
+                    mthd = "Index",
+                    cntlr = "Exam",
+                    course_id = exam_tbl.Course_ID,
+                    subject = "New Exam is added for Course ",
+                    role_not = "Student"
+                });
+                //return RedirectToAction("Index");
             }
             var lec = db.Lecturer_tbl.FirstOrDefault(m => m.Email == User.Identity.Name);
             if (lec == null)

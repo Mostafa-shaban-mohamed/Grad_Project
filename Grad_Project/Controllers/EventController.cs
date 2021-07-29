@@ -123,7 +123,16 @@ namespace Grad_Project.Controllers
                 event_tbl.ReleaseDate = DateTime.Now;
                 db.Event_tbl.Add(event_tbl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //Add notification
+                return RedirectToAction("Create", "Notification", new
+                {
+                    mthd = "Index",
+                    cntlr = "Event",
+                    course_id = event_tbl.ReleaseDate.ToString(),
+                    subject = "New Event is added at ",
+                    role_not = "Student"
+                });
+                //return RedirectToAction("Index");
             }
 
             ViewBag.CourseID = new SelectList(db.Course_tbl, "ID", "Name", event_tbl.CourseID);

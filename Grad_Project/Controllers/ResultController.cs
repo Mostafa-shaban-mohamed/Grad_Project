@@ -34,60 +34,7 @@ namespace Grad_Project.Controllers
             }
             return View(result_tbl.ToList().ToPagedList(No_Of_Page, Size_Of_Page));
         }
-
-        // GET: Result/Details/5
-        //[Authorize(Roles = "Lecturer, Student")]
-        //public ActionResult Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Result_tbl result_tbl = db.Result_tbl.Find(id);
-        //    if (result_tbl == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(result_tbl);
-        //}
-
-        //// GET: Result/Create
-        //[Authorize(Roles = "Lecturer")]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Result/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(Result_tbl result_tbl)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Result_tbl.Add(result_tbl);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(result_tbl);
-        //}
-
-        //// GET: Result/Edit/5
-        //[Authorize(Roles = "Lecturer")]
-        //public ActionResult Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Result_tbl result_tbl = db.Result_tbl.Find(id);
-        //    if (result_tbl == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(result_tbl);
-        //}
-
+        
         //AutoComplete mechanism for student code
         public JsonResult SearchStd(string term)
         {
@@ -101,48 +48,7 @@ namespace Grad_Project.Controllers
             List<string> Loc = db.Course_tbl.Where(x => x.ID.Contains(term)).Select(x => x.ID).ToList();
             return Json(Loc, JsonRequestBehavior.AllowGet);
         }
-
-        // POST: Result/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(Result_tbl result_tbl)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(result_tbl).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(result_tbl);
-        //}
-
-        //// GET: Result/Delete/5
-        //[Authorize(Roles = "Lecturer")]
-        //public ActionResult Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Result_tbl result_tbl = db.Result_tbl.Find(id);
-        //    if (result_tbl == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(result_tbl);
-        //}
-
-        //// POST: Result/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(string id)
-        //{
-        //    Result_tbl result_tbl = db.Result_tbl.Find(id);
-        //    db.Result_tbl.Remove(result_tbl);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

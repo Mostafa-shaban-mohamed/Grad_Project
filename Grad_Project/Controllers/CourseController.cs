@@ -222,8 +222,10 @@ namespace Grad_Project.Controllers
             db.SaveChanges();
             db.Course_tbl.Find(id).PDFs = db.File_tbl.Where(m => m.CourseID == id).Count().ToString();
             db.SaveChanges();
+            // add notification for every student registered to this course
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Create", "Notification", new { mthd = "Index", cntlr = "Course", course_id = id,
+                subject = "New File is uploaded in ", role_not = "Student"});
         }
         
         public FileResult ViewFile(string Name)

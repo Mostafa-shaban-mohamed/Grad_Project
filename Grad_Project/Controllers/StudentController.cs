@@ -12,6 +12,8 @@ using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using PagedList;
+using System.Net.Mail;
+
 
 namespace Grad_Project.Controllers
 {
@@ -107,6 +109,7 @@ namespace Grad_Project.Controllers
             {
                 student_tbl.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(student_tbl.Password), salt));
                 student_tbl.Salt = salt;
+                student_tbl.ForgetPassword = false;
                 str = student_tbl.ID;
                 db.Student_tbl.Add(student_tbl);
                 db.SaveChanges();
@@ -250,7 +253,7 @@ namespace Grad_Project.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -12,9 +12,75 @@ namespace Grad_Project.Controllers
 {
     public class HomeController : Controller
     {
+        private LMSDBEntities db = new LMSDBEntities();
         // GET: Home
         public ActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ForgetPassword()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgetPassword(string Email, string UserID)
+        {
+            if(Email != null && UserID != null)
+            {
+                //check if user is student
+                if(db.Student_tbl.Any(m => m.Email == Email && m.ID == UserID))
+                {
+                    //give admin authorization to reset the password
+                    var std = db.Student_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault();
+                    std.ForgetPassword = true;
+                    db.SaveChanges();
+                    //add notification to admin to reset password
+                    return RedirectToAction("Create", "Notification", new
+                    {
+                        mthd = "Index",
+                        cntlr = "Home",
+                        course_id = UserID,
+                        subject = "Recover account of "+Email+"&",
+                        role_not = "Admin"
+                    });
+                }
+                //check if user is lecturer
+                else if(db.Lecturer_tbl.Any(m => m.Email == Email && m.ID == UserID))
+                {
+                    //give admin authorization to reset the password
+                    db.Lecturer_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault().ForgetPassword = true;
+                    db.SaveChanges();
+                    //add notification to admin to reset password
+                    return RedirectToAction("Create", "Notification", new
+                    {
+                        mthd = "Index",
+                        cntlr = "Home",
+                        course_id = UserID,
+                        subject = Email + " Forgot the password and ID is ",
+                        role_not = "Admin"
+                    });
+                }
+                //check if user is admin
+                else if (db.Admin_tbl.Any(m => m.Email == Email && m.ID == UserID))
+                {
+                    //give admin authorization to reset the password
+                    db.Admin_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault().ForgetPassword = true;
+                    db.SaveChanges();
+                    //add notification to admin to reset password
+                    return RedirectToAction("Create", "Notification", new
+                    {
+                        mthd = "Index",
+                        cntlr = "Home",
+                        course_id = UserID,
+                        subject = Email + " Forgot the password and ID is ",
+                        role_not = "Admin"
+                    });
+                }
+            }
             return View();
         }
 
@@ -71,7 +137,7 @@ namespace Grad_Project.Controllers
                 if (IsValidStudent)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    Session["UserID"] = std.ID;
+                    //Session["UserID"] = std.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }
@@ -79,7 +145,7 @@ namespace Grad_Project.Controllers
                 if (IsValidLecturer)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    Session["UserID"] = lec.ID;
+                    //Session["UserID"] = lec.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }
@@ -87,7 +153,7 @@ namespace Grad_Project.Controllers
                 if (IsValidAdmin)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    Session["UserID"] = ad.ID;
+                    //Session["UserID"] = ad.ID;
                     //Go to profile page
                     return RedirectToAction("Index", "Home");
                 }

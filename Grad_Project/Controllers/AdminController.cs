@@ -178,6 +178,45 @@ namespace Grad_Project.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        // to reset passwords of students & lecturers & other admins 
+        [HttpGet]
+        public ActionResult ResetPasswords()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPasswords(string Email, string UserID, string newPassword)
+        {
+            if(db.Student_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault().ForgetPassword == true)
+            {
+                var std = db.Student_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault();
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(newPassword), std.Salt));
+                std.ForgetPassword = false;
+                std.Password = NewHashedPassword;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Student");
+            }
+            else if(db.Lecturer_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault().ForgetPassword == true)
+            {
+                var lec = db.Lecturer_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault();
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(newPassword), lec.Salt));
+                lec.Password = NewHashedPassword;
+                lec.ForgetPassword = false;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Lecturer");
+            }
+            else if(db.Admin_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault().ForgetPassword == true)
+            {
+                var ad = db.Admin_tbl.Where(m => m.Email == Email && m.ID == UserID).FirstOrDefault();
+                var NewHashedPassword = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(newPassword), ad.Salt));
+                ad.Password = NewHashedPassword;
+                ad.ForgetPassword = false;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Admin");
+            }
+            return View();
+        }
 
         protected override void Dispose(bool disposing)
         {

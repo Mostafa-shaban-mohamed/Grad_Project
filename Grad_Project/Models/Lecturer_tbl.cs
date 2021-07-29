@@ -29,6 +29,8 @@ namespace Grad_Project.Models
         public string Role { get; set; }
         public byte[] Image { get; set; }
         public string RegisteredCourses { get; set; }
+        public Nullable<int> No_Notification { get; set; }
+        public Nullable<bool> ForgetPassword { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course_tbl> Course_tbl { get; set; }

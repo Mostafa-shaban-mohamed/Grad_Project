@@ -75,8 +75,16 @@ namespace Grad_Project.Controllers
                 db.Entry(res).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            
-            return RedirectToAction("Index", "Result");
+            //Add notification
+            return RedirectToAction("Create", "Notification", new
+            {
+                mthd = "Index",
+                cntlr = "Result",
+                course_id = ans.Exam_ID,
+                subject = "New Result is added for Course ",
+                role_not = "Student"
+            });
+            //return RedirectToAction("Index", "Result");
         }
         
 

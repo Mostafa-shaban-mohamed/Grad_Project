@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Grad_Project.Models.Notification_tbl>
+
+<div class="margin_30_95" style="margin:0 30px;">
+    <h2>Notification List</h2>
+    <br />
+    <br />
+    @foreach (var item in Model)
+    {
+        <div class="alert">
+            <span class="closebtn" data-target="@item.NotificationID" onclick="this.parentElement.style.display = 'none';">&times;</span>
+            @item.Description
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //click on target element
+            $('.closebtn').click(function () {
+                var notID = $(this).data("target");
+                //ajax of modal pop up
+                var url = '/Notification/Delete?id=' + notID;
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/html; charset=utf-8",
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+                location.reload();
+            });
+
+        });
+    </script>    
+}
